@@ -466,7 +466,13 @@ namespace Gwen.Controls
             OnChildRemoved(child);
 
             if (dispose)
-                child.DelayedDelete();
+            {
+                var canvas = GetCanvas();
+                if (canvas != null)
+                    canvas.AddDelayedDelete(child);
+                else
+                    child.Dispose();
+            }
         }
 
         /// <summary>
