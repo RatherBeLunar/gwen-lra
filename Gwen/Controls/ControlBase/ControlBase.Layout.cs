@@ -119,7 +119,8 @@ namespace Gwen.Controls
             var shouldlayout = m_NeedsLayout || force;
             if (shouldlayout)
             {
-                if (AutoSizeToContents)
+                // if we have a dock property, our parent handles sizing us.
+                if (AutoSizeToContents && Dock == Pos.None)
                 {
                     var sz = GetSizeToFitContents();
                     SetBounds(X, Y, sz.Width, sz.Height);
@@ -410,7 +411,8 @@ namespace Gwen.Controls
             if (idx != -1)
             {
                 Children.SendToBack(idx);
-                InvalidateParent();
+                if (AutoSizeToContents)
+                    InvalidateParent();
                 Redraw();
             }
             else
@@ -427,7 +429,8 @@ namespace Gwen.Controls
             if (idx != -1)
             {
                 Children.BringToFront(idx);
-                InvalidateParent();
+                if (AutoSizeToContents)
+                    InvalidateParent();
                 Redraw();
             }
             else

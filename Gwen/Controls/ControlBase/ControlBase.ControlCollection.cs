@@ -54,6 +54,7 @@ namespace Gwen.Controls
                     var control = _controls[index];
                     _controls.RemoveAt(index);
                     _controls.Insert(0, control);
+                    _owner.Invalidate();
                 }
             }
             internal void BringToFront(int index)
@@ -65,6 +66,7 @@ namespace Gwen.Controls
                     var control = _controls[index];
                     _controls.RemoveAt(index);
                     _controls.Insert(_controls.Count, control);
+                    _owner.Invalidate();
                 }
             }
             internal void Move(ControlBase child, int index)
@@ -76,7 +78,7 @@ namespace Gwen.Controls
                     throw new ArgumentOutOfRangeException(nameof(index));
                 _controls.RemoveAt(childindex);
                 _controls.Insert(index, child);
-
+                _owner.Invalidate();
             }
             public void BringToFront(ControlBase child)
             {
@@ -127,6 +129,7 @@ namespace Gwen.Controls
                     _controls.Insert(index, item);
                     item.m_Parent = _owner;
                     _owner.OnChildAdded(item);
+                    _owner.Invalidate();
                 }
             }
 
@@ -145,7 +148,7 @@ namespace Gwen.Controls
                 toremove.m_Parent = null;
                 _controls.RemoveAt(index);
                 _owner.OnChildRemoved(toremove);
-
+                _owner.Invalidate();
             }
             public ControlBase[] ToArray()
             {

@@ -102,6 +102,8 @@ namespace Gwen.Controls
                 if (m_Parent != null)
                 {
                     m_Parent.AddChild(this);
+                    if (m_Parent.DrawDebugOutlines)
+                        DrawDebugOutlines = true;
                 }
             }
         }
@@ -556,8 +558,8 @@ namespace Gwen.Controls
         {
             foreach (ControlBase child in Children)
             {
-                if (child.Name == name) 
-                return child;
+                if (child.Name == name)
+                    return child;
             }
 
             if (recursive)
