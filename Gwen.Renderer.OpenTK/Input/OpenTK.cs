@@ -87,6 +87,12 @@ namespace Gwen.Input
             {
                 MouseButtonEventArgs ev = args as MouseButtonEventArgs;
 
+                int dx = ev.X - m_MouseX;
+                int dy = ev.Y - m_MouseY;
+                m_MouseX = ev.X;
+                m_MouseY = ev.Y;
+                m_Canvas.Input_MouseMoved(ev.X, m_MouseY, dx, dy);
+
                 /* We can not simply cast ev.Button to an int, as 1 is middle click, not right click. */
                 int ButtonID = -1; //Do not trigger event.
 
