@@ -143,13 +143,13 @@ namespace Gwen.Controls
         }
         private void SetupDefault()
         {
-
             var extra = TextHeight / 3;
             var textpadding = new Padding(extra, extra, extra, extra);
             if (TextPadding != textpadding)
             {
                 TextPadding = textpadding;
-                SizeToChildren(false, true);
+                if (GetSizeToFitContents().Height > Height)
+                    SizeToChildren(false, true);
             }
         }
 
