@@ -253,6 +253,8 @@ namespace Gwen.Controls
         protected override void PrepareLayout()
         {
             base.PrepareLayout();
+            m_Text.X = m_TextPadding.Left;
+            m_Text.Y = m_TextPadding.Top;
             m_Text.AlignToEdge(m_Align, m_TextPadding);
         }
 
