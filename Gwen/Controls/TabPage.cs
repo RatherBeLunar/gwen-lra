@@ -28,5 +28,13 @@ namespace Gwen.Controls
         {
             m_ParentButton = button;
         }
+        public void FocusTab()
+        {
+            TabButton.Press();
+        }
+        public void RemoveTab()
+        {
+            TabButton.TabControl.RemoveTab(this);
+        }
     }
 }

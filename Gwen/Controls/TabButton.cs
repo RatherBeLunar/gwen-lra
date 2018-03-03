@@ -8,7 +8,7 @@ namespace Gwen.Controls
     /// </summary>
     public class TabButton : Button
     {
-        private ControlBase m_Page;
+        private TabPage m_Page;
         private TabControl m_Control;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Interior of the tab.
         /// </summary>
-        public ControlBase Page { get { return m_Page; } set { m_Page = value; } }
+        public TabPage Page { get { return m_Page; } set { m_Page = value; } }
 
         /// <summary>
         /// Determines whether the control should be clipped to its bounds while rendering.

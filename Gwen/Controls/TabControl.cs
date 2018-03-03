@@ -32,17 +32,29 @@ namespace Gwen.Controls
         /// <summary>
         /// Currently active tab button.
         /// </summary>
-        public TabButton CurrentButton { get { return m_CurrentButton; } }
+        internal TabButton CurrentButton { get { return m_CurrentButton; } }
+
+        /// <summary>
+        /// Currently active tab page.
+        /// </summary>
+        public TabPage CurrentPage { get { return m_CurrentButton.Page; } }
 
         /// <summary>
         /// Current tab strip position.
         /// </summary>
-        public Pos TabStripPosition { get { return m_TabStrip.StripPosition; }set { m_TabStrip.StripPosition = value; } }
+        public Pos TabStripPosition { get { return m_TabStrip.StripPosition; } set { m_TabStrip.StripPosition = value; } }
 
         /// <summary>
         /// Tab strip.
         /// </summary>
         public TabStrip TabStrip { get { return m_TabStrip; } }
+        public int SelectedTab
+        {
+            get
+            {
+                return Children.IndexOf(CurrentButton.Page);
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -50,8 +62,8 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public TabControl(ControlBase parent)
             : base(parent)
-		{
-			m_Scroll = new ScrollBarButton[2];
+        {
+            m_Scroll = new ScrollBarButton[2];
             m_ScrollOffset = 0;
 
             m_TabStrip = new TabStrip(null);
@@ -69,15 +81,15 @@ namespace Gwen.Controls
             m_Scroll[1].SetSize(14, 16);
 
             PrivateChildren.Add(m_TabStrip);
-			PrivateChildren.Add(m_Scroll[0]);
-			PrivateChildren.Add(m_Scroll[1]);
+            PrivateChildren.Add(m_Scroll[0]);
+            PrivateChildren.Add(m_Scroll[1]);
 
             IsTabable = false;
         }
         protected override void RenderPanel(Skin.SkinBase skin)
         {
             base.RenderPanel(skin);
-            skin.DrawTabControl(this);
+            skin.DrawTabControl(m_Panel);
         }
         /// <summary>
         /// Adds a new page/tab.
@@ -87,8 +99,9 @@ namespace Gwen.Controls
         /// <returns>Newly created control.</returns>
         public TabPage AddPage(string label, ControlBase page = null)
         {
-			TabButton button = new TabButton(m_TabStrip);
+            TabButton button = new TabButton(m_TabStrip);
             var tabpage = new TabPage(this, button);
+            tabpage.Name = label;
             button.SetText(label);
             button.Page = tabpage;
             button.IsTabable = false;
@@ -106,7 +119,7 @@ namespace Gwen.Controls
         /// <param name="button">Page to add. (well, it's a TabButton which is a parent to the page).</param>
         public void AddPage(TabButton button)
         {
-            ControlBase page = button.Page;
+            TabPage page = button.Page;
             page.Parent = this;
             page.IsHidden = true;
             page.Margin = new Margin(6, 6, 6, 6);
@@ -130,6 +143,25 @@ namespace Gwen.Controls
             Invalidate();
         }
 
+        public TabPage GetPage(int index)
+        {
+            int pageindex = 0;
+            for (int i = 0; i < TabStrip.Children.Count; i++)
+            {
+                if (TabStrip.Children[i] is TabButton btn)
+                {
+                    if (pageindex == index)
+                        return btn.Page;
+                    pageindex++;
+                }
+            }
+            return null;
+        }
+        public void RemoveTab(TabPage page)
+        {
+            TabStrip.RemoveChild(page.TabButton, true);
+            RemoveChild(page, true);
+        }
         private void UnsubscribeTabEvent(TabButton button)
         {
             button.Clicked -= OnTabPressed;
@@ -191,7 +223,7 @@ namespace Gwen.Controls
             //TODO: Select a tab if any exist.
 
             if (TabRemoved != null)
-				TabRemoved.Invoke(this, EventArgs.Empty);
+                TabRemoved.Invoke(this, EventArgs.Empty);
 
             Invalidate();
         }
@@ -218,7 +250,7 @@ namespace Gwen.Controls
 
             m_ScrollOffset = Util.Clamp(m_ScrollOffset, 0, TabsSize.Width - Width + 32);
 
-            m_TabStrip.Margin = new Margin(m_ScrollOffset*-1, 0, 0, 0);
+            m_TabStrip.Margin = new Margin(m_ScrollOffset * -1, 0, 0, 0);
             m_Scroll[0].SetPosition(Width - 30, 5);
             m_Scroll[1].SetPosition(m_Scroll[0].Right, 5);
         }

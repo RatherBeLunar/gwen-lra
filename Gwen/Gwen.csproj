@@ -45,7 +45,6 @@
     <Compile Include="ControlInternal\RightArrow.cs" />
     <Compile Include="ControlInternal\SliderBar.cs" />
     <Compile Include="ControlInternal\SplitterBar.cs" />
-    <Compile Include="ControlInternal\TabControlInner.cs" />
     <Compile Include="ControlInternal\TreeNodeLabel.cs" />
     <Compile Include="ControlInternal\TreeToggleButton.cs" />
     <Compile Include="ControlInternal\UpDownButton_Down.cs" />
