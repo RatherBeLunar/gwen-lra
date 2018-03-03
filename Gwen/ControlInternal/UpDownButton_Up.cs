@@ -15,6 +15,7 @@ namespace Gwen.ControlInternal
         public UpDownButton_Up(Controls.ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             SetSize(7, 7);
         }
 

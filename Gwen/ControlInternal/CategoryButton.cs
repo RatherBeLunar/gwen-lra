@@ -44,6 +44,7 @@ namespace Gwen.ControlInternal
         /// <param name="parent">Parent control.</param>
         public CategoryButton(Controls.ControlBase parent) : base(parent)
         {
+            AutoSizeToContents = false;
             Alignment = Pos.Left | Pos.CenterV;
             m_Alt = false;
             IsToggle = true;

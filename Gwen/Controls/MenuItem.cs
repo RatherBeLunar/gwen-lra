@@ -121,7 +121,6 @@ namespace Gwen.Controls
             IsChecked = false;
 
             m_Accelerator = new Label(this);
-            AutoSizeToContents = true;
         }
 
         /// <summary>

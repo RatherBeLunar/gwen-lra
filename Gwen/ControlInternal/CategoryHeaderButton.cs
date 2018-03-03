@@ -25,6 +25,7 @@ namespace Gwen.ControlInternal
         public CategoryHeaderButton(Controls.ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             ShouldDrawBackground = false;
             IsToggle = true;
             Alignment = Pos.Center;

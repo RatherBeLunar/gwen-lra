@@ -37,6 +37,7 @@ namespace Gwen.ControlInternal
         public TreeNodeLabel(Controls.ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             Alignment = Pos.Left | Pos.CenterV;
             ShouldDrawBackground = false;
             AutoSizeToContents = true;

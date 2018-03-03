@@ -53,6 +53,7 @@ namespace Gwen.Controls
         public ComboBox(ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             SetSize(100, 20);
             m_Menu = new Menu(this);
             m_Menu.IsHidden = true;

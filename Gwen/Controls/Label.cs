@@ -47,7 +47,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Font.
         /// </summary>
-        public Font Font
+        public virtual Font Font
         {
             get { return m_Text.Font; }
             set
@@ -134,7 +134,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Text padding.
         /// </summary>
-        public Padding TextPadding
+        internal Padding TextPadding
         {
             get { return m_TextPadding; }
             set
@@ -253,8 +253,8 @@ namespace Gwen.Controls
         protected override void PrepareLayout()
         {
             base.PrepareLayout();
-            m_Text.X = m_TextPadding.Left;
-            m_Text.Y = m_TextPadding.Top;
+            m_Text.X = Padding.Left + m_TextPadding.Left;
+            m_Text.Y = Padding.Top + m_TextPadding.Top;
             m_Text.AlignToEdge(m_Align, m_TextPadding);
         }
 

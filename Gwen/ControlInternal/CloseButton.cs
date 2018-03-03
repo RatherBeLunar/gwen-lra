@@ -18,6 +18,7 @@ namespace Gwen.ControlInternal
         public CloseButton(Controls.ControlBase parent, WindowControl owner)
             : base(parent)
         {
+            AutoSizeToContents = false;
             m_Window = owner;
         }
 

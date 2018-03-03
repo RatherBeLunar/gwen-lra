@@ -17,6 +17,7 @@ namespace Gwen.ControlInternal
         public ScrollBarButton(Controls.ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             SetDirectionUp();
         }
 

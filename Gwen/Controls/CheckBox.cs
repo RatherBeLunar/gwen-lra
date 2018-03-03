@@ -30,6 +30,7 @@ namespace Gwen.Controls
         public CheckBox(ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             SetSize(15, 15);
 			IsToggle = true;
         }

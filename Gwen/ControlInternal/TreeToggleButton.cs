@@ -15,6 +15,7 @@ namespace Gwen.ControlInternal
         public TreeToggleButton(Controls.ControlBase parent)
             : base(parent)
         {
+            AutoSizeToContents = false;
             IsToggle = true;
             IsTabable = false;
         }

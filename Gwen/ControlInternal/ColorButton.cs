@@ -22,6 +22,7 @@ namespace Gwen.ControlInternal
         /// <param name="parent">Parent control.</param>
         public ColorButton(Controls.ControlBase parent) : base(parent)
         {
+            AutoSizeToContents = false;
             m_Color = Color.Black;
             Text = String.Empty;
         }

@@ -43,23 +43,23 @@ namespace Gwen.Controls
         protected override Color CurrentColor
         {
             get
-			{
-				if (IsDisabled)
-				{
-					return Skin.Colors.Button.Disabled;
-				}
+            {
+                if (IsDisabled)
+                {
+                    return Skin.Colors.Button.Disabled;
+                }
 
-				if (IsDepressed || ToggleState)
-				{
-					return Skin.Colors.Button.Down;
-				}
+                if (IsDepressed || ToggleState)
+                {
+                    return Skin.Colors.Button.Down;
+                }
 
-				if (IsHovered)
-				{
-					return Skin.Colors.Button.Hover;
-				}
+                if (IsHovered)
+                {
+                    return Skin.Colors.Button.Hover;
+                }
 
-				return Skin.Colors.Button.Normal;
+                return Skin.Colors.Button.Normal;
             }
         }
         /// <summary>
@@ -112,6 +112,18 @@ namespace Gwen.Controls
                 Redraw();
             }
         }
+        /// <summary>
+        /// Font.
+        /// </summary>
+        public override Font Font
+        {
+            get { return base.Font; }
+            set
+            {
+                base.Font = value;
+                SetupDefault();
+            }
+        }
 
         #endregion Properties
 
@@ -124,11 +136,21 @@ namespace Gwen.Controls
         public Button(ControlBase parent)
             : base(parent)
         {
-            AutoSizeToContents = false;
-            SetSize(100, TextHeight+6);
+            SetupDefault();
+            AutoSizeToContents = true;
             MouseInputEnabled = true;
             Alignment = Pos.Center;
-            TextPadding = new Padding(3, 3, 3, 3);
+        }
+        private void SetupDefault()
+        {
+
+            var extra = TextHeight / 3;
+            var textpadding = new Padding(extra, extra, extra, extra);
+            if (TextPadding != textpadding)
+            {
+                TextPadding = textpadding;
+                SizeToChildren(false, true);
+            }
         }
 
         #endregion Constructors
@@ -189,8 +211,8 @@ namespace Gwen.Controls
             if (m_Image != null)
             {
                 m_Image.AlignToEdge(m_CenterImage ? Pos.Center : Pos.CenterV);
-			}
-			base.PrepareLayout();
+            }
+            base.PrepareLayout();
         }
 
         /// <summary>
