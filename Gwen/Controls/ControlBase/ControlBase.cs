@@ -267,8 +267,8 @@ namespace Gwen.Controls
             set
             {
                 if (value == m_Hidden)
-                    return; 
-                m_Hidden = value; 
+                    return;
+                m_Hidden = value;
                 Invalidate();
                 InvalidateParent();
             }
@@ -554,15 +554,15 @@ namespace Gwen.Controls
         /// <returns>Found control or null.</returns>
         public virtual ControlBase FindChildByName(string name, bool recursive = false)
         {
-            for (int i = 0; i < m_Children.Count; i++)
+            foreach (ControlBase child in Children)
             {
-                if (m_Children[i].Name == name)
-                    return m_Children[i];
+                if (child.Name == name) 
+                return child;
             }
 
             if (recursive)
             {
-                foreach (ControlBase child in m_Children)
+                foreach (ControlBase child in Children)
                 {
                     var b = child.FindChildByName(name, true);
                     if (b != null)
