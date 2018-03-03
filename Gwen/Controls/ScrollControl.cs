@@ -68,8 +68,6 @@ namespace Gwen.Controls
         public ScrollControl(ControlBase parent)
             : base(parent)
         {
-            MouseInputEnabled = false;
-
             m_VerticalScrollBar = new VerticalScrollBar(null);
             m_VerticalScrollBar.Dock = Pos.Right;
             m_VerticalScrollBar.BarMoved += VBarMoved;
@@ -80,14 +78,14 @@ namespace Gwen.Controls
             m_HorizontalScrollBar.Dock = Pos.Bottom;
             m_HorizontalScrollBar.BarMoved += HBarMoved;
             m_CanScrollH = true;
-			m_HorizontalScrollBar.NudgeAmount = 30;
-			PrivateChildren.Add(m_HorizontalScrollBar);
-			PrivateChildren.Add(m_VerticalScrollBar);
+            m_HorizontalScrollBar.NudgeAmount = 30;
+            PrivateChildren.Add(m_HorizontalScrollBar);
+            PrivateChildren.Add(m_VerticalScrollBar);
             m_Panel.Dock = Pos.None;
             m_Panel.X = 0;
             m_Panel.Y = 0;
             SendChildToBack(m_Panel);
-            m_Panel.AutoSizeToContents = true; 
+            m_Panel.AutoSizeToContents = true;
             m_AutoHideBars = true;
         }
 
@@ -208,21 +206,6 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-#if false
-
-    // Debug render - this shouldn't render ANYTHING REALLY - it should be up to the parent!
-
-    Gwen::Rect rect = GetRenderBounds();
-    Gwen::Renderer::Base* render = skin->GetRender();
-
-    render->SetDrawColor( Gwen::Color( 255, 255, 0, 100 ) );
-    render->DrawFilledRect( rect );
-
-    render->SetDrawColor( Gwen::Color( 255, 0, 0, 100 ) );
-    render->DrawFilledRect( m_InnerPanel->GetBounds() );
-
-    render->RenderText( skin->GetDefaultFont(), Gwen::Point( 0, 0 ), Utility::Format( L"Offset: %i %i", m_InnerPanel->X(), m_InnerPanel->Y() ) );
-#endif
         }
 
         public virtual void UpdateScrollBars()
@@ -231,18 +214,9 @@ namespace Gwen.Controls
                 return;
 
             //Get the max size of all our children together
-            int childrenWidth = Children.Count > 0 ? Children.Max(x => x.Right) : 0;
-            int childrenHeight = Children.Count > 0 ? Children.Max(x => x.Bottom) : 0;
+            int childrenWidth = m_Panel.Children.Count > 0 ? m_Panel.Children.Max(x => x.Right) : 0;
+            int childrenHeight = m_Panel.Children.Count > 0 ? m_Panel.Children.Max(x => x.Bottom) : 0;
 
-            if (m_CanScrollH)
-            {
-                m_Panel.SetSize(Math.Max(Width, childrenWidth), Math.Max(Height, childrenHeight));
-            }
-            else
-            {
-                m_Panel.SetSize(Width - (m_VerticalScrollBar.IsHidden ? 0 : m_VerticalScrollBar.Width),
-                                     Math.Max(Height, childrenHeight));
-            }
 
             float wPercent = Width /
                              (float)(childrenWidth + (m_VerticalScrollBar.IsHidden ? 0 : m_VerticalScrollBar.Width));
