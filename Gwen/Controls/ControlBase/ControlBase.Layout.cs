@@ -445,6 +445,8 @@ namespace Gwen.Controls
         /// <param name="child">Control to be added as a child.</param>
         public virtual void AddChild(ControlBase child)
         {
+            if (child == null)
+                throw new NullReferenceException("Cannot add null child");
             if (!Children.Contains(child))
                 Children.Add(child);
             child.m_Parent = this;
@@ -458,7 +460,8 @@ namespace Gwen.Controls
         /// <param name="dispose">Determines whether the child should be disposed (added to delayed delete queue).</param>
         public virtual void RemoveChild(ControlBase child, bool dispose)
         {
-
+            if (child == null)
+                throw new NullReferenceException("Cannot remove null child");
             Children.Remove(child);
             OnChildRemoved(child);
 
