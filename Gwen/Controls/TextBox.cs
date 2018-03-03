@@ -34,6 +34,7 @@ namespace Gwen.Controls
 
                 m_CursorEnd = value;
                 RefreshCursorBounds();
+                ResetCaretBlink();
             }
         }
 
@@ -49,6 +50,7 @@ namespace Gwen.Controls
 
                 m_CursorPos = value;
                 RefreshCursorBounds();
+                ResetCaretBlink();
             }
         }
 
@@ -62,6 +64,18 @@ namespace Gwen.Controls
         /// </summary>
         public bool SelectAllOnFocus { get { return m_SelectAll; } set { m_SelectAll = value; if (value) OnSelectAll(this, EventArgs.Empty); } }
 
+        /// <summary>
+        /// Font.
+        /// </summary>
+        public override Font Font
+        {
+            get { return base.Font; }
+            set
+            {
+                base.Font = value;
+                SetupDefault();
+            }
+        }
         #endregion Properties
 
         #region Constructors
@@ -74,12 +88,13 @@ namespace Gwen.Controls
             : base(parent)
         {
             AutoSizeToContents = false;
-            SetSize(200, 20);
+            SetupDefault();
+            this.Width = 200;
 
             MouseInputEnabled = true;
             KeyboardInputEnabled = true;
 
-            Alignment = Pos.Left | Pos.CenterV;
+            Alignment = Pos.CenterV;
             TextPadding = new Padding(4, 2, 4, 2);
 
             m_CursorPos = 0;
@@ -100,6 +115,17 @@ namespace Gwen.Controls
 
         #region Methods
 
+        private void SetupDefault()
+        {
+            var extra = TextHeight / 4;
+            var textpadding = new Padding(extra * 2, extra, extra * 2, extra);
+            if (TextPadding != textpadding)
+            {
+                TextPadding = textpadding;
+                if (GetSizeToFitContents().Height > Height)
+                    SizeToChildren(false, true);
+            }
+        }
         /// <summary>
         /// Deletes text.
         /// </summary>
@@ -151,7 +177,7 @@ namespace Gwen.Controls
         }
         public override void SetText(string str, bool doEvents = true)
         {
-			base.SetText(str, doEvents);
+            base.SetText(str, doEvents);
             //bugfix crash when cursorpos > text length
             m_CursorPos = Math.Min(m_CursorPos, Text.Length);
             m_CursorEnd = Math.Min(m_CursorEnd, Text.Length);
@@ -197,6 +223,7 @@ namespace Gwen.Controls
             m_CursorEnd = m_CursorPos;
 
             RefreshCursorBounds();
+            ResetCaretBlink();
         }
 
         /// <summary>
@@ -216,8 +243,7 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void PrepareLayout()
         {
-            base.PrepareLayout();
-
+            m_Text.AlignToEdge(Alignment, TextPadding);
             RefreshCursorBounds();
         }
 
@@ -399,7 +425,7 @@ namespace Gwen.Controls
             {
                 m_CursorEnd = m_CursorPos;
             }
-
+            ResetCaretBlink();
             RefreshCursorBounds();
             return true;
         }
@@ -450,6 +476,7 @@ namespace Gwen.Controls
                 m_CursorEnd = m_CursorPos;
             }
 
+            ResetCaretBlink();
             RefreshCursorBounds();
             return true;
         }
@@ -489,6 +516,7 @@ namespace Gwen.Controls
                     InputHandler.MouseFocus = null;
                 }
             }
+            ResetCaretBlink();
         }
 
         /// <summary>
@@ -499,7 +527,10 @@ namespace Gwen.Controls
         protected override void OnMouseDoubleClickedLeft(int x, int y)
         {
             //base.OnMouseDoubleClickedLeft(x, y);
+            int c = GetClosestCharacter(x, y).X;
+            
             OnSelectAll(this, EventArgs.Empty);
+            ResetCaretBlink();
         }
 
         /// <summary>
@@ -549,6 +580,7 @@ namespace Gwen.Controls
             m_CursorPos = TextLength;
 
             RefreshCursorBounds();
+            ResetCaretBlink();
         }
 
         /// <summary>
@@ -563,12 +595,15 @@ namespace Gwen.Controls
 
             if (TextChanged != null)
                 TextChanged.Invoke(this, EventArgs.Empty);
+            ResetCaretBlink();
         }
 
-        protected virtual void RefreshCursorBounds()
+        private void ResetCaretBlink()
         {
             m_LastInputTime = Platform.Neutral.GetTimeInSeconds();
-
+        }
+        protected virtual void RefreshCursorBounds()
+        {
             MakeCaretVisible();
 
             Point pA = GetCharacterPosition(m_CursorPos);
