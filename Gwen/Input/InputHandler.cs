@@ -277,15 +277,6 @@ namespace Gwen.Input
             if (down)
                 HoveredControl.Touch();
 
-#if GWEN_HOOKSYSTEM
-            if (bDown)
-            {
-                if (Hook::CallHook(&Hook::BaseHook::OnControlClicked, HoveredControl, MousePosition.x,
-                                   MousePosition.y))
-                    return true;
-            }
-#endif
-
             switch (mouseButton)
             {
                 case 0:
