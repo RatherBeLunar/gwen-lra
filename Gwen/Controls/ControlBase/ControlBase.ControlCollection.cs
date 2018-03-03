@@ -64,8 +64,19 @@ namespace Gwen.Controls
                 {
                     var control = _controls[index];
                     _controls.RemoveAt(index);
-                    _controls.Add(control);
+                    _controls.Insert(_controls.Count, control);
                 }
+            }
+            internal void Move(ControlBase child, int index)
+            {
+                var childindex = IndexOf(child);
+                if (childindex == -1)
+                    throw new Exception("Child not found in parent who called Move");
+                if (index >= Count || index < 0)
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                _controls.RemoveAt(childindex);
+                _controls.Insert(index, child);
+
             }
             public void BringToFront(ControlBase child)
             {

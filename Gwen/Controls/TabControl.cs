@@ -57,6 +57,11 @@ namespace Gwen.Controls
         }
 
         /// <summary>
+        /// Number of tabs in the control.
+        /// </summary>
+        public int TabCount { get { return m_TabStrip.Children.Count; } }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
@@ -132,7 +137,7 @@ namespace Gwen.Controls
             button.TabControl = this;
             button.Clicked += OnTabPressed;
 
-            if (null == m_CurrentButton)
+            if (m_CurrentButton == null)
             {
                 button.Press();
             }
@@ -145,22 +150,45 @@ namespace Gwen.Controls
 
         public TabPage GetPage(int index)
         {
-            int pageindex = 0;
+            return ((TabButton)TabStrip.Children[index]).Page;
+        }
+        public TabPage GetPage(string title)
+        {
             for (int i = 0; i < TabStrip.Children.Count; i++)
             {
                 if (TabStrip.Children[i] is TabButton btn)
                 {
-                    if (pageindex == index)
+                    if (btn.Text == title)
                         return btn.Page;
-                    pageindex++;
                 }
             }
             return null;
         }
+        public void SetTabIndex(TabPage page, int index)
+        {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index));
+            TabStrip.Children.Move(page.TabButton, index);
+            m_TabStrip.Invalidate();
+        }
         public void RemoveTab(TabPage page)
         {
+            var idx = -1;
+            if (CurrentButton == page.TabButton)
+            {
+                idx = TabStrip.Children.IndexOf(page.TabButton);
+                if (idx == TabStrip.Children.Count - 1)
+                    idx--;
+                m_CurrentButton = null;
+            }
             TabStrip.RemoveChild(page.TabButton, true);
             RemoveChild(page, true);
+            if (idx != -1)
+            {
+                GetPage(idx).FocusTab();
+            }
+            OnLoseTab(page.TabButton);
+            Invalidate();
         }
         private void UnsubscribeTabEvent(TabButton button)
         {
@@ -217,21 +245,11 @@ namespace Gwen.Controls
         /// <param name="button"></param>
         internal virtual void OnLoseTab(TabButton button)
         {
-            if (m_CurrentButton == button)
-                m_CurrentButton = null;
-
-            //TODO: Select a tab if any exist.
-
             if (TabRemoved != null)
                 TabRemoved.Invoke(this, EventArgs.Empty);
 
             Invalidate();
         }
-
-        /// <summary>
-        /// Number of tabs in the control.
-        /// </summary>
-        public int TabCount { get { return m_TabStrip.Children.Count; } }
 
         private void HandleOverflow()
         {
@@ -246,7 +264,16 @@ namespace Gwen.Controls
             m_Scroll[0].IsHidden = !needed;
             m_Scroll[1].IsHidden = !needed;
 
-            if (!needed) return;
+            if (!needed)
+            {
+                if (m_ScrollOffset != 0)
+                {
+                    m_ScrollOffset = 0;
+                    m_TabStrip.Margin = new Margin(0, 0, 0, 0);
+                    Invalidate();
+                }
+                return;
+            }
 
             m_ScrollOffset = Util.Clamp(m_ScrollOffset, 0, TabsSize.Width - Width + 32);
 

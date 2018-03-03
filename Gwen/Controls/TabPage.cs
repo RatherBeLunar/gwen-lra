@@ -36,5 +36,9 @@ namespace Gwen.Controls
         {
             TabButton.TabControl.RemoveTab(this);
         }
+        public void SetIndex(int index)
+        {
+            TabButton.TabControl.SetTabIndex(this,index);
+        }
     }
 }

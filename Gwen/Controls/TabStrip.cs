@@ -111,6 +111,10 @@ namespace Gwen.Controls
             {
                 SetupButton(child);
             }
+            else
+            {
+                throw new Exception("Child of TabStrib must be a tab button");
+            }
             base.OnChildAdded(child);
         }
         private void SetupButton(ControlBase child)
