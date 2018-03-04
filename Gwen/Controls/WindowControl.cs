@@ -62,6 +62,13 @@ namespace Gwen.Controls
         /// </summary>
         public string Title { get { return m_Title.Text; } set { m_Title.Text = value; } }
 
+        protected override Margin PanelMargin
+        {
+            get
+            {
+                return Margin.Two;
+            }
+        }
         #endregion Properties
 
         #region Constructors
@@ -75,18 +82,17 @@ namespace Gwen.Controls
         public WindowControl(ControlBase parent, string title = "", bool modal = false)
             : base(parent)
         {
-            m_TitleBar = new Dragger(this);
+            m_TitleBar = new Dragger(null);
+            PrivateChildren.Add(m_TitleBar);
             m_TitleBar.Height = 24;
-            m_TitleBar.Padding = Gwen.Padding.Zero;
-            m_TitleBar.Margin = new Margin(0, 0, 0, 4);
             m_TitleBar.Target = this;
             m_TitleBar.Dock = Pos.Top;
 
             m_Title = new Label(m_TitleBar);
-            m_Title.Alignment = Pos.Left | Pos.CenterV;
+            m_Title.Alignment = Pos.Left | Pos.Top;
             m_Title.Text = title;
             m_Title.Dock = Pos.Fill;
-            m_Title.Padding = new Padding(8, 4, 0, 0);
+            m_Title.TextPadding = new Padding(8, 4, 0, 0);
             m_Title.TextColor = Skin.Colors.Window.TitleInactive;
 
             m_CloseButton = new CloseButton(m_TitleBar, this);
@@ -100,7 +106,7 @@ namespace Gwen.Controls
             BringToFront();
             IsTabable = false;
             Focus();
-            MinimumSize = new Size(100, 40);
+            MinimumSize = new Size(100, 50);
             ClampMovement = true;
             KeyboardInputEnabled = false;
 

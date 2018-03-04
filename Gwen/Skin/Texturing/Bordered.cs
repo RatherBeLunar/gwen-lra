@@ -38,11 +38,14 @@ namespace Gwen.Skin.Texturing
 
             render.DrawColor = col;
 
-            if (r.Width < m_Width && r.Height < m_Height)
-            {
-                render.DrawTexturedRect(m_Texture, r, m_Rects[0].uv[0], m_Rects[0].uv[1], m_Rects[8].uv[2], m_Rects[8].uv[3]);
-                return;
-            }
+            // this code would shrink window titles on small windows.
+            // i have removed it, but i'm not positive of how it affects others
+
+            // if (r.Width < m_Width && r.Height < m_Height)
+            // {
+            //     render.DrawTexturedRect(m_Texture, r, m_Rects[0].uv[0], m_Rects[0].uv[1], m_Rects[8].uv[2], m_Rects[8].uv[3]);
+            //     return;
+            // }
 
             DrawRect(render, 0, r.X, r.Y, m_Margin.Left, m_Margin.Top);
             DrawRect(render, 1, r.X + m_Margin.Left, r.Y, r.Width - m_Margin.Left - m_Margin.Right, m_Margin.Top);
