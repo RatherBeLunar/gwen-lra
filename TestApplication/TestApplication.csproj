@@ -41,12 +41,17 @@
     <Compile Include="Tests\ButtonTest.cs" />
     <Compile Include="Tests\LabelTest.cs" />
     <Compile Include="TestContainer.cs" />
+    <Compile Include="Tests\TabTest.cs" />
+    <Compile Include="Tests\LayoutTest.cs" />
+    <Compile Include="Tests\TreeTest.cs" />
+    <Compile Include="Tests\TextBoxTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
       <HintPath>..\Gwen\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />

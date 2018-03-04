@@ -12,7 +12,7 @@ namespace TestApplication
     {
         Gwen.Input.OpenTK input;
         Canvas Canvas;
-        public Window() : base(500, 500,GraphicsMode.Default,"UI Test")
+        public Window() : base(500, 600,GraphicsMode.Default,"UI Test")
         {
 
         }
@@ -79,11 +79,6 @@ namespace TestApplication
             Canvas.ShouldDrawBackground = true;
             SwapBuffers();
             base.OnRenderFrame(e);
-        }
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-            input.KeyPress(Canvas, e);
         }
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
         {
