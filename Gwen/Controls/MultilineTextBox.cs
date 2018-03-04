@@ -162,7 +162,7 @@ namespace Gwen.Controls
             m_ScrollControl.Margin = Margin.One;
             //TODO COMPLETELY BROKEN TEXTBOX WITHOUT THESE TWO LINES
             //m_InnerPanel = m_ScrollControl;
-            //  m_Text.Parent = m_InnerPanel;
+            m_Text.Parent = m_ScrollControl;
             m_ScrollControl.InnerPanel.BoundsChanged += new GwenEventHandler<EventArgs>(ScrollChanged);
 
             m_TextLines.Add(String.Empty);
@@ -175,7 +175,6 @@ namespace Gwen.Controls
             AddAccelerator("Ctrl + X", OnCut);
             AddAccelerator("Ctrl + V", OnPaste);
             AddAccelerator("Ctrl + A", OnSelectAll);
-            throw new Exception("nope. i didnt program this.");
         }
 
         #endregion Constructors
