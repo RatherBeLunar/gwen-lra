@@ -50,12 +50,12 @@ namespace Gwen.Controls
                 if (value)
                 {
                     if (Checked != null)
-						Checked.Invoke(this, EventArgs.Empty);
+                        Checked.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
                     if (UnChecked != null)
-						UnChecked.Invoke(this, EventArgs.Empty);
+                        UnChecked.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -114,8 +114,8 @@ namespace Gwen.Controls
         public MenuItem(ControlBase parent)
             : base(parent)
         {
-			AutoSizeToContents = true;
-			m_OnStrip = false;
+            AutoSizeToContents = true;
+            m_OnStrip = false;
             IsTabable = false;
             IsCheckable = false;
             IsChecked = false;
@@ -158,7 +158,7 @@ namespace Gwen.Controls
             {
                 IsChecked = !IsChecked;
                 if (Selected != null)
-					Selected.Invoke(this, new ItemSelectedEventArgs(this));
+                    Selected.Invoke(this, new ItemSelectedEventArgs(this));
                 GetCanvas().CloseMenus();
             }
             base.OnClicked(x, y);
@@ -242,6 +242,10 @@ namespace Gwen.Controls
             m_Accelerator.Text = acc;
             m_Accelerator.Margin = new Margin(0, 0, 16, 0);
             // todo
+        }
+        public override string ToString()
+        {
+            return "[MenuItem: " + (this as MenuItem).Text + "]";
         }
     }
 }

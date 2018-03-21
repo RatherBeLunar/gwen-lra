@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Gwen.Controls;
 
 namespace Gwen.ControlInternal
@@ -18,12 +19,20 @@ namespace Gwen.ControlInternal
             KeyboardInputEnabled = true;
             MouseInputEnabled = true;
             ShouldDrawBackground = true;
-            SetBounds(0, 0, GetCanvas().Width, GetCanvas().Height);
+            Invalidate();
         }
-        protected override void PrepareLayout()
-		{
-			SetBounds(0, 0, GetCanvas().Width, GetCanvas().Height);
-            base.PrepareLayout();
+        /// <summary>
+        /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
+        /// If AutoSizeToContents is enabled, sizes the control before layout.
+        /// </summary>
+        protected override void Layout(bool force, bool recursioncheck = false)
+        {
+            var canvas = GetCanvas();
+            if (canvas != null)
+            {
+                SetBounds(0, 0, GetCanvas().Width, GetCanvas().Height);
+            }
+            base.Layout(force,recursioncheck);
         }
 
         /// <summary>

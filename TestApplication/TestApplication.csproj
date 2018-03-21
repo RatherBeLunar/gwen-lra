@@ -45,6 +45,7 @@
     <Compile Include="Tests\LayoutTest.cs" />
     <Compile Include="Tests\TreeTest.cs" />
     <Compile Include="Tests\TextBoxTest.cs" />
+    <Compile Include="Tests\WindowTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">

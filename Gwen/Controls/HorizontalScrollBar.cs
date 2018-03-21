@@ -60,20 +60,18 @@ namespace Gwen.Controls
             m_Bar.Dragged += OnBarMoved;
         }
 
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            base.PrepareLayout();
-
-            m_ScrollButton[0].Width = Height;
+            m_ScrollButton[0].Width = size.Height;
             m_ScrollButton[0].Dock = Pos.Left;
 
-            m_ScrollButton[1].Width = Height;
+            m_ScrollButton[1].Width = size.Height;
             m_ScrollButton[1].Dock = Pos.Right;
 
             m_Bar.Height = ButtonSize;
             m_Bar.Padding = new Padding(ButtonSize, 0, ButtonSize, 0);
 
-            float barWidth = (m_ViewableContentSize / m_ContentSize) * (Width - (ButtonSize * 2));
+            float barWidth = (m_ViewableContentSize / m_ContentSize) * (size.Width - (ButtonSize * 2));
 
             if (barWidth < ButtonSize * 0.5f)
                 barWidth = (int)(ButtonSize * 0.5f);
@@ -86,15 +84,16 @@ namespace Gwen.Controls
             {
                 SetScrollAmount(ScrollAmount, true);
             }
+            base.ProcessLayout(size);
         }
 
-		public void NudgeLeft(ControlBase control, EventArgs args)
+        public void NudgeLeft(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount - NudgeAmount, true);
         }
 
-		public void NudgeRight(ControlBase control, EventArgs args)
+        public void NudgeRight(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
                 SetScrollAmount(ScrollAmount + NudgeAmount, true);
@@ -133,7 +132,7 @@ namespace Gwen.Controls
         /// <param name="down">If set to <c>true</c> mouse button is down.</param>
         protected override void OnMouseClickedLeft(int x, int y, bool down)
         {
-			base.OnMouseClickedLeft(x, y, down);
+            base.OnMouseClickedLeft(x, y, down);
             if (down)
             {
                 m_Depressed = true;
@@ -143,10 +142,10 @@ namespace Gwen.Controls
             {
                 Point clickPos = CanvasPosToLocal(new Point(x, y));
                 if (clickPos.X < m_Bar.X)
-					NudgeLeft(this, EventArgs.Empty);
+                    NudgeLeft(this, EventArgs.Empty);
                 else
                     if (clickPos.X > m_Bar.X + m_Bar.Width)
-						NudgeRight(this, EventArgs.Empty);
+                    NudgeRight(this, EventArgs.Empty);
 
                 m_Depressed = false;
                 InputHandler.MouseFocus = null;
@@ -176,7 +175,7 @@ namespace Gwen.Controls
             if (forceUpdate)
             {
                 int newX = (int)(ButtonSize + (value * ((Width - m_Bar.Width) - (ButtonSize * 2))));
-                m_Bar.MoveTo(newX, m_Bar.Y);
+                m_Bar.MoveClampToParent(newX, m_Bar.Y);
             }
 
             return true;

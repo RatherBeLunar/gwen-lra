@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using Gwen.ControlInternal;
 using System.Collections.Generic;
@@ -139,7 +140,7 @@ namespace Gwen.Controls
         {
             get
             {
-                return new Margin(TreeIndentation, m_Title.TextHeight, 0, 0);
+                return new Margin(TreeIndentation, 0, 0, 0);
             }
         }
 
@@ -153,11 +154,15 @@ namespace Gwen.Controls
             m_ToggleButton = new TreeToggleButton(null);
             m_ToggleButton.SetBounds(0, 0, 15, 15);
             m_ToggleButton.Toggled += OnToggleButtonPress;
+           // m_ToggleButton.Dock = Pos.Left;
 
             m_Title = new TreeNodeLabel(null);
             m_Title.DoubleClicked += OnDoubleClickName;
 
             m_Title.Clicked += OnClickName;
+            m_Title.Dock = Pos.Top;
+            m_Title.Margin = new Margin(16,0,0,0);
+            // m_Title.BoundsChanged += 
             PrivateChildren.Insert(0, m_ToggleButton);
             PrivateChildren.Insert(0, m_Title);
             m_Panel.Dock = Pos.Top;
@@ -180,9 +185,10 @@ namespace Gwen.Controls
         protected override void Render(Skin.SkinBase skin)
         {
             int bottom = 0;
-            if (m_Panel.Children.Count > 0)
+            var children = m_Panel.Children.Count;
+            if (children > 0)
             {
-                bottom = m_Panel.Children.Last().Y + m_Panel.Y;
+                bottom = m_Panel.Children[children - 1].Y + m_Panel.Y;
             }
 
             skin.DrawTreeNode(this, m_Panel.IsVisible, IsSelected, m_Title.Height, m_Title.TextRight,
@@ -206,18 +212,10 @@ namespace Gwen.Controls
         {
             return base.SetBounds(bounds);
         }
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            if (m_ToggleButton != null)
-            {
-                m_ToggleButton.AlignToEdge(Gwen.Pos.Top | Pos.Left, new Padding(0, (m_Title.TextHeight / 2) - (m_ToggleButton.Height / 2), 0, 0));
-                m_Title.AlignToEdge(Pos.Top | Pos.Left, new Padding(16, 0, 0, 0));
-            }
-            base.PrepareLayout();
+            // todo this should either dock or not be called here. sizefittocontents is wrong among other things
+            base.ProcessLayout(size);
         }
         /// <summary>
         /// Adds a new child node.
@@ -245,6 +243,7 @@ namespace Gwen.Controls
                 Expanded.Invoke(this, EventArgs.Empty);
 
             Invalidate();
+            InvalidateParent();
         }
 
         /// <summary>
@@ -260,6 +259,7 @@ namespace Gwen.Controls
                 Collapsed.Invoke(this, EventArgs.Empty);
 
             Invalidate();
+            InvalidateParent();
         }
 
         /// <summary>

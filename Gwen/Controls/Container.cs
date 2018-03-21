@@ -126,16 +126,19 @@ namespace Gwen.Controls
                 var container = (Container)Parent;
                 container.PrivateChildren.BringToFront(this);
             }
-            protected override void ProcessLayout()
-            {
-                base.ProcessLayout();
-            }
             protected override void Render(Gwen.Skin.SkinBase skin)
             {
-
                 var parent = Parent as Container;
                 if (parent != null)
                     parent.RenderPanel(skin);
+            }
+            public override string ToString()
+            {
+                if (Parent != null)
+                {
+                    return "(Container) "+Parent.ToString();
+                }
+                return "(Container)";
             }
         }
     }

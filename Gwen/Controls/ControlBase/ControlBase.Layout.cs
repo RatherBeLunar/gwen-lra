@@ -7,12 +7,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using Gwen.Controls.Layout;
 namespace Gwen.Controls
 {
     public partial class ControlBase
     {
+        public static bool LogLayout = true;
         private bool m_AutoSizeToContents;
+        private int m_LayoutSuspendedCount = 0;
         internal bool NeedsLayout => m_NeedsLayout;
         /// <summary>
         /// Bounds adjusted by padding.
@@ -60,29 +61,25 @@ namespace Gwen.Controls
             }
         }
         /// <summary>
-        /// Function invoked before layout, after AutoSizeToContents if applicable
-        /// Is called regardless of needslayout.
-        /// </summary>
-        protected virtual void PrepareLayout()
-        {
-        }
-        /// <summary>
         /// Function invoked after layout.
         /// </summary>
         protected virtual void PostLayout()
         {
         }
+
         /// <summary>
-        /// Function that does the layout process. Applying child docks, etc
-        /// Does *not* resize ourself
+        /// Function that does the layout process. Applying child docks, 
+        /// rearranging controls, etc.
+        /// This function should not change our bounds.
         /// </summary>
-        protected virtual void ProcessLayout()
+        /// <param name="size">Our current size</param>
+        protected virtual void ProcessLayout(Size size)
         {
             var control = this;
             Rectangle bounds = new Rectangle(control.Padding.Left,
                                             control.Padding.Top,
-                                            control.Width - (control.Padding.Right + control.Padding.Left),
-                                            control.Height - (control.Padding.Bottom + control.Padding.Top));
+                                            size.Width - (control.Padding.Right + control.Padding.Left),
+                                            size.Height - (control.Padding.Bottom + control.Padding.Top));
             foreach (var child in control.m_Children)
             {
                 if (child.IsHidden)
@@ -108,35 +105,66 @@ namespace Gwen.Controls
                 }
             }
         }
+        public void SuspendLayout()
+        {
+            m_LayoutSuspendedCount++;
+        }
+        public void ResumeLayout(bool layout)
+        {
+            if (m_LayoutSuspendedCount == 0)
+                throw new InvalidOperationException(
+                    "Layout resumed but was not suspended");
+            m_LayoutSuspendedCount--;
+
+            if (layout)
+                Layout(true, false);
+        }
         /// <summary>
         /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
         /// If AutoSizeToContents is enabled, sizes the control before layout.
         /// </summary>
-        public void Layout(bool force = true, bool recursioncheck = false)
+        public void Layout()
         {
-            if (IsHidden)
+            Layout(true, false);
+        }
+        /// <summary>
+        /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
+        /// If AutoSizeToContents is enabled, sizes the control before layout.
+        /// </summary>
+        protected virtual void Layout(bool force, bool recursioncheck = false)
+        {
+            if (IsHidden || m_LayoutSuspendedCount > 0)
                 return;
             var shouldlayout = m_NeedsLayout || force;
             if (shouldlayout)
             {
                 // if we have a dock property, our parent handles sizing us.
-                if (AutoSizeToContents && Dock == Pos.None)
+                bool autosize = AutoSizeToContents && Dock == Pos.None;
+                if (autosize)
                 {
                     var sz = GetSizeToFitContents();
                     SetBounds(X, Y, sz.Width, sz.Height);
+                    // setbounds can be overridden, so just get size for
+                    // processlayout later.
                 }
-                PrepareLayout();
-                ProcessLayout();
+                var oldbounds = Bounds;
+                ProcessLayout(oldbounds.Size);
+                if (Bounds.Size != oldbounds.Size)
+                {
+                    throw new InvalidOperationException(
+                        "Control cannot resize itself during ProcessLayout");
+                }
                 m_NeedsLayout = false;
                 foreach (var child in m_Children)
                 {
                     child.Layout(force);
                 }
                 PostLayout();
+                if (LogLayout)
+                    Console.WriteLine("Layout performed on " + this.ToString());
             }
             else
             {
-                PrepareLayout();
                 foreach (var child in m_Children)
                 {
                     child.Layout(false);
@@ -144,7 +172,7 @@ namespace Gwen.Controls
                 if (m_NeedsLayout)
                 {
                     if (recursioncheck)
-                        throw new Exception("Recursion check failed.");
+                        throw new Exception("Layout recursion detected.");
                     Layout(true, true);
                 }
             }
@@ -515,7 +543,7 @@ namespace Gwen.Controls
         /// <param name="y">Target y coordinate.</param>
         public virtual void MoveTo(float x, float y)
         {
-            MoveTo((int)x, (int)y);
+            MoveClampToParent((int)x, (int)y);
         }
 
         /// <summary>
@@ -523,7 +551,7 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="x">Target x coordinate.</param>
         /// <param name="y">Target y coordinate.</param>
-        public virtual void MoveTo(int x, int y)
+        public virtual Point MoveClampToParent(int x, int y)
         {
             if (RestrictToParent && (Parent != null))
             {
@@ -539,6 +567,7 @@ namespace Gwen.Controls
             }
 
             SetBounds(x, y, Width, Height);
+            return new Point(x,y);
         }
 
         /// <summary>
@@ -647,8 +676,8 @@ namespace Gwen.Controls
             {
                 Invalidate();
             }
-
-            Redraw();
+            if (m_Bounds.X != oldBounds.X || m_Bounds.Y != oldBounds.Y)
+                Redraw();
         }
         /// <summary>
         /// Handler invoked when control children's bounds change.

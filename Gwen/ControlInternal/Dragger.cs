@@ -90,7 +90,7 @@ namespace Gwen.ControlInternal
                 p = m_Target.Parent.CanvasPosToLocal(p);
 
             //m_Target->SetPosition( p.x, p.y );
-            m_Target.MoveTo(p.X, p.Y);
+            m_Target.MoveClampToParent(p.X, p.Y);
             if (Dragged != null)
                 Dragged.Invoke(this, EventArgs.Empty);
         }

@@ -229,13 +229,9 @@ namespace Gwen.Controls
             Invalidate();
         }
 
-        /// <summary>
-        /// Function invoked after layout.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            base.PrepareLayout();
+            base.ProcessLayout(size);
             HandleOverflow();
         }
 

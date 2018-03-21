@@ -93,17 +93,15 @@ namespace Gwen.Controls
         {
             set
             {
-                if (value)
+                bool disabled = value;
+                bool hidden = m_AutoHideBars && value;
+                if (m_HorizontalScrollBar.IsDisabled != disabled ||
+                    m_HorizontalScrollBar.IsHidden != hidden)
                 {
-                    m_HorizontalScrollBar.SetScrollAmount(0, true);
-                    m_HorizontalScrollBar.IsDisabled = true;
-                    if (m_AutoHideBars)
-                        m_HorizontalScrollBar.IsHidden = true;
-                }
-                else
-                {
-                    m_HorizontalScrollBar.IsHidden = false;
-                    m_HorizontalScrollBar.IsDisabled = false;
+                    if (value)
+                        m_HorizontalScrollBar.SetScrollAmount(0, true);
+                    m_HorizontalScrollBar.IsDisabled = disabled;
+                    m_HorizontalScrollBar.IsHidden = hidden;
                 }
             }
         }
@@ -112,17 +110,15 @@ namespace Gwen.Controls
         {
             set
             {
-                if (value)
+                bool disabled = value;
+                bool hidden = m_AutoHideBars && value;
+                if (m_VerticalScrollBar.IsDisabled != disabled ||
+                    m_VerticalScrollBar.IsHidden != hidden)
                 {
-                    m_VerticalScrollBar.SetScrollAmount(0, true);
-                    m_VerticalScrollBar.IsDisabled = true;
-                    if (m_AutoHideBars)
-                        m_VerticalScrollBar.IsHidden = true;
-                }
-                else
-                {
-                    m_VerticalScrollBar.IsHidden = false;
-                    m_VerticalScrollBar.IsDisabled = false;
+                    if (value)
+                        m_VerticalScrollBar.SetScrollAmount(0, true);
+                    m_VerticalScrollBar.IsDisabled = disabled;
+                    m_VerticalScrollBar.IsHidden = hidden;
                 }
             }
         }

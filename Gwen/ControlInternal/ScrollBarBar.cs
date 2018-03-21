@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Gwen.Controls;
 
 namespace Gwen.ControlInternal
@@ -69,18 +70,10 @@ namespace Gwen.ControlInternal
             InvalidateParent();
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            if (null == Parent)
-                return;
-
-            //Move to our current position to force clamping - is this a hack?
-            //todo investigate doing this with layout instead
-            MoveTo(X, Y);
+            MoveClampToParent(X, Y);
+            base.ProcessLayout(size);
         }
     }
 }

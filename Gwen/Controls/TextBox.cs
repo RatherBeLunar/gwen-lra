@@ -237,14 +237,11 @@ namespace Gwen.Controls
             return true;
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
             m_Text.AlignToEdge(Alignment, TextPadding);
             RefreshCursorBounds();
+            //do not call base.processlayout
         }
 
         protected virtual void MakeCaretVisible()

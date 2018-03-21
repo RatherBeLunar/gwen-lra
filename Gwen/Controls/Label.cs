@@ -190,6 +190,7 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public Label(ControlBase parent) : base(parent)
         {
+            SuspendLayout();
             m_Text = new Text(this);
             SetSize(100, m_Text.Height);
             Alignment = Pos.Left | Pos.Top;
@@ -198,6 +199,7 @@ namespace Gwen.Controls
             base.MouseInputEnabled = false;
             TextColorOverride = Color.FromArgb(0, 255, 255, 255);// A==0, override disabled
             BoundsOutlineColor = Color.LawnGreen;
+            ResumeLayout(true);
         }
 
         #endregion Constructors
@@ -246,16 +248,12 @@ namespace Gwen.Controls
             return new Point(m_Text.GetClosestCharacter(m_Text.CanvasPosToLocal(new Point(x, y))), 0);
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            base.PrepareLayout();
             m_Text.X = Padding.Left + m_TextPadding.Left;
             m_Text.Y = Padding.Top + m_TextPadding.Top;
             m_Text.AlignToEdge(m_Align, m_TextPadding);
+            base.ProcessLayout(size);
         }
 
         /// <summary>

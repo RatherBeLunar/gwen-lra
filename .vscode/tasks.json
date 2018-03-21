@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "msbuild TestApplication",
+            "command": "TERM=xterm msbuild TestApplication",
             "args": [
                 // Ask msbuild to generate full paths for file names.
                 "/property:GenerateFullPaths=true",

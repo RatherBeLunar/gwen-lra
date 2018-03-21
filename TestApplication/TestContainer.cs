@@ -9,14 +9,27 @@ namespace TestApplication
         //todo
         // scroll control needs to be not set by percent by controls (tree control scrolls slow af)
         // tree control multi select should only be if holding ctrl, right?
+        // window has no font scaling for title
         public TestContainer(ControlBase parent) : base(parent)
         {
             Dock = Pos.Fill;
+            CreateStatusbar();
             Create();
         }
         public void DbgCreate()
         {
             var tree = new TreeTest(this);
+        }
+        public void CreateStatusbar()
+        {
+            StatusBar sb = new StatusBar(this);
+            Label left = new Label(sb);
+            left.Text = "Statusbar left";
+            sb.AddControl(left, false);
+
+            Button br = new Button(sb);
+            br.Text = "Right button";
+            sb.AddControl(br, true);
         }
         public void Create()
         {
@@ -40,6 +53,8 @@ namespace TestApplication
 
             page = tabcontrol.AddPage("Textbox");
             var textbox = new TextBoxTest(page);
+            page = tabcontrol.AddPage("Window");
+            var window = new WindowTest(page);
             page.FocusTab();
         }
     }

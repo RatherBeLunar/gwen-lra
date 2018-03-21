@@ -52,25 +52,19 @@ namespace Gwen.Controls
             m_Bar.Dragged += OnBarMoved;
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            base.PrepareLayout();
-
-            m_ScrollButton[0].Height = Width;
+            m_ScrollButton[0].Height = size.Width;
             m_ScrollButton[0].Dock = Pos.Top;
 
-            m_ScrollButton[1].Height = Width;
+            m_ScrollButton[1].Height = size.Width;
             m_ScrollButton[1].Dock = Pos.Bottom;
 
             m_Bar.Width = ButtonSize;
             m_Bar.Padding = new Padding(0, ButtonSize, 0, ButtonSize);
 
             float barHeight = 0.0f;
-            if (m_ContentSize > 0.0f) barHeight = (m_ViewableContentSize/m_ContentSize)*(Height - (ButtonSize*2));
+            if (m_ContentSize > 0.0f) barHeight = (m_ViewableContentSize/m_ContentSize)*(size.Height - (ButtonSize*2));
 
             if (barHeight < ButtonSize*0.5f)
                 barHeight = (int) (ButtonSize*0.5f);
@@ -83,6 +77,7 @@ namespace Gwen.Controls
             {
                 SetScrollAmount(ScrollAmount, true);
             }
+            base.ProcessLayout(size);
         }
 
 		public virtual void NudgeUp(ControlBase control, EventArgs args)
@@ -170,7 +165,7 @@ namespace Gwen.Controls
             if (forceUpdate)
             {
                 int newY = (int)(ButtonSize + (value * ((Height - m_Bar.Height) - (ButtonSize * 2))));
-                m_Bar.MoveTo(m_Bar.X, newY);
+                m_Bar.MoveClampToParent(m_Bar.X, newY);
             }
 
             return true;

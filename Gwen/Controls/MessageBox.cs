@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Gwen.Controls
 {
@@ -48,19 +49,16 @@ namespace Gwen.Controls
                 Dismissed.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            base.PrepareLayout();
-
+            //todo
+/*/
             Align.PlaceDownLeft(m_Button, m_Label, 10);
             Align.CenterHorizontally(m_Button);
             m_Panel.SizeToChildren();
             m_Panel.Height += 10;
-            SizeToChildren();
+            SizeToChildren();*/
+            base.ProcessLayout(size);
         }
     }
 }

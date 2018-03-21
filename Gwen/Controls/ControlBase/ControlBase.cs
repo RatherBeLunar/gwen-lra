@@ -373,6 +373,7 @@ namespace Gwen.Controls
 
         public int Width { get { return m_Bounds.Width; } set { SetSize(value, Height); } }
         public int Height { get { return m_Bounds.Height; } set { SetSize(Width, value); } }
+        public Size Size { get { return m_Bounds.Size; } set { SetSize(value.Width, value.Height); } }
         public int Bottom { get { return m_Bounds.Bottom + m_Margin.Bottom; } }
         public int Right { get { return m_Bounds.Right + m_Margin.Right; } }
 
@@ -405,7 +406,6 @@ namespace Gwen.Controls
         {
             m_Children = new ControlCollection(this);
             m_Accelerators = new Dictionary<string, GwenEventHandler<EventArgs>>();
-
             Parent = parent;
 
             m_Hidden = false;
@@ -486,8 +486,6 @@ namespace Gwen.Controls
 
         public override string ToString()
         {
-            if (this is MenuItem)
-                return "[MenuItem: " + (this as MenuItem).Text + "]";
             if (this is Label)
                 return "[Label: " + (this as Label).Text + "]";
             if (this is ControlInternal.Text)

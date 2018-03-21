@@ -97,13 +97,13 @@ namespace Gwen.Controls
             return false;
         }
 
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
             foreach (var child in Children)
             {
                 SetupButton(child);
             }
-            base.PrepareLayout();
+            base.ProcessLayout(size);
         }
         protected override void OnChildAdded(ControlBase child)
         {
