@@ -28,6 +28,13 @@ namespace TestApplication
             {
                 CreateModal(true);
             };
+            btn = new Button(parent);
+            btn.Y += 150;
+            btn.Text = "Open Messagebox";
+            btn.Clicked += (sender, arguments) =>
+            {
+                MessageBox mb = new MessageBox(Parent,"This is a test for a messagebox, It word wraps and all that jazz.","Caption",true);
+            };
         }
         private void CreateWindow()
         {

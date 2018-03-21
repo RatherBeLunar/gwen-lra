@@ -19,6 +19,10 @@ namespace Gwen.Renderer
             this.Size = fontdata.FontSize;
             this.texture = tx;
         }
+        public override List<string> WordWrap(string input, int maxpx)
+        {
+            return fontdata.WordWrap(input,maxpx);
+        }
     }
     /// <summary>
     /// BMFont class made for loading files created with bmfont

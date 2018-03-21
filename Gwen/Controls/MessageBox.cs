@@ -3,62 +3,73 @@ using System.Drawing;
 
 namespace Gwen.Controls
 {
-    /// <summary>
-    /// Simple message box.
-    /// </summary>
-    public class MessageBox : WindowControl
+    public class MessageBox : Gwen.Controls.WindowControl
     {
         private readonly Button m_Button;
-        private readonly Label m_Label; // should be rich label with maxwidth = parent
-
-        /// <summary>
-        /// Invoked when the message box has been dismissed.
-        /// </summary>
-        public GwenEventHandler<EventArgs> Dismissed;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageBox"/> class.
-        /// </summary>
-        /// <param name="parent">Parent control.</param>
-        /// <param name="text">Message to display.</param>
-        /// <param name="caption">Window caption.</param>
-        public MessageBox(ControlBase parent, string text, string caption = "") 
-            : base(parent, caption, true)
+        public EventHandler<EventArgs> Dismissed;
+        public ControlBase Container;
+        public System.Windows.Forms.DialogResult Result { get; set; }
+        public string Text { get; private set; }
+        public bool Modal = false;
+        public MessageBox(Gwen.Controls.ControlBase ctrl, string text, string title, bool cancelbutton = false) : base(ctrl, title)
         {
-            DeleteOnClose = true;
-
-            m_Label = new Label(m_Panel);
-            m_Label.Text = text;
-            m_Label.Margin = Margin.Five;
-            m_Label.Dock = Pos.Top;
-            m_Label.Alignment = Pos.Center;
-
-            m_Button = new Button(m_Panel);
-            m_Button.Text = "OK"; // todo: parametrize buttons
-            m_Button.Clicked += CloseButtonPressed;
-            m_Button.Clicked += DismissedHandler;
-            m_Button.Margin = Margin.Five;
-            m_Button.SetSize(50, 20);
-
+            var wrapped = Skin.DefaultFont.WordWrap(text, 200);
+            foreach (var line in wrapped)
+            {
+                AddLine(line);
+            }
+            Container = new ControlBase(m_Panel);
+            Container.Margin = new Margin(0, 40, 0, 5);
+            Container.Dock = Pos.Bottom;
+            Container.Height = 30;
+            m_Panel.Layout();
+            m_Panel.SizeToChildren(true, true);
+            SizeToChildren(true, true);
+            Layout();
+            m_Button = new Button(Container);
+            m_Button.Text = "Okay"; // todo: parametrize buttons
+            m_Button.Clicked += (o, e) =>
+                {
+                    Result = System.Windows.Forms.DialogResult.OK;
+                    Close();
+                    DismissedHandler(o, e);
+                };
+            m_Button.Margin = Margin.One;
+            m_Button.Width = 70;
+            m_Button.Dock = Pos.Right;
+            Container.SizeToChildren(false, true);
+            if (cancelbutton)
+            {
+                Button btn = new Button(Container);
+                btn.Margin = new Margin(1, 1, 7, 1);
+                btn.Dock = Pos.Right;
+                btn.Name = "Cancel";
+                btn.Text = "Cancel";
+                btn.Width = 70;
+                btn.Clicked += (o, e) =>
+                {
+                    Result = System.Windows.Forms.DialogResult.Cancel;
+                    Close();
+                    DismissedHandler(o, e);
+                };
+            }
             Align.Center(this);
+            Invalidate();
         }
 
-		private void DismissedHandler(ControlBase control, EventArgs args)
+        private void DismissedHandler(ControlBase control, EventArgs args)
         {
             if (Dismissed != null)
                 Dismissed.Invoke(this, EventArgs.Empty);
         }
-
-        protected override void ProcessLayout(Size size)
+        private void AddLine(string line)
         {
-            //todo
-/*/
-            Align.PlaceDownLeft(m_Button, m_Label, 10);
-            Align.CenterHorizontally(m_Button);
-            m_Panel.SizeToChildren();
-            m_Panel.Height += 10;
-            SizeToChildren();*/
-            base.ProcessLayout(size);
+            Label add = new Label(m_Panel);
+            add.Margin = new Margin(0, 0, 0, 0);
+            add.Alignment = Pos.CenterH | Pos.Top;
+            add.Dock = Pos.Top;
+            add.AutoSizeToContents = true;
+            add.Text = line;
         }
     }
 }

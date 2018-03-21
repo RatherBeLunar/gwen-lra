@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Gwen
 {
@@ -25,7 +26,7 @@ namespace Gwen
 
         //public bool Bold { get; set; }
         //public bool DropShadow { get; set; }
-        
+
         /// <summary>
         /// This should be set by the renderer if it tries to use a font where it's null.
         /// </summary>
@@ -62,6 +63,10 @@ namespace Gwen
             //Bold = false;
             //DropShadow = false;
         }
+        public virtual List<string> WordWrap(string input, int maxpx)
+        {
+            return new List<string>() { input };
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -71,7 +76,7 @@ namespace Gwen
             m_Renderer.FreeFont(this);
             GC.SuppressFinalize(this);
         }
-        
+
 #if DEBUG
         ~Font()
         {
