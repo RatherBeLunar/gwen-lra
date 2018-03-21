@@ -231,8 +231,8 @@ namespace Gwen.Controls
 
         protected override void ProcessLayout(Size size)
         {
-            base.ProcessLayout(size);
             HandleOverflow();
+            base.ProcessLayout(size);
         }
 
         /// <summary>
@@ -281,11 +281,13 @@ namespace Gwen.Controls
         protected virtual void ScrollPressedLeft(ControlBase control, EventArgs args)
         {
             m_ScrollOffset -= 120;
+            Invalidate();
         }
 
         protected virtual void ScrollPressedRight(ControlBase control, EventArgs args)
         {
             m_ScrollOffset += 120;
+            Invalidate();
         }
     }
 }
