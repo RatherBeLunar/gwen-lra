@@ -90,13 +90,13 @@ namespace Gwen.Controls
         public void NudgeLeft(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
-                SetScrollAmount(ScrollAmount - NudgeAmount, true);
+                SetScrollAmount(ScrollAmount - NudgePercent, true);
         }
 
         public void NudgeRight(ControlBase control, EventArgs args)
         {
             if (!IsDisabled)
-                SetScrollAmount(ScrollAmount + NudgeAmount, true);
+                SetScrollAmount(ScrollAmount + NudgePercent, true);
         }
 
         public override void ScrollToLeft()
@@ -108,19 +108,14 @@ namespace Gwen.Controls
         {
             SetScrollAmount(1, true);
         }
-
-        public override float NudgeAmount
+        public override float NudgePercent
         {
             get
             {
                 if (m_Depressed)
-                    return m_ViewableContentSize / m_ContentSize;
+                    return m_ViewableContentSize / m_ContentSize;//page up/down
                 else
-                    return base.NudgeAmount;
-            }
-            set
-            {
-                base.NudgeAmount = value;
+                    return base.NudgePercent;
             }
         }
 

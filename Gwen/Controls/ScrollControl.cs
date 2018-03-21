@@ -182,14 +182,14 @@ namespace Gwen.Controls
             if (CanScrollV && m_VerticalScrollBar.IsVisible)
             {
                 if (m_VerticalScrollBar.SetScrollAmount(
-                    m_VerticalScrollBar.ScrollAmount - m_VerticalScrollBar.NudgeAmount * (delta / 60.0f), true))
+                    m_VerticalScrollBar.ScrollAmount - m_VerticalScrollBar.NudgePercent * (delta / 60.0f), true))
                     return true;
             }
 
             if (CanScrollH && m_HorizontalScrollBar.IsVisible)
             {
                 if (m_HorizontalScrollBar.SetScrollAmount(
-                    m_HorizontalScrollBar.ScrollAmount - m_HorizontalScrollBar.NudgeAmount * (delta / 60.0f), true))
+                    m_HorizontalScrollBar.ScrollAmount - m_HorizontalScrollBar.NudgePercent * (delta / 60.0f), true))
                     return true;
             }
 

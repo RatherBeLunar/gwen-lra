@@ -31,13 +31,20 @@ namespace Gwen.Controls
         /// Bar position (in pixels).
         /// </summary>
         public virtual int BarPos { get { return 0; } }
-        
+
         /// <summary>
         /// Button size (in pixels).
         /// </summary>
         public virtual int ButtonSize { get { return 0; } }
 
-        public virtual float NudgeAmount { get { return m_NudgeAmount / m_ContentSize; } set { m_NudgeAmount = value; } }
+        public virtual float NudgeAmount { set { m_NudgeAmount = value; } }
+        public virtual float NudgePercent
+        {
+            get
+            {
+                return m_NudgeAmount / (ContentSize - ViewableContentSize);
+            }
+        }
         public float ScrollAmount { get { return m_ScrollAmount; } }
         public float ContentSize { get { return m_ContentSize; } set { if (m_ContentSize != value) Invalidate(); m_ContentSize = value; } }
         public float ViewableContentSize { get { return m_ViewableContentSize; } set { if (m_ViewableContentSize != value) Invalidate(); m_ViewableContentSize = value; } }
@@ -112,7 +119,7 @@ namespace Gwen.Controls
 		protected virtual void OnBarMoved(ControlBase control, EventArgs args)
         {
             if (BarMoved != null)
-				BarMoved.Invoke(this, EventArgs.Empty);
+                BarMoved.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual float CalculateScrolledAmount()
@@ -123,9 +130,9 @@ namespace Gwen.Controls
         protected virtual int CalculateBarSize()
         {
             return 0;
-        } 
+        }
 
-        public virtual void ScrollToLeft() { } 
+        public virtual void ScrollToLeft() { }
         public virtual void ScrollToRight() { }
         public virtual void ScrollToTop() { }
         public virtual void ScrollToBottom() { }
