@@ -14,6 +14,13 @@ namespace TestApplication
             for (int i = 0; i < 10; i++)
             {
                 var root = tree.AddNode("root " + i);
+                if (i ==  0)
+                {
+                    for (int ix = 0; ix < 100; ix++)
+                    {
+                        var node = root.AddNode("for large scale");
+                    }
+                }
                 for (int ix = 0; ix < 10; ix++)
                 {
                     var node = root.AddNode("child " + ix + " of root " + i);

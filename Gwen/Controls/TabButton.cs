@@ -28,7 +28,7 @@ namespace Gwen.Controls
                 m_Control = value;
             }
         }
-        
+
         /// <summary>
         /// Interior of the tab.
         /// </summary>
@@ -79,33 +79,7 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-			skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
-        }
-
-        /// <summary>
-        /// Handler for Down Arrow keyboard event.
-        /// </summary>
-        /// <param name="down">Indicates whether the key was pressed or released.</param>
-        /// <returns>
-        /// True if handled.
-        /// </returns>
-        protected override bool OnKeyDown(bool down)
-        {
-            OnKeyRight(down);
-            return true;
-        }
-
-        /// <summary>
-        /// Handler for Up Arrow keyboard event.
-        /// </summary>
-        /// <param name="down">Indicates whether the key was pressed or released.</param>
-        /// <returns>
-        /// True if handled.
-        /// </returns>
-        protected override bool OnKeyUp(bool down)
-        {
-            OnKeyLeft(down);
-            return true;
+            skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
         }
 
         /// <summary>
@@ -159,39 +133,39 @@ namespace Gwen.Controls
         protected override System.Drawing.Color CurrentColor
         {
             get
-			{
-				if (IsActive)
-				{
-					if (IsDisabled)
-					{
-						return Skin.Colors.Tab.Active.Disabled;
-					}
-					if (IsDepressed)
-					{
-						return Skin.Colors.Tab.Active.Down;
-					}
-					if (IsHovered)
-					{
-						return Skin.Colors.Tab.Active.Hover;
-					}
+            {
+                if (IsActive)
+                {
+                    if (IsDisabled)
+                    {
+                        return Skin.Colors.Tab.Active.Disabled;
+                    }
+                    if (IsDepressed)
+                    {
+                        return Skin.Colors.Tab.Active.Down;
+                    }
+                    if (IsHovered)
+                    {
+                        return Skin.Colors.Tab.Active.Hover;
+                    }
 
-					return Skin.Colors.Tab.Active.Normal;
-				}
+                    return Skin.Colors.Tab.Active.Normal;
+                }
 
-				if (IsDisabled)
-				{
-					return Skin.Colors.Tab.Inactive.Disabled;
-				}
-				if (IsDepressed)
-				{
-					return Skin.Colors.Tab.Inactive.Down;
-				}
-				if (IsHovered)
-				{
-					return Skin.Colors.Tab.Inactive.Hover;
-				}
+                if (IsDisabled)
+                {
+                    return Skin.Colors.Tab.Inactive.Disabled;
+                }
+                if (IsDepressed)
+                {
+                    return Skin.Colors.Tab.Inactive.Down;
+                }
+                if (IsHovered)
+                {
+                    return Skin.Colors.Tab.Inactive.Hover;
+                }
 
-				return Skin.Colors.Tab.Inactive.Normal;
+                return Skin.Colors.Tab.Inactive.Normal;
             }
         }
     }

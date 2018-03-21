@@ -62,7 +62,7 @@ namespace Gwen.Controls
                     return;
                 if (m_TreeControl != null)
                 {
-                    if (!m_TreeControl.AllowMultiSelect && value)
+                    if ((!m_TreeControl.AllowMultiSelect || !Input.InputHandler.IsControlDown) && value)
                     {
                         m_TreeControl.UnselectAll();
                     }

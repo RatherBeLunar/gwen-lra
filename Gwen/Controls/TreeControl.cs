@@ -47,6 +47,7 @@ namespace Gwen.Controls
         public TreeControl(ControlBase parent)
             : base(parent)
         {
+            KeyboardInputEnabled = true;
             m_MultiSelect = false;
             Dock = Pos.None;
             m_Panel.BoundsOutlineColor = System.Drawing.Color.Red;
