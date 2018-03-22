@@ -113,7 +113,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Dock position.
         /// </summary>
-        public Pos Dock
+        public virtual Pos Dock
         {
             get { return m_Dock; }
             set

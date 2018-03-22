@@ -96,7 +96,9 @@
     <Compile Include="Controls\ImagePanel.cs" />
     <Compile Include="Controls\Label.cs" />
     <!-- <Compile Include="Controls\LabeledRadioButton.cs" /> -->
-    <!-- <Compile Include="Controls\Layout\Splitter.cs" /> -->
+    <Compile Include="Controls\Layout\FlowLayout.cs" />
+    <Compile Include="Controls\Layout\TableLayout.cs" />
+    <Compile Include="Controls\Layout\TableRow.cs" />
     <!-- <Compile Include="Controls\ListBox.cs" /> -->
     <!-- <Compile Include="Controls\ListBoxRow.cs" /> -->
     <!-- <Compile Include="Controls\Menu.cs" /> -->

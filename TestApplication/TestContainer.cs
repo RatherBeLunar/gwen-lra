@@ -55,6 +55,8 @@ namespace TestApplication
             var textbox = new TextBoxTest(page);
             page = tabcontrol.AddPage("Window");
             var window = new WindowTest(page);
+            page = tabcontrol.AddPage("Container");
+            var container = new ContainerTest(page);
             page.FocusTab();
         }
     }
