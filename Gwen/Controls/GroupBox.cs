@@ -57,11 +57,13 @@ namespace Gwen.Controls
             // can't get it without us..
             MouseInputEnabled = true;
             KeyboardInputEnabled = true;
-
+            m_Label = new Label(null);
             m_Label.TextPadding = new Padding(10, 0, 10, 0);
             m_Label.Alignment = Pos.Top | Pos.Left;
+            m_Label.AutoSizeToContents = true;
+            PrivateChildren.Add(m_Label);
             Invalidate();
-//todo test groupbox
+            //todo test groupbox
             //Margin = new Margin(5, 5, 5, 5);
         }
 
@@ -75,7 +77,9 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            skin.DrawGroupBox(this, m_Label.TextX, m_Label.TextHeight, m_Label.TextWidth);
+            var end = m_Label.TextX + m_Label.TextWidth;
+            int txwidth = m_Label.TextWidth - (end - Math.Min(end, Width - Padding.Right));
+            skin.DrawGroupBox(this, m_Label.TextX, m_Label.TextHeight, txwidth);
         }
 
         #endregion Methods
