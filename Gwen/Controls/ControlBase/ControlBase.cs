@@ -332,7 +332,7 @@ namespace Gwen.Controls
         public Size MaximumSize { get { return m_MaximumSize; } set { m_MaximumSize = value; } }
 
         private Size m_MinimumSize = new Size(1, 1);
-        private Size m_MaximumSize = new Size(MaxCoord, MaxCoord);
+        private Size m_MaximumSize = new Size(int.MaxValue, int.MaxValue);
 
         /// <summary>
         /// Determines whether hover should be drawn during rendering.
@@ -374,6 +374,11 @@ namespace Gwen.Controls
         public int Width { get { return m_Bounds.Width; } set { SetSize(value, Height); } }
         public int Height { get { return m_Bounds.Height; } set { SetSize(Width, value); } }
         public Size Size { get { return m_Bounds.Size; } set { SetSize(value.Width, value.Height); } }
+        /// <summary>
+        /// The size of the control as understood by its children
+        /// This is for containers to implement
+        /// </summary>
+        public virtual Size InnerSize { get { return m_Bounds.Size; } }
         public int Bottom { get { return m_Bounds.Bottom + m_Margin.Bottom; } }
         public int Right { get { return m_Bounds.Right + m_Margin.Right; } }
 

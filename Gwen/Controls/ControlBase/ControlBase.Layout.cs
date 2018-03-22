@@ -479,9 +479,13 @@ namespace Gwen.Controls
             if (child == null)
                 throw new NullReferenceException("Cannot add null child");
             if (!Children.Contains(child))
-                Children.Add(child);
+                Children.Add(child);// The collection will run events.
+            else
+            {
+                Debug.Assert(child.m_Parent == this,
+                "Child is already contained but doesnt have us as its parent");
+            }
             child.m_Parent = this;
-            OnChildAdded(child);
         }
 
         /// <summary>
@@ -493,8 +497,7 @@ namespace Gwen.Controls
         {
             if (child == null)
                 throw new NullReferenceException("Cannot remove null child");
-            Children.Remove(child);
-            OnChildRemoved(child);
+            Children.Remove(child);// The collection will run events.
 
             if (dispose)
             {
@@ -567,7 +570,7 @@ namespace Gwen.Controls
             }
 
             SetBounds(x, y, Width, Height);
-            return new Point(x,y);
+            return new Point(x, y);
         }
 
         /// <summary>
@@ -638,6 +641,12 @@ namespace Gwen.Controls
         /// </returns>
         public virtual bool SetBounds(int x, int y, int width, int height)
         {
+            width = Math.Max(
+                MinimumSize.Width,
+                Math.Min(MaximumSize.Width, width));
+            height = Math.Max(
+                MinimumSize.Height,
+                Math.Min(MaximumSize.Height, height));
             if (m_Bounds.X == x &&
                 m_Bounds.Y == y &&
                 m_Bounds.Width == width &&

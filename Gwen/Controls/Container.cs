@@ -49,6 +49,7 @@ namespace Gwen.Controls
                 m_Panel.Padding = value;
             }
         }
+        public override Size InnerSize { get { return PanelBounds.Size; } }
         internal Rectangle PanelBounds => m_Panel.Bounds;
         public Container(ControlBase parent) : base(parent)
         {
