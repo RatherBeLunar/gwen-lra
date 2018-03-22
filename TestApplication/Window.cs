@@ -14,7 +14,7 @@ namespace TestApplication
         Canvas Canvas;
         public Window() : base(500, 600,GraphicsMode.Default,"UI Test")
         {
-
+            
         }
 
 
@@ -58,13 +58,12 @@ namespace TestApplication
             Canvas.Skin.Dispose();
             Canvas.Dispose();
         }
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            Canvas.SetSize(ClientSize.Width, ClientSize.Height);
-        }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            if (Canvas.Size != ClientSize)
+            {
+                Canvas.SetSize(ClientSize.Width,ClientSize.Height);
+            }
             GL.ClearColor(255, 255, 255, 255);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Gwen.Controls
 {
@@ -16,7 +17,7 @@ namespace Gwen.Controls
         {
             SetBounds(0, 0, 200, 22);
             Dock = Pos.Top;
-            m_Panel.Padding = new Padding(5, 0, 0, 0);
+            m_Panel.Padding = new Padding(0, 0, 0, 0);
         }
 
         /// <summary>
@@ -45,15 +46,6 @@ namespace Gwen.Controls
         }
 
         /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
-        {
-            //TODO: We don't want to do vertical sizing the same as Menu, do nothing for now
-        }
-
-        /// <summary>
         /// Determines whether the menu should open on mouse hover.
         /// </summary>
         protected override bool ShouldHoverOpenMenu
@@ -69,9 +61,11 @@ namespace Gwen.Controls
         {
             item.Dock = Pos.Left;
             item.TextPadding = new Padding(5, 0, 5, 0);
-            item.Padding = new Padding(10, 0, 10, 0);
+            item.Padding = new Padding(10, 5, 10, 5);
             item.IsOnStrip = true;
             item.HoverEnter += OnHoverItem;
+            item.SizeToChildren();
+            SizeToChildren();
         }
     }
 }

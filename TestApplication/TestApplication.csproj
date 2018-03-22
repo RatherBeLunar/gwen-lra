@@ -41,6 +41,7 @@
     <Compile Include="Tests\ButtonTest.cs" />
     <Compile Include="Tests\LabelTest.cs" />
     <Compile Include="Tests\ContainerTest.cs" />
+    <Compile Include="Tests\MenuTest.cs" />
     <Compile Include="TestContainer.cs" />
     <Compile Include="Tests\TabTest.cs" />
     <Compile Include="Tests\LayoutTest.cs" />

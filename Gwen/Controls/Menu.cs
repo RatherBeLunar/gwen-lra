@@ -19,6 +19,13 @@ namespace Gwen.Controls
 
         public bool IconMarginDisabled { get { return m_DisableIconMargin; } set { m_DisableIconMargin = value; } }
 
+        protected override Margin PanelMargin
+        {
+            get
+            {
+                return Margin.Zero;
+            }
+        }
         #endregion Properties
 
         #region Constructors
@@ -31,12 +38,12 @@ namespace Gwen.Controls
             : base(parent)
         {
             SetBounds(0, 0, 10, 10);
-            Padding = Padding.Two;
             IconMarginDisabled = false;
 
             AutoHideBars = true;
             EnableScroll(false, true);
             DeleteOnClose = false;
+            AutoSizeToContents = true;
         }
 
         #endregion Constructors
@@ -105,7 +112,7 @@ namespace Gwen.Controls
             var copy = Children.ToArray();
             foreach (var child in copy)
             {
-                if (child is MenuItem) 
+                if (child is MenuItem)
                     (child as MenuItem).CloseMenu();
             }
         }
@@ -142,23 +149,6 @@ namespace Gwen.Controls
             SetPosition(mouse.X, mouse.Y);
         }
 
-        public override bool SizeToChildren(bool width = true, bool height = true)
-        {
-            base.SizeToChildren(width, height);
-            if (width)
-            {
-                int MaxWidth = this.Width;
-                foreach (ControlBase child in Children)
-                {
-                    if (child.Width > MaxWidth)
-                    {
-                        MaxWidth = child.Width;
-                    }
-                }
-                this.SetSize(MaxWidth, Height);
-            }
-            return true;
-        }
 
         #endregion Methods
 
@@ -169,20 +159,12 @@ namespace Gwen.Controls
         /// </summary>
         protected virtual bool ShouldHoverOpenMenu { get { return true; } }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        public override Size GetSizeToFitContents()
         {
-            int childrenHeight = Children.Sum(child => child != null ? child.Height : 0);
-
-            if (Y + childrenHeight > GetCanvas().Height)
-                childrenHeight = GetCanvas().Height - Y;
-
-            SetSize(Width, childrenHeight);
-
-            base.PrepareLayout();
+            Size ret = base.GetSizeToFitContents();
+            if (Y + ret.Height > GetCanvas().Height)
+                ret.Height = GetCanvas().Height - Y;
+            return ret;
         }
 
         /// <summary>
@@ -193,16 +175,14 @@ namespace Gwen.Controls
         {
             item.TextPadding = new Padding(IconMarginDisabled ? 0 : 24, 0, 16, 0);
             item.Dock = Pos.Top;
-            //todo test menu sizing
-            item.SizeToChildren(true,true);
-            
             item.Alignment = Pos.CenterV | Pos.Left;
             item.HoverEnter += OnHoverItem;
-
+            item.SizeToChildren();
+            SizeToChildren();
             // Do this here - after Top Docking these values mean nothing in layout
-            int w = item.Width + 10 + 32;
-            if (w < Width) w = Width;
-            SetSize(w, Height);
+            //  int w = item.Width + 10 + 32;
+            //  if (w < Width) w = Width;
+            //   SetSize(w, Height);
         }
 
         /// <summary>

@@ -132,17 +132,13 @@ namespace Gwen.Controls
             skin.DrawMenuItem(this, IsMenuOpen, m_Checkable ? m_Checked : false);
         }
 
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
             if (m_SubmenuArrow != null)
             {
                 m_SubmenuArrow.AlignToEdge(Pos.Right | Pos.CenterV, 4, 0);
             }
-            base.PrepareLayout();
+            base.ProcessLayout(size);
         }
 
         /// <summary>
@@ -233,7 +229,7 @@ namespace Gwen.Controls
                 m_Accelerator = null;
             }
 
-            if (acc == String.Empty)
+            if (string.IsNullOrEmpty(acc))
                 return;
 
             m_Accelerator = new Label(this);

@@ -57,6 +57,8 @@ namespace TestApplication
             var window = new WindowTest(page);
             page = tabcontrol.AddPage("Container");
             var container = new ContainerTest(page);
+            page = tabcontrol.AddPage("Menu");
+            var menu = new MenuTest(page);
             page.FocusTab();
         }
     }
