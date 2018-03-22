@@ -96,6 +96,10 @@ namespace Gwen.Controls
         {
             m_Panel.DeleteAllChildren();
         }
+        public override ControlBase FindChildByName(string name, bool recursive = false)
+        {
+            return m_Panel.FindChildByName(name, recursive);
+        }
         protected virtual void RenderPanel(Skin.SkinBase skin)
         {
         }
@@ -133,11 +137,43 @@ namespace Gwen.Controls
                 if (parent != null)
                     parent.RenderPanel(skin);
             }
+            protected override void OnChildAdded(ControlBase child)
+            {
+                base.OnChildAdded(child);
+                if (Parent is Container c)
+                {
+                    c.OnChildAdded(child);
+                }
+            }
+            protected override void OnChildBoundsChanged(Rectangle oldChildBounds, ControlBase child)
+            {
+                base.OnChildBoundsChanged(oldChildBounds, child);
+                if (Parent is Container c)
+                {
+                    c.OnChildBoundsChanged(oldChildBounds, child);
+                }
+            }
+            protected override void OnChildRemoved(ControlBase child)
+            {
+                base.OnChildRemoved(child);
+                if (Parent is Container c)
+                {
+                    c.OnChildRemoved(child);
+                }
+            }
+            protected override void OnChildTouched(ControlBase control)
+            {
+                base.OnChildTouched(control);
+                if (Parent is Container c)
+                {
+                    c.OnChildTouched(control);
+                }
+            }
             public override string ToString()
             {
                 if (Parent != null)
                 {
-                    return "(Container) "+Parent.ToString();
+                    return "(Container) " + Parent.ToString();
                 }
                 return "(Container)";
             }
