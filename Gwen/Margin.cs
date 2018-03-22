@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Gwen
 {
@@ -11,6 +12,27 @@ namespace Gwen
         public int Bottom;
         public int Left;
         public int Right;
+        public int Width
+        {
+            get
+            {
+                return Left + Right;
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return Top + Bottom;
+            }
+        }
+        public Size Size
+        {
+            get
+            {
+                return new Size(Width, Height);
+            }
+        }
 
         // common values
         public static Margin Zero = new Margin(0, 0, 0, 0);
@@ -38,12 +60,12 @@ namespace Gwen
             return other.Top == Top && other.Bottom == Bottom && other.Left == Left && other.Right == Right;
         }
 
-        public static bool operator==(Margin lhs, Margin rhs)
+        public static bool operator ==(Margin lhs, Margin rhs)
         {
             return lhs.Equals(rhs);
         }
 
-        public static bool operator!=(Margin lhs, Margin rhs)
+        public static bool operator !=(Margin lhs, Margin rhs)
         {
             return !lhs.Equals(rhs);
         }
@@ -51,8 +73,8 @@ namespace Gwen
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            if (obj.GetType() != typeof (Margin)) return false;
-            return Equals((Margin) obj);
+            if (obj.GetType() != typeof(Margin)) return false;
+            return Equals((Margin)obj);
         }
 
         public override int GetHashCode()
@@ -60,9 +82,9 @@ namespace Gwen
             unchecked
             {
                 int result = Top;
-                result = (result*397) ^ Bottom;
-                result = (result*397) ^ Left;
-                result = (result*397) ^ Right;
+                result = (result * 397) ^ Bottom;
+                result = (result * 397) ^ Left;
+                result = (result * 397) ^ Right;
                 return result;
             }
         }
