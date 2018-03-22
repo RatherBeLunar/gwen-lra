@@ -20,6 +20,13 @@ namespace TestApplication
             item = menu.AddItem("Too many test");
             for (int i = 0; i < 30; i++)
                 item.Menu.AddItem("item " + i);
+
+            FlowLayout flow = new FlowLayout(parent);
+            flow.Dock = Pos.Fill;
+            ComboBox cb = new ComboBox(flow);
+            cb.AddItem("Test");
+            cb.AddItem("Come on combobox");
+            cb.AddItem("maybe");
         }
     }
 }

@@ -38,7 +38,7 @@
     <!-- <Compile Include="ControlInternal\CategoryHeaderButton.cs" /> -->
     <!-- <Compile Include="ControlInternal\ColorButton.cs" /> -->
     <!-- <Compile Include="ControlInternal\ColorDisplay.cs" /> -->
-    <!-- <Compile Include="ControlInternal\DownArrow.cs" /> -->
+    <Compile Include="ControlInternal\DownArrow.cs" />
     <Compile Include="ControlInternal\MenuDivider.cs" />
     <Compile Include="ControlInternal\Modal.cs" />
     <Compile Include="ControlInternal\Resizer.cs" />
@@ -91,7 +91,7 @@
     <!-- <Compile Include="Controls\HorizontalSlider.cs" /> -->
     <!-- <Compile Include="Controls\IColorPicker.cs" /> -->
     <!-- <Compile Include="Controls\LabeledCheckBox.cs" /> -->
-    <!-- <Compile Include="Controls\ComboBox.cs" /> -->
+    <Compile Include="Controls\ComboBox.cs" />
     <Compile Include="Controls\HorizontalScrollBar.cs" />
     <Compile Include="Controls\ImagePanel.cs" />
     <Compile Include="Controls\Label.cs" />

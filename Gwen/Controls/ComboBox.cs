@@ -37,7 +37,7 @@ namespace Gwen.Controls
                 if (value != null && value.Parent == m_Menu)
                 {
                     m_SelectedItem = value;
-                    OnItemSelected(m_SelectedItem, new ItemSelectedEventArgs(value));
+                    OnItemSelected(this, new ItemSelectedEventArgs(value));
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace Gwen.Controls
             item.UserData = UserData;
 
             if (m_SelectedItem == null)
-                OnItemSelected(item, new ItemSelectedEventArgs(null));
+                SelectedItem = item;
 
             return item;
         }
@@ -204,15 +204,11 @@ namespace Gwen.Controls
         {
             get { return true; }
         }
-
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            m_Button.AlignToEdge(Pos.Right | Pos.CenterV, 4, 0);
-            base.PrepareLayout();
+            if (m_Button != null)
+                m_Button.AlignToEdge(Pos.Right | Pos.CenterV, 4, 0);
+            base.ProcessLayout(size);
         }
 
         /// <summary>
@@ -247,7 +243,7 @@ namespace Gwen.Controls
             if (!IsDisabled)
             {
                 //Convert selected to a menu item
-                MenuItem item = control as MenuItem;
+                MenuItem item = args.SelectedItem as MenuItem;
                 if (null == item) return;
 
                 m_SelectedItem = item;
@@ -287,6 +283,7 @@ namespace Gwen.Controls
                     if (m_Menu.Children[i] == m_SelectedItem)
                     {
                         OnItemSelected(this, new ItemSelectedEventArgs(m_Menu.Children[i + 1]));
+                        break;
                     }
                 }
             }
@@ -303,14 +300,15 @@ namespace Gwen.Controls
         protected override bool OnKeyUp(bool down)
         {
             if (down)
-			{
-				for (int i = 1; i < m_Menu.Children.Count; i++)
-				{
-					if (m_Menu.Children[i] == m_SelectedItem)
-					{
-						OnItemSelected(this, new ItemSelectedEventArgs(m_Menu.Children[i - 1]));
-					}
-				}
+            {
+                for (int i = 1; i < m_Menu.Children.Count; i++)
+                {
+                    if (m_Menu.Children[i] == m_SelectedItem)
+                    {
+                        OnItemSelected(this, new ItemSelectedEventArgs(m_Menu.Children[i - 1]));
+                        break;
+                    }
+                }
             }
             return true;
         }

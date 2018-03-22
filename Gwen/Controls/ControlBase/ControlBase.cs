@@ -492,7 +492,7 @@ namespace Gwen.Controls
         public override string ToString()
         {
             if (this is Label)
-                return "[Label: " + (this as Label).Text + "]";
+                return "[" + GetType().ToString() + ": " + (this as Label).Text + "]";
             if (this is ControlInternal.Text)
                 return "[Text: " + (this as ControlInternal.Text).String + "]";
             return GetType().ToString();
