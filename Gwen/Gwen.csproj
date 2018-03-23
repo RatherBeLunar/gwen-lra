@@ -78,6 +78,7 @@
     <Compile Include="Controls\TabButton.cs" />
     <!-- <Compile Include="Controls\ColorPicker.cs" /> -->
     <Compile Include="ControlInternal\Dragger.cs" />
+    <Compile Include="ControlInternal\CheckBoxButton.cs" />
     <Compile Include="ControlInternal\Highlight.cs" />
     <Compile Include="ControlInternal\ScrollBarBar.cs" />
     <Compile Include="ControlInternal\ScrollBarButton.cs" />
@@ -85,12 +86,11 @@
     <Compile Include="Controls\ScrollBar.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\Canvas.cs" />
-    <Compile Include="Controls\CheckBox.cs" />
     <!-- <Compile Include="Controls\ColorSlider.cs" /> -->
     <Compile Include="Controls\GroupBox.cs" />
     <!-- <Compile Include="Controls\HorizontalSlider.cs" /> -->
     <!-- <Compile Include="Controls\IColorPicker.cs" /> -->
-    <!-- <Compile Include="Controls\LabeledCheckBox.cs" /> -->
+    <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ComboBox.cs" />
     <Compile Include="Controls\HorizontalScrollBar.cs" />
     <Compile Include="Controls\ImagePanel.cs" />

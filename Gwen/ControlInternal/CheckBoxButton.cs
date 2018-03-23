@@ -1,11 +1,11 @@
 ﻿using System;
-
-namespace Gwen.Controls
+using Gwen.Controls;
+namespace Gwen.ControlInternal
 {
     /// <summary>
-    /// CheckBox control.
+    /// CheckBox button.
     /// </summary>
-    public class CheckBox : Button
+    internal class CheckBoxButton : Button
     {
         private bool m_Checked;
 
@@ -24,10 +24,10 @@ namespace Gwen.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckBox"/> class.
+        /// Initializes a new instance of the <see cref="CheckBoxButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public CheckBox(ControlBase parent)
+        public CheckBoxButton(ControlBase parent)
             : base(parent)
         {
             AutoSizeToContents = false;

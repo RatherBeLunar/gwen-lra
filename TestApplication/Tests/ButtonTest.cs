@@ -48,6 +48,13 @@ namespace TestApplication
             posy += 50;
             btn.Alignment = Gwen.Pos.Right | Gwen.Pos.CenterV;
             btn.AutoSizeToContents = false;
+            Checkbox checkbox = new Checkbox(Parent);
+            checkbox.SetPosition(posx, posy);
+            posy += 50;
+            Checkbox lcheckbox = new Checkbox(Parent);
+            lcheckbox.Text = "checkbox";
+            lcheckbox.SetPosition(posx, posy);
+            posy += 50;
         }
         private int posx = 0;
         private int posy = 0;
