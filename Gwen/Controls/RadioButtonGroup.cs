@@ -9,12 +9,12 @@ namespace Gwen.Controls
     /// </summary>
     public class RadioButtonGroup : GroupBox
     {
-        private LabeledRadioButton m_Selected;
+        private RadioButton m_Selected;
 
         /// <summary>
         /// Selected radio button.
         /// </summary>
-        public LabeledRadioButton Selected { get { return m_Selected; } }
+        public RadioButton Selected { get { return m_Selected; } }
 
         /// <summary>
         /// Internal name of the selected radio button.
@@ -55,7 +55,7 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="text">Option text.</param>
         /// <returns>Newly created control.</returns>
-        public virtual LabeledRadioButton AddOption(string text)
+        public virtual RadioButton AddOption(string text)
         {
             return AddOption(text, String.Empty);
         }
@@ -66,9 +66,9 @@ namespace Gwen.Controls
         /// <param name="text">Option text.</param>
         /// <param name="optionName">Internal name.</param>
         /// <returns>Newly created control.</returns>
-        public virtual LabeledRadioButton AddOption(string text, string optionName)
+        public virtual RadioButton AddOption(string text, string optionName)
         {
-            LabeledRadioButton lrb = new LabeledRadioButton(this);
+            RadioButton lrb = new RadioButton(this);
             lrb.Name = optionName;
             lrb.Text = text;
             lrb.Checked += OnRadioClicked;
@@ -87,10 +87,10 @@ namespace Gwen.Controls
         /// <param name="fromPanel">Event source.</param>
         protected virtual void OnRadioClicked(ControlBase fromPanel, EventArgs args)
         {
-            LabeledRadioButton chked = fromPanel as LabeledRadioButton;
+            RadioButton chked = fromPanel as RadioButton;
             foreach (var child in Children)
             {
-                if (child is LabeledRadioButton rb)
+                if (child is RadioButton rb)
                 {
                     if (rb == chked)
                         m_Selected = rb;
@@ -116,7 +116,7 @@ namespace Gwen.Controls
             if (index < 0 || index >= Children.Count)
                 return;
 
-            (Children[index] as LabeledRadioButton).Press();
+            (Children[index] as RadioButton).Press();
         }
     }
 }

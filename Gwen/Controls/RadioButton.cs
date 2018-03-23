@@ -8,7 +8,7 @@ namespace Gwen.Controls
     /// <summary>
     /// RadioButton with label.
     /// </summary>
-    public class LabeledRadioButton : ControlBase
+    public class RadioButton : ControlBase
     {
         private readonly RadioButtonButton m_RadioButton;
         private readonly Label m_Label;
@@ -46,10 +46,10 @@ namespace Gwen.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LabeledRadioButton"/> class.
+        /// Initializes a new instance of the <see cref="RadioButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public LabeledRadioButton(ControlBase parent)
+        public RadioButton(ControlBase parent)
             : base(parent)
         {
             this.MinimumSize = new System.Drawing.Size(15, 15);
