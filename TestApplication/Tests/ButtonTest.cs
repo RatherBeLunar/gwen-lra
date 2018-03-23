@@ -55,6 +55,13 @@ namespace TestApplication
             lcheckbox.Text = "checkbox";
             lcheckbox.SetPosition(posx, posy);
             posy += 50;
+            RadioButtonGroup group = new RadioButtonGroup(Parent);
+            group.Text = "radio button group";
+            group.SetPosition(posx, posy);
+            group.AddOption("Radio 1");
+            group.AddOption("Radio 2");
+            group.AddOption("");
+            posy += 100;
         }
         private int posx = 0;
         private int posy = 0;

@@ -1,5 +1,7 @@
 ﻿using System;
 using Gwen.Input;
+using Gwen.ControlInternal;
+using System.Drawing;
 
 namespace Gwen.Controls
 {
@@ -8,13 +10,40 @@ namespace Gwen.Controls
     /// </summary>
     public class LabeledRadioButton : ControlBase
     {
-        private readonly RadioButton m_RadioButton;
+        private readonly RadioButtonButton m_RadioButton;
         private readonly Label m_Label;
+        /// <summary>
+        /// Invoked when the control has been checked.
+        /// </summary>
+        public event GwenEventHandler<EventArgs> Checked;
+
+        /// <summary>
+        /// Invoked when the control has been unchecked.
+        /// </summary>
+        public event GwenEventHandler<EventArgs> UnChecked;
+
+        /// <summary>
+        /// Invoked when the control's check has been changed.
+        /// </summary>
+        public event GwenEventHandler<EventArgs> CheckChanged;
+
+        /// <summary>
+        /// Indicates whether the control is checked.
+        /// </summary>
+        public bool IsChecked { get { return m_RadioButton.IsChecked; } set { m_RadioButton.IsChecked = value; } }
 
         /// <summary>
         /// Label text.
         /// </summary>
-        public string Text { get { return m_Label.Text; } set { m_Label.Text = value; } }
+        public string Text
+        {
+            get { return m_Label.Text; }
+            set
+            {
+                m_Label.Text = value;
+                m_Label.IsHidden = (string.IsNullOrEmpty(value));
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledRadioButton"/> class.
@@ -23,29 +52,29 @@ namespace Gwen.Controls
         public LabeledRadioButton(ControlBase parent)
             : base(parent)
         {
-			MouseInputEnabled = true;
-            SetSize(100, 20);
+            this.MinimumSize = new System.Drawing.Size(15, 15);
+            AutoSizeToContents = true;
 
-            m_RadioButton = new RadioButton(this);
-            //m_RadioButton.Dock = Pos.Left; // no docking, it causes resizing
-            //m_RadioButton.Margin = new Margin(0, 2, 2, 2);
+            m_RadioButton = new RadioButtonButton(this);
             m_RadioButton.IsTabable = false;
-            m_RadioButton.KeyboardInputEnabled = false;
+            m_RadioButton.CheckChanged += OnCheckChanged;
 
             m_Label = new Label(this);
-            m_Label.Alignment = Pos.CenterV | Pos.Left;
-            m_Label.Text = "Radio Button";
-			m_Label.Clicked += delegate(ControlBase control, ClickedEventArgs args) { m_RadioButton.Press(control); };
+            m_Label.TextPadding = Padding.Two;
+            m_Label.Margin = new Margin(17, 0, 0, 0);
+            m_Label.Dock = Pos.Fill;
+            m_Label.Clicked += delegate (ControlBase Control, ClickedEventArgs args) { m_RadioButton.Press(Control); };
             m_Label.IsTabable = false;
-            m_Label.KeyboardInputEnabled = false;
-            m_Label.Margin = new Margin(0, 0, m_RadioButton.Width, 0);
             AutoSizeToContents = true;
         }
 
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
-            m_RadioButton.AlignToEdge(Pos.Left | Pos.CenterV);
-            base.PrepareLayout();
+            if (m_RadioButton != null)
+            {
+                m_RadioButton.AlignToEdge(Pos.Left | Pos.CenterV);
+            }
+            base.ProcessLayout(size);
         }
 
         /// <summary>
@@ -60,8 +89,10 @@ namespace Gwen.Controls
             skin.DrawKeyboardHighlight(this, RenderBounds, 0);
         }
 
-        // todo: would be nice to remove that
-        internal RadioButton RadioButton { get { return m_RadioButton; } }
+        public void Press(ControlBase control = null)
+        {
+            m_RadioButton.Press(control);
+        }
 
         /// <summary>
         /// Handler for Space keyboard event.
@@ -72,7 +103,8 @@ namespace Gwen.Controls
         /// </returns>
         protected override bool OnKeySpace(bool down)
         {
-            if (down)
+            base.OnKeySpace(down);
+            if (!down)
                 m_RadioButton.IsChecked = !m_RadioButton.IsChecked;
             return true;
         }
@@ -83,6 +115,26 @@ namespace Gwen.Controls
         public virtual void Select()
         {
             m_RadioButton.IsChecked = true;
+        }
+
+        /// <summary>
+        /// Handler for CheckChanged event.
+        /// </summary>
+        protected virtual void OnCheckChanged(ControlBase control, EventArgs Args)
+        {
+            if (m_RadioButton.IsChecked)
+            {
+                if (Checked != null)
+                    Checked.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                if (UnChecked != null)
+                    UnChecked.Invoke(this, EventArgs.Empty);
+            }
+
+            if (CheckChanged != null)
+                CheckChanged.Invoke(this, EventArgs.Empty);
         }
     }
 }

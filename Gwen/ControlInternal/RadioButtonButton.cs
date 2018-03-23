@@ -1,11 +1,12 @@
 ﻿using System;
+using Gwen.Controls;
 
-namespace Gwen.Controls
+namespace Gwen.ControlInternal
 {
     /// <summary>
     /// Radio button.
     /// </summary>
-    public class RadioButton : CheckBox
+    internal class RadioButtonButton : CheckBoxButton
     {
         /// <summary>
         /// Determines whether unchecking is allowed.
@@ -19,13 +20,13 @@ namespace Gwen.Controls
         /// Initializes a new instance of the <see cref="RadioButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public RadioButton(ControlBase parent)
+        public RadioButtonButton(ControlBase parent)
             : base(parent)
         {
             SetSize(15, 15);
             MouseInputEnabled = true;
             IsTabable = false;
-			IsToggle = true; //[halfofastaple] technically true. "Toggle" isn't the best word, "Sticky" is a better one.
+            IsToggle = true; //[halfofastaple] technically true. "Toggle" isn't the best word, "Sticky" is a better one.
         }
 
         /// <summary>

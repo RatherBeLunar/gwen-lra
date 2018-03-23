@@ -95,7 +95,7 @@
     <Compile Include="Controls\HorizontalScrollBar.cs" />
     <Compile Include="Controls\ImagePanel.cs" />
     <Compile Include="Controls\Label.cs" />
-    <!-- <Compile Include="Controls\LabeledRadioButton.cs" /> -->
+    <Compile Include="Controls\LabeledRadioButton.cs" />
     <Compile Include="Controls\Layout\FlowLayout.cs" />
     <Compile Include="Controls\Layout\TableLayout.cs" />
     <Compile Include="Controls\Layout\TableRow.cs" />
@@ -105,8 +105,8 @@
     <Compile Include="Controls\MenuItem.cs" />
     <Compile Include="Controls\MenuStrip.cs" />
     <!-- <Compile Include="Controls\NumericUpDown.cs" /> -->
-    <!-- <Compile Include="Controls\RadioButton.cs" /> -->
-    <!-- <Compile Include="Controls\RadioButtonGroup.cs" /> -->
+    <Compile Include="ControlInternal\RadioButtonButton.cs" />
+    <Compile Include="Controls\RadioButtonGroup.cs" />
     <Compile Include="Controls\ScrollControl.cs" />
     <!-- <Compile Include="Controls\Slider.cs" /> -->
     <Compile Include="Controls\TabControl.cs" />

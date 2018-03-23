@@ -63,7 +63,6 @@ namespace Gwen.Controls
             m_Label.AutoSizeToContents = true;
             PrivateChildren.Add(m_Label);
             Invalidate();
-            //todo test groupbox
             //Margin = new Margin(5, 5, 5, 5);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Gwen.ControlInternal;
 
 namespace Gwen.Controls
 {
@@ -9,7 +10,7 @@ namespace Gwen.Controls
     public class RadioButtonGroup : GroupBox
     {
         private LabeledRadioButton m_Selected;
-        
+
         /// <summary>
         /// Selected radio button.
         /// </summary>
@@ -43,6 +44,7 @@ namespace Gwen.Controls
         public RadioButtonGroup(ControlBase parent) : base(parent)
         {
             AutoSizeToContents = true;
+            m_Panel.AutoSizeToContents = true;
             IsTabable = false;
             KeyboardInputEnabled = true;
             Text = String.Empty;
@@ -69,7 +71,7 @@ namespace Gwen.Controls
             LabeledRadioButton lrb = new LabeledRadioButton(this);
             lrb.Name = optionName;
             lrb.Text = text;
-            lrb.RadioButton.Checked += OnRadioClicked;
+            lrb.Checked += OnRadioClicked;
             lrb.Dock = Pos.Top;
             lrb.Margin = new Margin(0, 0, 0, 1); // 1 bottom
             lrb.KeyboardInputEnabled = false; // todo: true?
@@ -85,36 +87,20 @@ namespace Gwen.Controls
         /// <param name="fromPanel">Event source.</param>
         protected virtual void OnRadioClicked(ControlBase fromPanel, EventArgs args)
         {
-            RadioButton @checked = fromPanel as RadioButton;
-            foreach (LabeledRadioButton rb in Children.OfType<LabeledRadioButton>()) // todo: optimize
+            LabeledRadioButton chked = fromPanel as LabeledRadioButton;
+            foreach (var child in Children)
             {
-                if (rb.RadioButton == @checked)
-                    m_Selected = rb;
-                else
-                    rb.RadioButton.IsChecked = false;
+                if (child is LabeledRadioButton rb)
+                {
+                    if (rb == chked)
+                        m_Selected = rb;
+                    else
+                        rb.IsChecked = false;
+                }
             }
 
             OnChanged(m_Selected);
         }
-        /*
-        /// <summary>
-        /// Sizes to contents.
-        /// </summary>
-        public override void SizeToContents()
-        {
-            RecurseLayout(Skin); // options are docked so positions are not updated until layout runs
-            //base.SizeToContents();
-            int width = 0;
-            int height = 0;
-            foreach (Base child in Children)
-            {
-                width = Math.Max(child.Width, width);
-                height += child.Height;
-            }
-            SetSize(width, height);
-            InvalidateParent();
-        }
-        */
         protected virtual void OnChanged(ControlBase NewTarget)
         {
             if (SelectionChanged != null)
@@ -130,7 +116,7 @@ namespace Gwen.Controls
             if (index < 0 || index >= Children.Count)
                 return;
 
-            (Children[index] as LabeledRadioButton).RadioButton.Press();
+            (Children[index] as LabeledRadioButton).Press();
         }
     }
 }
