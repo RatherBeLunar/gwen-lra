@@ -46,7 +46,21 @@ namespace Gwen.Controls
             }
         }
         public float ScrollAmount { get { return m_ScrollAmount; } }
-        public float ContentSize { get { return m_ContentSize; } set { if (m_ContentSize != value) Invalidate(); m_ContentSize = value; } }
+        public float ContentSize
+        {
+            get { return m_ContentSize; }
+            set
+            {
+                if (m_ContentSize != value)
+                {
+                    var unscaled = m_ScrollAmount * (m_ContentSize - ViewableContentSize);
+                    m_ScrollAmount = Util.Clamp(unscaled / (value - ViewableContentSize), 0, 1);
+
+                    Invalidate();
+                }
+                m_ContentSize = value;
+            }
+        }
         public float ViewableContentSize { get { return m_ViewableContentSize; } set { if (m_ViewableContentSize != value) Invalidate(); m_ViewableContentSize = value; } }
 
         /// <summary>

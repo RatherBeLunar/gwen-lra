@@ -120,8 +120,8 @@ namespace Gwen.Controls
             m_HorizontalScrollBar.BarMoved += HBarMoved;
             m_CanScrollH = true;
             m_HorizontalScrollBar.NudgeAmount = 30;
-            PrivateChildren.Add(m_HorizontalScrollBar);
             PrivateChildren.Add(m_VerticalScrollBar);
+            PrivateChildren.Add(m_HorizontalScrollBar);
             m_Panel.Dock = Pos.None;
             SendChildToBack(m_Panel);
             m_Panel.AutoSizeToContents = true;
@@ -136,9 +136,10 @@ namespace Gwen.Controls
             base.ProcessLayout(size);
             if (UpdateScrollBars())
             {
-                m_Panel.Layout(false);
+                if (m_Panel.NeedsLayout)
+                    m_Panel.Layout(false);
             }
-            // UpdateScrollBars();//todo << ??, also can we stop moving if the contents change if we're above the change
+            UpdateScrollPosition();
         }
         /// <summary>
         /// Maintain the panel to be at least the maximum width without scrolling
@@ -176,7 +177,6 @@ namespace Gwen.Controls
                 UpdateBar(sz, true);
             }
             UpdatePanel();
-            UpdateScrollPosition();
             return vchange || hchange;
         }
         private bool UpdateBar(Size panelsize, bool vscroll)
@@ -230,14 +230,14 @@ namespace Gwen.Controls
             if (CanScrollV && !m_VerticalScrollBar.IsHidden)
             {
                 newInnerPanelPosY =
-                    (int)(
+                    (int)Math.Round(
                         -(m_Panel.Height - Height + (m_HorizontalScrollBar.IsHidden ? 0 : m_HorizontalScrollBar.Height)) *
                         m_VerticalScrollBar.ScrollAmount);
             }
             if (CanScrollH && !m_HorizontalScrollBar.IsHidden)
             {
                 newInnerPanelPosX =
-                    (int)(
+                    (int)Math.Round(
                         -(m_Panel.Width - Width + (m_VerticalScrollBar.IsHidden ? 0 : m_VerticalScrollBar.Width)) *
                         m_HorizontalScrollBar.ScrollAmount);
             }
