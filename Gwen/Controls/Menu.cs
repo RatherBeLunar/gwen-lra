@@ -40,7 +40,7 @@ namespace Gwen.Controls
             SetBounds(0, 0, 10, 10);
             IconMarginDisabled = false;
 
-            AutoHideBars = true;
+            AutoHideBars = false;
             EnableScroll(false, true);
             DeleteOnClose = false;
             AutoSizeToContents = true;
@@ -96,6 +96,7 @@ namespace Gwen.Controls
         public virtual void Close()
         {
             //System.Diagnostics.Debug.Print("Menu.Close: {0}", this);
+            ScrollToTop();
             IsHidden = true;
             if (DeleteOnClose)
             {
@@ -147,6 +148,7 @@ namespace Gwen.Controls
             BringToFront();
             Point mouse = Input.InputHandler.MousePosition;
             SetPosition(mouse.X, mouse.Y);
+            Invalidate();
         }
 
 
@@ -161,9 +163,17 @@ namespace Gwen.Controls
 
         public override Size GetSizeToFitContents()
         {
-            Size ret = base.GetSizeToFitContents();
+            Size ret = m_Panel.GetSizeToFitContents() + PanelMargin.Size + Padding.Size;
             if (Y + ret.Height > GetCanvas().Height)
+            {
                 ret.Height = GetCanvas().Height - Y;
+                EnableScroll(false, true);
+                ret.Width += VScrollWidth;
+            }
+            else
+            {
+                EnableScroll(false, false);
+            }
             return ret;
         }
 

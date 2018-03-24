@@ -8,16 +8,16 @@ namespace Gwen.Controls
     /// Static text label.
     /// </summary>
     public class Label : ControlBase
-	{
-		#region Fields
+    {
+        #region Fields
 
-		protected readonly Text m_Text;
-		private Color m_TextColor;
-		private Color m_textColorOverride;
-		private Pos m_Align;
-		private Padding m_TextPadding;
+        protected readonly Text m_Text;
+        private Color m_TextColor;
+        private Color m_textColorOverride;
+        private Pos m_Align;
+        private Padding m_TextPadding;
 
-		#endregion Fields
+        #endregion Fields
 
         #region Properties
 
@@ -145,7 +145,7 @@ namespace Gwen.Controls
             }
         }
 
-        public int TextRight { get { return m_Text.Right; } }
+        public int TextRight { get { return m_Text.Right + m_Text.Margin.Right; } }
 
         /// <summary>
         /// Width of the text (in pixels).
@@ -164,19 +164,19 @@ namespace Gwen.Controls
         protected virtual Color CurrentColor
         {
             get
-			{
-				if (IsDisabled)
-				{
-					return Skin.Colors.Button.Disabled;
-				}
-				else if (IsHovered && ClickEventAssigned)
-				{
-					return Skin.Colors.Button.Hover;
-				}
-				else
-				{
+            {
+                if (IsDisabled)
+                {
+                    return Skin.Colors.Button.Disabled;
+                }
+                else if (IsHovered && ClickEventAssigned)
+                {
+                    return Skin.Colors.Button.Hover;
+                }
+                else
+                {
                     return Skin.Colors.Button.Normal;
-				}
+                }
             }
         }
 
@@ -250,9 +250,7 @@ namespace Gwen.Controls
 
         protected override void ProcessLayout(Size size)
         {
-            m_Text.X = Padding.Left + m_TextPadding.Left;
-            m_Text.Y = Padding.Top + m_TextPadding.Top;
-            m_Text.AlignToEdge(m_Align, m_TextPadding);
+            m_Text.AlignToEdge(m_Align, m_TextPadding + Padding, 0, 0);
             base.ProcessLayout(size);
         }
 

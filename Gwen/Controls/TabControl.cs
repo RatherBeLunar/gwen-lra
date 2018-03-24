@@ -275,7 +275,7 @@ namespace Gwen.Controls
 
             m_TabStrip.Margin = new Margin(m_ScrollOffset * -1, 0, 0, 0);
             m_Scroll[0].SetPosition(Width - 30, 5);
-            m_Scroll[1].SetPosition(m_Scroll[0].Right, 5);
+            m_Scroll[1].SetPosition(m_Scroll[0].Right + m_Scroll[0].Margin.Right, 5);
         }
 
         protected virtual void ScrollPressedLeft(ControlBase control, EventArgs args)

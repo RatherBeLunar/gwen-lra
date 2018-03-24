@@ -54,7 +54,22 @@ namespace Gwen
         {
             return other.Top == Top && other.Bottom == Bottom && other.Left == Left && other.Right == Right;
         }
-
+        public static Padding operator +(Padding lhs, Padding rhs)
+        {
+            return new Padding(
+                lhs.Left + rhs.Left, 
+                lhs.Top + rhs.Top, 
+                lhs.Right + rhs.Right, 
+                lhs.Bottom + rhs.Bottom);
+        }
+        public static Padding operator -(Padding lhs, Padding rhs)
+        {
+            return new Padding(
+                lhs.Left - rhs.Left,
+                lhs.Top - rhs.Top,
+                lhs.Right - rhs.Right,
+                lhs.Bottom - rhs.Bottom);
+        }
         public static bool operator ==(Padding lhs, Padding rhs)
         {
             return lhs.Equals(rhs);

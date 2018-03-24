@@ -123,9 +123,9 @@ namespace Gwen.Controls
         /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
         /// If AutoSizeToContents is enabled, sizes the control before layout.
         /// </summary>
-        public void Layout()
+        public void Layout(bool force = true)
         {
-            Layout(true, false);
+            Layout(force, false);
         }
         /// <summary>
         /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
@@ -142,12 +142,14 @@ namespace Gwen.Controls
                 bool autosize = AutoSizeToContents && Dock == Pos.None;
                 if (autosize)
                 {
-                    var sz = GetSizeToFitContents();
-                    SetBounds(X, Y, sz.Width, sz.Height);
+                   var sz = ClampSize(this, GetSizeToFitContents());
+                   SetBounds(X, Y, sz.Width, sz.Height);
                     // setbounds can be overridden, so just get size for
                     // processlayout later.
                 }
                 var oldbounds = Bounds;
+                // children can tell us to layout again, we don't want to
+                // hide that.
                 ProcessLayout(oldbounds.Size);
                 if (Bounds.Size != oldbounds.Size)
                 {
@@ -161,7 +163,7 @@ namespace Gwen.Controls
                 }
                 PostLayout();
                 if (LogLayout)
-                    Console.WriteLine("Layout performed on " + this.ToString());
+                Console.WriteLine("Layout performed on " + this.ToString());
             }
             else
             {
@@ -205,10 +207,20 @@ namespace Gwen.Controls
         /// <param name="pos">Target position.</param>
         /// <param name="xpadding">X padding.</param>
         /// <param name="ypadding">Y padding.</param>
-        public virtual void AlignToEdge(Pos pos, Padding padding)
+        public void AlignToEdge(Pos pos, Padding padding)
         {
-            int newx = X;
-            int newy = Y;
+            AlignToEdge(pos, padding, X, Y);
+        }
+        /// <summary>
+        /// Positions the control inside its parent relative to its edges
+        /// </summary>
+        /// <param name="pos">Target position.</param>
+        /// <param name="xpadding">X padding.</param>
+        /// <param name="ypadding">Y padding.</param>
+        public virtual void AlignToEdge(Pos pos, Padding padding, int startx, int starty)
+        {
+            int newx = startx;
+            int newy = starty;
 
             if (pos.HasFlag(Pos.Left))
             {
@@ -266,10 +278,16 @@ namespace Gwen.Controls
                     {
                         childsize = child.GetSizeToFitContents();
                     }
+                    childsize = ClampSize(child, childsize);
                     childsize.Width += child.Margin.Left + child.Margin.Right;
                     childsize.Height += child.Margin.Top + child.Margin.Bottom;
                     if (child.Dock == Pos.None)
                     {
+                        // using the childs coordinates has the side effect
+                        // of meaning controls in negative space do not count
+                        // towards our maximum size. the logic is that if we
+                        // resize to fit it, what would that do to make the
+                        // child visible?
                         maxundocked.Width = Math.Max(maxundocked.Width, child.X + childsize.Width);
                         maxundocked.Height = Math.Max(maxundocked.Height, child.Y + childsize.Height);
                         continue;
@@ -303,6 +321,7 @@ namespace Gwen.Controls
                     {
                         childsize = child.GetSizeToFitContents();
                     }
+                    childsize = ClampSize(child, childsize);
                     childsize.Width += child.Margin.Left + child.Margin.Right;
                     childsize.Height += child.Margin.Top + child.Margin.Bottom;
                     // fill is lowest priority
@@ -319,6 +338,12 @@ namespace Gwen.Controls
             size.Height += control.Padding.Top + control.Padding.Bottom;
             return size;
         }
+        protected static Size ClampSize(ControlBase control, Size size)
+        {
+            return new Size(
+                Math.Min(Math.Max(control.MinimumSize.Width, size.Width), control.MaximumSize.Width),
+                Math.Min(Math.Max(control.MinimumSize.Height, size.Height), control.MaximumSize.Height));
+        }
         /// <summary>
         /// Calculates a child's new bounds according to its Dock property and applies AutoSizeToContents
         /// </summary>
@@ -334,6 +359,7 @@ namespace Gwen.Controls
             {
                 ret.Size = control.GetSizeToFitContents();
             }
+            ret.Size = ClampSize(control, ret.Size);
             if (control.Dock == Pos.None)
             {
                 return ret;
@@ -393,7 +419,7 @@ namespace Gwen.Controls
         /// <returns>True if bounds changed.</returns>
         public virtual bool SizeToChildren(bool width = true, bool height = true)
         {
-            Size size = GetSizeToFitContents();
+            Size size = ClampSize(this, GetSizeToFitContents());
             return SetSize(width ? size.Width : Width, height ? size.Height : Height);
         }
 

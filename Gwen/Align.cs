@@ -116,7 +116,7 @@ namespace Gwen
         /// <param name="spacing">Optional spacing.</param>
         public static void PlaceDownLeft(Controls.ControlBase control, Controls.ControlBase anchor, int spacing = 0)
         {
-            control.SetPosition(anchor.X + control.Margin.Left, anchor.Bottom + spacing + control.Margin.Top);
+            control.SetPosition(anchor.X + control.Margin.Left, anchor.Bottom + anchor.Margin.Bottom + spacing + control.Margin.Top);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Gwen
         /// <param name="spacing">Optional spacing.</param>
         public static void PlaceRightBottom(Controls.ControlBase control, Controls.ControlBase anchor, int spacing = 0)
         {
-            control.SetPosition(anchor.Right + spacing + control.Margin.Right, anchor.Y - control.Height + anchor.Height + control.Margin.Top);
+            control.SetPosition(anchor.Right + anchor.Margin.Right + spacing + control.Margin.Right, anchor.Y - control.Height + anchor.Height + control.Margin.Top);
         }
     }
 }

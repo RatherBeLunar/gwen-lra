@@ -25,15 +25,10 @@ namespace Gwen.ControlInternal
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            if (ShouldDrawBackground)
+           if (ShouldDrawBackground)
                 skin.DrawButton(this, true, false, IsDisabled);
         }
-
-        /// <summary>
-        /// Lays out the control's interior according to alignment, padding, dock etc.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(System.Drawing.Size size)
         {
             MoveTo(X, Y);
         }

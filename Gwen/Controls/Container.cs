@@ -12,7 +12,7 @@ namespace Gwen.Controls
 {
     public class Container : ControlBase
     {
-        protected Panel m_Panel;
+        protected readonly Panel m_Panel;
         public override ControlCollection Children
         {
             get

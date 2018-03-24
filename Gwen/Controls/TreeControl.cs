@@ -119,16 +119,6 @@ namespace Gwen.Controls
                 node.UnselectAll();
             }
         }
-        /// <summary>
-        /// Handler invoked when control children's bounds change.
-        /// </summary>
-        /// <param name="oldChildBounds"></param>
-        /// <param name="child"></param>
-        protected override void OnChildBoundsChanged(System.Drawing.Rectangle oldChildBounds, ControlBase child)
-        {
-            base.OnChildBoundsChanged(oldChildBounds, child);
-            UpdateScrollBars();
-        }
 
         internal virtual void OnSelectionChanged(ControlBase sender, EventArgs args)
 		{

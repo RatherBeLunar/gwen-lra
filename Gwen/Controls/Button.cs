@@ -191,7 +191,7 @@ namespace Gwen.Controls
             m_Image.Margin = new Margin(0, 2, 0, 2);
             m_CenterImage = center;
 
-            TextPadding = new Padding(m_Image.Right + 2, TextPadding.Top, TextPadding.Right, TextPadding.Bottom);
+            TextPadding = new Padding(m_Image.Right + m_Image.Margin.Right + 2, TextPadding.Top, TextPadding.Right, TextPadding.Bottom);
         }
 
         /// <summary>

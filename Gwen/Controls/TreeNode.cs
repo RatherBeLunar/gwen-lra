@@ -166,6 +166,7 @@ namespace Gwen.Controls
             PrivateChildren.Insert(0, m_ToggleButton);
             PrivateChildren.Insert(0, m_Title);
             m_Panel.Dock = Pos.Top;
+            Layout();//figure out placement before hiding stuff.
 			m_Panel.Hide();
 			m_ToggleButton.Hide();
 
@@ -203,20 +204,6 @@ namespace Gwen.Controls
             //this.Invalidate();
         }
 
-        public override System.Drawing.Size GetSizeToFitContents()
-        {
-            var bounds = base.GetSizeToFitContents();
-            return bounds;
-        }
-        public override bool SetBounds(System.Drawing.Rectangle bounds)
-        {
-            return base.SetBounds(bounds);
-        }
-        protected override void ProcessLayout(Size size)
-        {
-            // todo this should either dock or not be called here. sizefittocontents is wrong among other things
-            base.ProcessLayout(size);
-        }
         /// <summary>
         /// Adds a new child node.
         /// </summary>

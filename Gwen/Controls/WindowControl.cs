@@ -187,7 +187,7 @@ namespace Gwen.Controls
             else
                 m_Title.TextColor = Skin.Colors.Window.TitleInactive;
 
-            skin.DrawWindow(this, m_TitleBar.Bottom, hasFocus);
+            skin.DrawWindow(this, m_TitleBar.Bottom + m_Title.Margin.Bottom, hasFocus);
         }
 
         /// <summary>

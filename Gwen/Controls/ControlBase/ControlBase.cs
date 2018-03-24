@@ -324,12 +324,38 @@ namespace Gwen.Controls
         /// <summary>
         /// Size restriction.
         /// </summary>
-        public Size MinimumSize { get { return m_MinimumSize; } set { m_MinimumSize = value; } }
+        public Size MinimumSize
+        {
+            get { return m_MinimumSize; }
+            set
+            {
+                m_MinimumSize = value;
+                if (Width < m_MinimumSize.Width || Height < m_MinimumSize.Height)
+                {
+                    SetSize(
+                        Math.Max(m_MinimumSize.Width, Width),
+                        Math.Max(m_MinimumSize.Height, Height));
+                }
+            }
+        }
 
         /// <summary>
         /// Size restriction.
         /// </summary>
-        public Size MaximumSize { get { return m_MaximumSize; } set { m_MaximumSize = value; } }
+        public Size MaximumSize
+        {
+            get { return m_MaximumSize; }
+            set
+            {
+                m_MaximumSize = value;
+                if (Width > m_MaximumSize.Width || Height > m_MaximumSize.Height)
+                {
+                    SetSize(
+                        Math.Min(m_MaximumSize.Width, Width),
+                        Math.Min(m_MaximumSize.Height, Height));
+                }
+            }
+        }
 
         private Size m_MinimumSize = new Size(1, 1);
         private Size m_MaximumSize = new Size(int.MaxValue, int.MaxValue);
@@ -369,18 +395,17 @@ namespace Gwen.Controls
         /// </summary>
         public int Y { get { return m_Bounds.Y; } set { SetPosition(X, value); } }
 
-        // todo: Bottom/Right includes margin but X/Y not?
-
         public int Width { get { return m_Bounds.Width; } set { SetSize(value, Height); } }
         public int Height { get { return m_Bounds.Height; } set { SetSize(Width, value); } }
         public Size Size { get { return m_Bounds.Size; } set { SetSize(value.Width, value.Height); } }
         /// <summary>
         /// The size of the control as understood by its children
         /// This is for containers to implement
+        /// todo: this is clientsize
         /// </summary>
         public virtual Size InnerSize { get { return m_Bounds.Size; } }
-        public int Bottom { get { return m_Bounds.Bottom + m_Margin.Bottom; } }
-        public int Right { get { return m_Bounds.Right + m_Margin.Right; } }
+        public int Bottom { get { return m_Bounds.Bottom; } }
+        public int Right { get { return m_Bounds.Right; } }
 
         /// <summary>
         /// Determines whether margin, padding and bounds outlines for the control will be drawn. Applied recursively to all children.

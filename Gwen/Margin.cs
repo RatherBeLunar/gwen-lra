@@ -60,6 +60,22 @@ namespace Gwen
             return other.Top == Top && other.Bottom == Bottom && other.Left == Left && other.Right == Right;
         }
 
+        public static Margin operator +(Margin lhs, Margin rhs)
+        {
+            return new Margin(
+                lhs.Left + rhs.Left,
+                lhs.Top + rhs.Top,
+                lhs.Right + rhs.Right,
+                lhs.Bottom + rhs.Bottom);
+        }
+        public static Margin operator -(Margin lhs, Margin rhs)
+        {
+            return new Margin(
+                lhs.Left - rhs.Left,
+                lhs.Top - rhs.Top,
+                lhs.Right - rhs.Right,
+                lhs.Bottom - rhs.Bottom);
+        }
         public static bool operator ==(Margin lhs, Margin rhs)
         {
             return lhs.Equals(rhs);
