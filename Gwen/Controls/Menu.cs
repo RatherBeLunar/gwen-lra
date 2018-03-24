@@ -96,11 +96,14 @@ namespace Gwen.Controls
         public virtual void Close()
         {
             //System.Diagnostics.Debug.Print("Menu.Close: {0}", this);
-            ScrollToTop();
-            IsHidden = true;
-            if (DeleteOnClose)
+            if (IsVisible)
             {
-                DelayedDelete();
+                ScrollToTop();
+                IsHidden = true;
+                if (DeleteOnClose)
+                {
+                    DelayedDelete();
+                }
             }
         }
 
