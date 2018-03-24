@@ -699,21 +699,6 @@ namespace Gwen.Controls
         }
 
         /// <summary>
-        /// Closes all menus recursively.
-        /// </summary>
-        public virtual void CloseMenus()
-        {
-            //Debug.Print("Base.CloseMenus: {0}", this);
-
-            // todo: not very efficient with the copying and recursive closing, maybe store currently open menus somewhere (canvas)?
-            var copy = m_Children.ToArray();
-            foreach (ControlBase child in copy)
-            {
-                child.CloseMenus();
-            }
-        }
-
-        /// <summary>
         /// Sets mouse cursor to current cursor.
         /// </summary>
         public virtual void UpdateCursor()

@@ -4,6 +4,7 @@ using Gwen.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Gwen.Controls
 {
@@ -58,6 +59,7 @@ namespace Gwen.Controls
         /// You can do this by checking NeedsRedraw.
         /// </summary>
         public bool NeedsRedraw { get { return m_NeedsRedraw; } set { m_NeedsRedraw = value; } }
+        public HashSet<Menu> OpenMenus = new HashSet<Menu>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Canvas"/> class.
@@ -79,6 +81,20 @@ namespace Gwen.Controls
             m_ToolTip.IsHidden = true;
         }
 
+        /// <summary>
+        /// Closes all menus recursively.
+        /// </summary>
+        public void CloseMenus()
+        {
+            if (OpenMenus.Count > 0)
+            {
+                var copy = OpenMenus.ToArray();
+                foreach (Menu child in copy)
+                {
+                    child.CloseMenus();
+                }
+            }
+        }
         public override void Dispose()
         {
             ProcessDelayedDeletes();

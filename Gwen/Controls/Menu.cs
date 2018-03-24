@@ -26,6 +26,28 @@ namespace Gwen.Controls
                 return Margin.Zero;
             }
         }
+        public override bool IsHidden
+        {
+            get
+            {
+                return base.IsHidden;
+            }
+            set
+            {
+                if (value != base.IsHidden)
+                {
+                    base.IsHidden = value;
+                    UpdateCanvas();
+                }
+            }
+        }
+        internal override bool IsMenuComponent { get { return true; } }
+
+        /// <summary>
+        /// Determines whether the menu should open on mouse hover.
+        /// </summary>
+        protected virtual bool ShouldHoverOpenMenu { get { return true; } }
+
         #endregion Properties
 
         #region Constructors
@@ -40,10 +62,12 @@ namespace Gwen.Controls
             SetBounds(0, 0, 10, 10);
             IconMarginDisabled = false;
 
-            AutoHideBars = false;
+            //   AutoHideBars = false;
+            
             EnableScroll(false, true);
             DeleteOnClose = false;
             AutoSizeToContents = true;
+            UpdateCanvas();
         }
 
         #endregion Constructors
@@ -116,18 +140,16 @@ namespace Gwen.Controls
             var copy = Children.ToArray();
             foreach (var child in copy)
             {
-                if (child is MenuItem)
-                    (child as MenuItem).CloseMenu();
+                if (child is MenuItem menuitem)
+                    menuitem.CloseMenu();
             }
         }
 
         /// <summary>
         /// Closes all submenus and the current menu.
         /// </summary>
-        public override void CloseMenus()
+        public void CloseMenus()
         {
-            //System.Diagnostics.Debug.Print("Menu.CloseMenus: {0}", this);
-            base.CloseMenus();
             CloseAll();
             Close();
         }
@@ -153,16 +175,24 @@ namespace Gwen.Controls
             SetPosition(mouse.X, mouse.Y);
             Invalidate();
         }
+        private void UpdateCanvas()
+        {
+            var canvas = GetCanvas();
+            if (canvas != null)
+            {
+                if (IsHidden)
+                {
+                    canvas.OpenMenus.Remove(this);
+                }
+                else
+                {
+                    canvas.OpenMenus.Add(this);
+                }
+            }
+        }
 
 
         #endregion Methods
-
-        internal override bool IsMenuComponent { get { return true; } }
-
-        /// <summary>
-        /// Determines whether the menu should open on mouse hover.
-        /// </summary>
-        protected virtual bool ShouldHoverOpenMenu { get { return true; } }
 
         public override Size GetSizeToFitContents()
         {
@@ -170,12 +200,7 @@ namespace Gwen.Controls
             if (Y + ret.Height > GetCanvas().Height)
             {
                 ret.Height = GetCanvas().Height - Y;
-                EnableScroll(false, true);
                 ret.Width += VScrollWidth;
-            }
-            else
-            {
-                EnableScroll(false, false);
             }
             return ret;
         }

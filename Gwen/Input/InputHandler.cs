@@ -223,7 +223,7 @@ namespace Gwen.Input
         /// <param name="mouseButton">Mouse button number.</param>
         /// <param name="down">Specifies if the button is down.</param>
         /// <returns>True if handled.</returns>
-        public static bool OnMouseClicked(Controls.ControlBase canvas, int mouseButton, bool down)
+        public static bool OnMouseClicked(Controls.Canvas canvas, int mouseButton, bool down)
         {
             // If we click on a control that isn't a menu we want to close
             // all the open menus. Menus are children of the canvas.
