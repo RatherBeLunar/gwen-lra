@@ -1,11 +1,11 @@
 ﻿using System;
-
-namespace Gwen.Controls.Property
+using Gwen.ControlInternal;
+namespace Gwen.Controls
 {
     /// <summary>
     /// Checkable property.
     /// </summary>
-    public class Check : PropertyBase
+    public class CheckProperty : PropertyBase
     {
         #region Properties
 
@@ -39,13 +39,13 @@ namespace Gwen.Controls.Property
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Check"/> class.
+        /// Initializes a new instance of the <see cref="CheckProperty"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Check(Gwen.Controls.ControlBase parent)
+        public CheckProperty(Gwen.Controls.ControlBase parent)
             : base(parent)
         {
-            m_CheckBox = new Gwen.Controls.CheckBox(this);
+            m_CheckBox = new CheckBoxButton(this);
             m_CheckBox.ShouldDrawBackground = false;
             m_CheckBox.CheckChanged += OnValueChanged;
             m_CheckBox.IsTabable = true;
@@ -80,7 +80,7 @@ namespace Gwen.Controls.Property
 
         #region Fields
 
-        protected readonly Gwen.Controls.CheckBox m_CheckBox;
+        private readonly CheckBoxButton m_CheckBox;
 
         #endregion Fields
     }

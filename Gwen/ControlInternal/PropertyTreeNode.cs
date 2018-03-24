@@ -1,5 +1,6 @@
 ﻿using System;
 using Gwen.Controls;
+using System.Drawing;
 
 namespace Gwen.ControlInternal
 {
@@ -8,6 +9,7 @@ namespace Gwen.ControlInternal
     /// </summary>
     public class PropertyTreeNode : TreeNode
     {
+        internal PropertyTable Table;
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyTreeNode"/> class.
         /// </summary>

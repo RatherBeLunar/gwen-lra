@@ -66,41 +66,37 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="parent">Parent control.</param>
         /// <param name="prop">Property control associated with this row.</param>
-        public PropertyRow(ControlBase parent, Property.PropertyBase prop)
+        public PropertyRow(ControlBase parent, PropertyBase prop)
             : base(parent)
         {
-            PropertyRowLabel label = new PropertyRowLabel(this);
-            label.Dock = Pos.Left;
-            label.Alignment = Pos.Left | Pos.Top;
-            label.Margin = new Margin(2, 2, 0, 0);
-            m_Label = label;
+            m_Label = new PropertyRowLabel(this);
+            m_Label.Dock = Pos.Left;
+            m_Label.Alignment = Pos.Left | Pos.Top;
+            m_Label.Margin = new Margin(2, 2, 0, 2);
+            m_Label.AutoSizeToContents = false;
 
             m_Property = prop;
             m_Property.Parent = this;
-            m_Property.Dock = Pos.Fill;
+            // m_Property.Dock = Pos.Left;
             m_Property.ValueChanged += OnValueChanged;
+            m_Property.AutoSizeToContents = false;
+            SizeToChildren(false, true);
         }
 
         #endregion Constructors
 
         #region Methods
 
-        /// <summary>
-        /// Function invoked before layout, after AutoSizeToContents if applicable
-        /// Is called regardless of needslayout.
-        /// </summary>
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(System.Drawing.Size size)
         {
-            base.PrepareLayout();
             PropertyTable parent = Parent as PropertyTable;
             if (null == parent) return;
 
+            // m_Label.SetBounds(2, 2, parent.SplitWidth, Height - 2);
             m_Label.Width = parent.SplitWidth;
-
-            if (m_Property != null)
-            {
-                Height = Math.Max(m_Property.Height, m_Label.TextHeight);
-            }
+            // m_Property.Width = parent.Width - parent.SplitWidth;
+            base.ProcessLayout(size);
+            m_Property.SetBounds(m_Label.Right + m_Label.Margin.Right, 0, parent.Width - (m_Label.Right + m_Label.Margin.Right), Height);
         }
 
         protected virtual void OnValueChanged(ControlBase control, EventArgs args)
@@ -129,7 +125,7 @@ namespace Gwen.Controls
             }
             /* SORRY */
 
-            skin.DrawPropertyRow(this, m_Label.Right, IsEditing, IsHovered | m_Property.IsHovered);
+            skin.DrawPropertyRow(this, m_Label.Right + m_Label.Margin.Right, IsEditing, IsHovered | m_Property.IsHovered);
         }
 
         #endregion Methods
@@ -137,7 +133,7 @@ namespace Gwen.Controls
         #region Fields
 
         private readonly Label m_Label;
-        private readonly Property.PropertyBase m_Property;
+        private readonly PropertyBase m_Property;
         private bool m_LastEditing;
         private bool m_LastHover;
 

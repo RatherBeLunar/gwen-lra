@@ -1,6 +1,7 @@
 ﻿using Gwen.ControlInternal;
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Gwen.Controls
 {
@@ -44,15 +45,17 @@ namespace Gwen.Controls
         /// Initializes a new instance of the <see cref="PropertyTable"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public PropertyTable(ControlBase parent)
+        public PropertyTable(ControlBase parent, int StartingBarPosition = 80)
             : base(parent)
         {
             m_SplitterBar = new SplitterBar(null);
-            m_SplitterBar.SetPosition(80, 0);
+            m_SplitterBar.SetPosition(StartingBarPosition, 0);
             m_SplitterBar.Cursor = Cursors.SizeWE;
             m_SplitterBar.Dragged += OnSplitterMoved;
             m_SplitterBar.ShouldDrawBackground = false;
             PrivateChildren.Add(m_SplitterBar);
+            m_Panel.AutoSizeToContents = true;
+            Width = StartingBarPosition + 50;
         }
 
         #endregion Constructors
@@ -67,7 +70,7 @@ namespace Gwen.Controls
         /// <returns>Newly created row.</returns>
         public PropertyRow Add(string label, string value = "")
         {
-            return Add(label, new Property.Text(this), value);
+            return Add(label, new TextProperty(this), value);
         }
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace Gwen.Controls
         /// <param name="prop">Property control.</param>
         /// <param name="value">Initial value.</param>
         /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, Property.PropertyBase prop, string value = "")
+        public PropertyRow Add(string label, PropertyBase prop, string value = "")
         {
             PropertyRow row = new PropertyRow(this, prop);
             row.Dock = Pos.Top;
@@ -95,7 +98,7 @@ namespace Gwen.Controls
         /// <param name="label">Property name.</param>
         /// <param name="prop">Property control.</param>
         /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, Property.KeyProperty prop)
+        public PropertyRow Add(string label, KeyProperty prop)
         {
             PropertyRow row = new PropertyRow(this, prop);
             row.Dock = Pos.Top;
@@ -123,22 +126,16 @@ namespace Gwen.Controls
         {
             InvalidateChildren();
         }
-
-        /// <summary>
-        /// Function invoked after layout.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout()
+        protected override void ProcessLayout(System.Drawing.Size size)
         {
-            base.PostLayout();
-            m_SplitterBar.Height = 0;
-
-            if (SizeToChildren(false, true))
-            {
-                InvalidateParent();
-            }
-
-            m_SplitterBar.SetSize(3, Height);
+            m_SplitterBar.SetSize(5, Height);
+            base.ProcessLayout(size);
+        }
+        public override Size GetSizeToFitContents()
+        {
+            var ret = base.GetSizeToFitContents();
+            ret.Width = m_SplitterBar.X + 50;
+            return ret;
         }
 
         #endregion Methods

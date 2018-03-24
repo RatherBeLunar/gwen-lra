@@ -15,7 +15,6 @@ namespace Gwen.Controls
         public PropertyTree(ControlBase parent)
             : base(parent)
         {
-
         }
 
         /// <summary>
@@ -25,15 +24,21 @@ namespace Gwen.Controls
         /// <returns>Newly created control</returns>
         public PropertyTable Add(string label)
         {
-            TreeNode node = new PropertyTreeNode(this);
+            PropertyTreeNode node = new PropertyTreeNode(this);
             node.Text = label;
-            node.Dock = Pos.Top;
-
             PropertyTable props = new PropertyTable(node);
-            props.Dock = Pos.Fill;
+            props.Dock = Pos.Top;
             props.AutoSizeToContents = true;
-
+            node.Table = props;
             return props;
+        }
+        /// <summary>
+        /// Renders the control using specified skin.
+        /// </summary>
+        /// <param name="skin">Skin to use.</param>
+        protected override void Render(Skin.SkinBase skin)
+        {
+            skin.DrawCategoryHolder(this);
         }
     }
 }

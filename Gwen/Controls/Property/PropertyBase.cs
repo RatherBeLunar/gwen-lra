@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Gwen.Controls.Property
+namespace Gwen.Controls
 {
     /// <summary>
     /// Base control for property entry.
     /// </summary>
-    public class PropertyBase : Gwen.Controls.ControlBase
+    public class PropertyBase : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyBase"/> class.

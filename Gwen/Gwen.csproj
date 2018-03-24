@@ -7,12 +7,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{ADDA2F43-96C0-497F-8216-29C67ABC9806}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gwen</RootNamespace>
     <AssemblyName>Gwen</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>obj</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +41,7 @@
     <Compile Include="ControlInternal\Resizer.cs" />
     <Compile Include="ControlInternal\RightArrow.cs" />
     <!-- <Compile Include="ControlInternal\SliderBar.cs" /> -->
-    <!-- <Compile Include="ControlInternal\SplitterBar.cs" /> -->
+    <Compile Include="ControlInternal\SplitterBar.cs" />
     <Compile Include="ControlInternal\TreeNodeLabel.cs" />
     <Compile Include="ControlInternal\TreeToggleButton.cs" />
     <Compile Include="ControlInternal\UpDownButton_Down.cs" />
@@ -59,18 +56,18 @@
     <Compile Include="Controls\EventArguments\ItemSelectedEventArgs.cs" />
     <!-- <Compile Include="Controls\IntSlider.cs" /> -->
     <Compile Include="Controls\MultilineTextBox.cs" />
-    <!-- <Compile Include="Controls\Property\KeyProperty.cs" /> -->
-    <!-- <Compile Include="Controls\Property\LabelProperty.cs" /> -->
+    <Compile Include="Controls\Property\KeyProperty.cs" />
+    <Compile Include="Controls\Property\LabelProperty.cs" />
     <Compile Include="Controls\MessageBox.cs" />
     <!-- <Compile Include="Controls\ProgressBar.cs" /> -->
-    <!-- <Compile Include="Controls\PropertyTable.cs" /> -->
-    <!-- <Compile Include="Controls\PropertyRow.cs" /> -->
-    <!-- <Compile Include="ControlInternal\PropertyRowLabel.cs" /> -->
-    <!-- <Compile Include="Controls\PropertyTree.cs" /> -->
-    <!-- <Compile Include="ControlInternal\PropertyTreeNode.cs" /> -->
-    <!-- <Compile Include="Controls\Property\PropertyBase.cs" /> -->
-    <!-- <Compile Include="Controls\Property\Check.cs" /> -->
-    <!-- <Compile Include="Controls\Property\Text.cs" /> -->
+    <Compile Include="Controls\PropertyTable.cs" />
+    <Compile Include="Controls\PropertyRow.cs" />
+    <Compile Include="ControlInternal\PropertyRowLabel.cs" />
+    <Compile Include="Controls\PropertyTree.cs" />
+    <Compile Include="ControlInternal\PropertyTreeNode.cs" />
+    <Compile Include="Controls\Property\PropertyBase.cs" />
+    <Compile Include="Controls\Property\Check.cs" />
+    <Compile Include="Controls\Property\Text.cs" />
     <Compile Include="Controls\ResizableControl.cs" />
     <!-- <Compile Include="Controls\RichLabel.cs" /> -->
     <Compile Include="Controls\StatusBar.cs" />

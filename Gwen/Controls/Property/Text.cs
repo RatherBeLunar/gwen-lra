@@ -1,19 +1,19 @@
 ﻿using System;
 
-namespace Gwen.Controls.Property
+namespace Gwen.Controls
 {
     /// <summary>
     /// Text property.
     /// </summary>
-    public class Text : PropertyBase
+    public class TextProperty : PropertyBase
     {
         protected readonly TextBox m_TextBox;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Text"/> class.
+        /// Initializes a new instance of the <see cref="TextProperty"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Text(Gwen.Controls.ControlBase parent) : base(parent)
+        public TextProperty(Gwen.Controls.ControlBase parent) : base(parent)
         {
             m_TextBox = new TextBox(this);
             this.Height = m_TextBox.TextHeight;

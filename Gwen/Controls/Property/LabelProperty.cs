@@ -1,7 +1,7 @@
 ﻿using System;
 using Gwen.Skin;
 
-namespace Gwen.Controls.Property
+namespace Gwen.Controls
 {
     /// <summary>
     /// Label property.

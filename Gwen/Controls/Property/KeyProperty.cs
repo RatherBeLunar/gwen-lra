@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gwen.Input;
 
-namespace Gwen.Controls.Property
+namespace Gwen.Controls
 {
     /// <summary>
     /// Text property.
