@@ -7,6 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TestApplication</RootNamespace>
     <AssemblyName>TestApplication</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -42,6 +43,7 @@
     <Compile Include="Tests\LabelTest.cs" />
     <Compile Include="Tests\ContainerTest.cs" />
     <Compile Include="Tests\MenuTest.cs" />
+    <Compile Include="Tests\PropertyTest.cs" />
     <Compile Include="TestContainer.cs" />
     <Compile Include="Tests\TabTest.cs" />
     <Compile Include="Tests\LayoutTest.cs" />

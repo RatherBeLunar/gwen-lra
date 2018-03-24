@@ -68,7 +68,6 @@ namespace TestApplication
             {
                 tab.GetPage("Page 3").RemoveTab();
             };
-
             page = tab.AddPage("stretch");
             page = tab.AddPage("stretch");
             page = tab.AddPage("stretch");

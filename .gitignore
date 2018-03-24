@@ -4,3 +4,4 @@
 *.exe
 **/obj
 *.userprefs
+TestApplication/bin/*

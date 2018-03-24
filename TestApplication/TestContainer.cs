@@ -10,6 +10,7 @@ namespace TestApplication
         // scroll control needs to be not set by percent by controls (tree control scrolls slow af)
         // tree control multi select should only be if holding ctrl, right?
         // window has no font scaling for title
+        // on ishidden change, fire mouseup
         public TestContainer(ControlBase parent) : base(parent)
         {
             Dock = Pos.Fill;
@@ -18,7 +19,7 @@ namespace TestApplication
         }
         public void DbgCreate()
         {
-            var tree = new TreeTest(this);
+            var test = new PropertyTest(this);
         }
         public void CreateStatusbar()
         {
@@ -59,6 +60,8 @@ namespace TestApplication
             var container = new ContainerTest(page);
             page = tabcontrol.AddPage("Menu");
             var menu = new MenuTest(page);
+            page = tabcontrol.AddPage("Property");
+            var prop = new PropertyTest(page);
             page.FocusTab();
         }
     }

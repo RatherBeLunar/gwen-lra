@@ -12,9 +12,11 @@ namespace TestApplication
     {
         Gwen.Input.OpenTK input;
         Canvas Canvas;
-        public Window() : base(500, 600,GraphicsMode.Default,"UI Test")
+        bool _slow = false;
+        bool _steps = false;
+        public Window() : base(500, 600, GraphicsMode.Default, "UI Test")
         {
-            
+
         }
 
 
@@ -60,9 +62,12 @@ namespace TestApplication
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            if (_slow && !_steps)
+                return;
+            _steps = false;
             if (Canvas.Size != ClientSize)
             {
-                Canvas.SetSize(ClientSize.Width,ClientSize.Height);
+                Canvas.SetSize(ClientSize.Width, ClientSize.Height);
             }
             GL.ClearColor(255, 255, 255, 255);
             GL.Clear(ClearBufferMask.ColorBufferBit);
@@ -83,6 +88,14 @@ namespace TestApplication
         {
             base.OnKeyDown(e);
             input.ProcessKeyDown(e);
+            if (e.Key == OpenTK.Input.Key.F12)
+            {
+                _slow = !_slow;
+            }
+            if (e.Key == OpenTK.Input.Key.F11)
+            {
+                _steps = true;
+            }
         }
         protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)
         {
