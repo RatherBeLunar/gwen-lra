@@ -84,7 +84,7 @@ namespace Gwen.Controls
         /// <returns>True if control state changed.</returns>
         public virtual bool SetScrollAmount(float value, bool forceUpdate = false)
         {
-            if (m_ScrollAmount == value && !forceUpdate)
+            if (m_ScrollAmount == value)
                 return false;
             m_ScrollAmount = value;
             Invalidate();

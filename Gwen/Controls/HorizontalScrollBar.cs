@@ -82,7 +82,8 @@ namespace Gwen.Controls
             //Based on our last scroll amount, produce a position for the bar
             if (!m_Bar.IsHeld)
             {
-                SetScrollAmount(ScrollAmount, true);
+                int newX = (int)(ButtonSize + (ScrollAmount * ((Width - m_Bar.Width) - (ButtonSize * 2))));
+                m_Bar.MoveClampToParent(newX, m_Bar.Y);
             }
             base.ProcessLayout(size);
         }
@@ -166,13 +167,6 @@ namespace Gwen.Controls
 
             if (!base.SetScrollAmount(value, forceUpdate))
                 return false;
-
-            if (forceUpdate)
-            {
-                int newX = (int)(ButtonSize + (value * ((Width - m_Bar.Width) - (ButtonSize * 2))));
-                m_Bar.MoveClampToParent(newX, m_Bar.Y);
-            }
-
             return true;
         }
 
