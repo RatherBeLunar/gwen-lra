@@ -152,23 +152,25 @@ namespace Gwen.Controls
                     : base(parent)
         {
             m_ToggleButton = new TreeToggleButton(null);
+            m_ToggleButton.ToolTipProvider = false;
             m_ToggleButton.SetBounds(0, 0, 15, 15);
             m_ToggleButton.Toggled += OnToggleButtonPress;
-           // m_ToggleButton.Dock = Pos.Left;
+            // m_ToggleButton.Dock = Pos.Left;
 
             m_Title = new TreeNodeLabel(null);
+            m_Title.ToolTipProvider = false;
             m_Title.DoubleClicked += OnDoubleClickName;
 
             m_Title.Clicked += OnClickName;
             m_Title.Dock = Pos.Top;
-            m_Title.Margin = new Margin(16,0,0,0);
+            m_Title.Margin = new Margin(16, 0, 0, 0);
             // m_Title.BoundsChanged += 
             PrivateChildren.Insert(0, m_ToggleButton);
             PrivateChildren.Insert(0, m_Title);
             m_Panel.Dock = Pos.Top;
             Layout();//figure out placement before hiding stuff.
-			m_Panel.Hide();
-			m_ToggleButton.Hide();
+            m_Panel.Hide();
+            m_ToggleButton.Hide();
 
             m_Root = parent is TreeControl;
             m_Selected = false;

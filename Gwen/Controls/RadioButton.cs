@@ -58,8 +58,10 @@ namespace Gwen.Controls
             m_RadioButton = new RadioButtonButton(this);
             m_RadioButton.IsTabable = false;
             m_RadioButton.CheckChanged += OnCheckChanged;
+            m_RadioButton.ToolTipProvider = false;
 
             m_Label = new Label(this);
+            m_Label.ToolTipProvider = false;
             m_Label.TextPadding = Padding.Two;
             m_Label.Margin = new Margin(17, 0, 0, 0);
             m_Label.Dock = Pos.Fill;

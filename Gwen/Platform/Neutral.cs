@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Gwen.Platform
 {
@@ -9,7 +10,7 @@ namespace Gwen.Platform
     /// </summary>
     public static class Neutral
     {
-        private static DateTime m_FirstTime = DateTime.Now;
+        private static Stopwatch _timecounter = Stopwatch.StartNew();
 
         /// <summary>
         /// Changes the mouse cursor.
@@ -81,16 +82,9 @@ namespace Gwen.Platform
         /// Gets elapsed time since this class was initalized.
         /// </summary>
         /// <returns>Time interval in seconds.</returns>
-        public static float GetTimeInSeconds()
+        public static double GetTimeInSeconds()
         {
-            //[halfofastaple] Note:
-            //  After 3.8 months, the difference in value will be greater than a second,
-            //  which isn't a problem for most people (who will run this that long?), but
-            //  if it is, we can convert this (and all timestamps that rely on this) to a double, 
-            //  which will grow stale (time difference > 1s) after ~3,168,888 years 
-            //  (that's gotta be good enough, right?)
-            //P.S. someone fix those numbers if I'm wrong.
-            return (float)((DateTime.Now - m_FirstTime).TotalSeconds);
+            return _timecounter.Elapsed.TotalSeconds;
         }
 
         /// <summary>
@@ -104,14 +98,14 @@ namespace Gwen.Platform
         public static bool FileOpen(string title, string startPath, string extension, Action<string> callback)
         {
             var dialog = new OpenFileDialog
-                             {
-                                 Title = title,
-                                 InitialDirectory = startPath,
-                                 DefaultExt = @"*.*",
-                                 Filter = extension,
-                                 CheckPathExists = true,
-                                 Multiselect = false
-                             };
+            {
+                Title = title,
+                InitialDirectory = startPath,
+                DefaultExt = @"*.*",
+                Filter = extension,
+                CheckPathExists = true,
+                Multiselect = false
+            };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 if (callback != null)

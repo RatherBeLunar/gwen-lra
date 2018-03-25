@@ -73,6 +73,7 @@
     <Compile Include="Controls\StatusBar.cs" />
     <Compile Include="Controls\TabStrip.cs" />
     <Compile Include="Controls\TabButton.cs" />
+    <Compile Include="Controls\Tooltip.cs" />
     <!-- <Compile Include="Controls\ColorPicker.cs" /> -->
     <Compile Include="ControlInternal\Dragger.cs" />
     <Compile Include="ControlInternal\CheckBoxButton.cs" />
@@ -132,7 +133,6 @@
     <Compile Include="Skin\Texturing\Bordered.cs" />
     <Compile Include="Skin\Texturing\Single.cs" />
     <Compile Include="Texture.cs" />
-    <Compile Include="ToolTip.cs" />
     <Compile Include="DragDrop\DragAndDrop.cs" />
     <Compile Include="DragDrop\Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

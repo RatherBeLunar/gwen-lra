@@ -990,9 +990,9 @@ namespace Gwen.Controls
             }
 
             // Draw caret
-            float time = Platform.Neutral.GetTimeInSeconds() - m_LastInputTime;
+            var time = Platform.Neutral.GetTimeInSeconds() - m_LastInputTime;
 
-            if ((time % 1.0f) <= 0.5f)
+            if ((time % 1.0) <= 0.5)
             {
                 skin.Renderer.DrawColor = Color.Black;
                 skin.Renderer.DrawFilledRect(m_CaretBounds);
@@ -1003,7 +1003,7 @@ namespace Gwen.Controls
 
         private Point m_CursorEnd;
         private Point m_CursorPos;
-        private float m_LastInputTime;
+        private double m_LastInputTime;
         private bool m_SelectAll;
         private List<string> m_TextLines = new List<string>();
 

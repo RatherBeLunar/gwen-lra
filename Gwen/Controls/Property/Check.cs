@@ -45,7 +45,8 @@ namespace Gwen.Controls
         public CheckProperty(Gwen.Controls.ControlBase parent)
             : base(parent)
         {
-            m_CheckBox = new CheckBoxButton(this);
+            m_CheckBox = new Checkbox(this);
+            m_CheckBox.Text = "";
             m_CheckBox.ShouldDrawBackground = false;
             m_CheckBox.CheckChanged += OnValueChanged;
             m_CheckBox.IsTabable = true;
@@ -80,7 +81,7 @@ namespace Gwen.Controls
 
         #region Fields
 
-        private readonly CheckBoxButton m_CheckBox;
+        private readonly Checkbox m_CheckBox;
 
         #endregion Fields
     }

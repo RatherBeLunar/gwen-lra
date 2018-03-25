@@ -13,8 +13,17 @@ namespace Gwen.Input
     public static class InputHandler
     {
         private static readonly KeyData m_KeyData = new KeyData();
-        private static readonly float[] m_LastClickTime = new float[MaxMouseButtons];
+        private static readonly double[] m_LastClickTime = new double[MaxMouseButtons];
+        private static double m_TooltipCounter;
         private static Point m_LastClickPos;
+        internal static bool CanShowTooltip
+        {
+            get
+            {
+                //wait 300ms for tooltip visibility since mouse move
+                return (Platform.Neutral.GetTimeInSeconds() - m_TooltipCounter) > 0.3;
+            }
+        }
 
         /// <summary>
         /// Control currently hovered by mouse.
@@ -170,10 +179,16 @@ namespace Gwen.Input
         public static void OnMouseMoved(Controls.ControlBase canvas, int x, int y, int dx, int dy)
         {
             // Send input to canvas for study
+            UpdateTooltipCounter();
             MousePosition.X = x;
             MousePosition.Y = y;
 
             UpdateHoveredControl(canvas);
+        }
+        private static void UpdateTooltipCounter()
+        {
+            // math.max in case someone delayed us.
+            m_TooltipCounter = Math.Max(m_TooltipCounter, Platform.Neutral.GetTimeInSeconds());
         }
 
         /// <summary>
@@ -191,7 +206,7 @@ namespace Gwen.Input
             if (null == KeyboardFocus) return;
             if (KeyboardFocus.GetCanvas() != control) return;
 
-            float time = Platform.Neutral.GetTimeInSeconds();
+            var time = Platform.Neutral.GetTimeInSeconds();
 
             //
             // Simulate Key-Repeats
@@ -231,6 +246,9 @@ namespace Gwen.Input
             {
                 canvas.CloseMenus();
             }
+            //increase time for tooltip if the user clicked
+            if (down)
+                m_TooltipCounter = Platform.Neutral.GetTimeInSeconds() + 1;
 
             if (null == HoveredControl) return false;
             if (HoveredControl.GetCanvas() != canvas) return false;
@@ -316,7 +334,7 @@ namespace Gwen.Input
             if (null == KeyboardFocus) return false;
             if (KeyboardFocus.GetCanvas() != canvas) return false;
             if (!KeyboardFocus.IsVisible) return false;
-
+            
             int iKey = (int)key;
             if (down)
             {

@@ -23,7 +23,7 @@ namespace Gwen.Controls
 
         internal ControlBase NextTab;
 
-        internal Label m_ToolTip;
+        internal Tooltip m_ToolTip;
 
         private readonly List<IDisposable> m_DisposeQueue; // dictionary for faster access?
 
@@ -74,10 +74,8 @@ namespace Gwen.Controls
             ShouldDrawBackground = false;
 
             m_DisposeQueue = new List<IDisposable>();
-            m_ToolTip = new Label(this);
+            m_ToolTip = new Tooltip(null);
             m_ToolTip.Name = "canvas_tooltip";
-            m_ToolTip.TextColorOverride = Skin.Colors.TooltipText;
-            m_ToolTip.Padding = new Padding(5, 3, 5, 3);
             m_ToolTip.IsHidden = true;
         }
 
@@ -148,11 +146,12 @@ namespace Gwen.Controls
             }
 
             DoRender(Skin);
-
             DragAndDrop.RenderOverlay(this, Skin);
 
-            Gwen.ToolTip.RenderToolTip(Skin);
-
+            if (m_ToolTip.IsVisible)
+            {
+                m_ToolTip.DoRender(Skin);
+            }
             render.EndClip();
 
             render.End();
@@ -203,8 +202,44 @@ namespace Gwen.Controls
                 NextTab = FirstTab;
 
             InputHandler.OnCanvasThink(this);
+            HandleTooltip();
         }
-
+        private void HandleTooltip()
+        {
+            var hovered = InputHandler.HoveredControl;
+            if (InputHandler.HoveredControl != null && InputHandler.CanShowTooltip)
+            {
+                var tooltip = hovered.GetTooltip();
+                if (!string.IsNullOrEmpty(tooltip))
+                {
+                    if (m_ToolTip.IsHidden)
+                    {
+                        m_ToolTip.IsHidden = false;
+                        if (Children[Children.Count - 1] != m_ToolTip)
+                            m_ToolTip.BringToFront();
+                    }
+                    if (m_ToolTip.Text != tooltip)
+                    {
+                        m_ToolTip.Text = tooltip;
+                        m_ToolTip.Layout();
+                    }
+                    Point mousePos = Input.InputHandler.MousePosition;
+                    var bounds = m_ToolTip.Bounds;
+                    Rectangle offset = Util.FloatRect(mousePos.X - bounds.Width * 0.5f, mousePos.Y - bounds.Height - 10,
+                                    bounds.Width, bounds.Height);
+                    offset = Util.ClampRectToRect(offset, Bounds);
+                    m_ToolTip.SetPosition(offset.X, offset.Y);
+                }
+                else
+                {
+                    m_ToolTip.IsHidden = true;
+                }
+            }
+            else
+            {
+                m_ToolTip.IsHidden = true;
+            }
+        }
         /// <summary>
         /// Adds given control to the delete queue and detaches it from canvas. Don't call from Dispose, it modifies child list.
         /// </summary>

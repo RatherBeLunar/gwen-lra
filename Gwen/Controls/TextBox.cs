@@ -188,7 +188,7 @@ namespace Gwen.Controls
         #region Fields
 
         protected Rectangle m_CaretBounds;
-        protected float m_LastInputTime;
+        protected double m_LastInputTime;
         protected Rectangle m_SelectionBounds;
 
         #endregion Fields
@@ -640,9 +640,9 @@ namespace Gwen.Controls
             }
 
             // Draw caret
-            float time = Platform.Neutral.GetTimeInSeconds() - m_LastInputTime;
+            var time = Platform.Neutral.GetTimeInSeconds() - m_LastInputTime;
 
-            if ((time % 1.0f) <= 0.5f)
+            if ((time % 1.0) <= 0.5)
             {
                 skin.Renderer.DrawColor = Color.Black;
                 skin.Renderer.DrawFilledRect(m_CaretBounds);

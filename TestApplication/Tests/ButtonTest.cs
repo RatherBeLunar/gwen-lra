@@ -8,6 +8,7 @@ namespace TestApplication
         public ButtonTest(ControlBase parent) : base(parent)
         {
             var btn = CreateButton("auto sized button");
+            btn.Tooltip = "With tooltip";
             btn.AutoSizeToContents = true;
             posy += 50;
             btn = CreateButton("auto sized padding button");
@@ -58,8 +59,8 @@ namespace TestApplication
             RadioButtonGroup group = new RadioButtonGroup(Parent);
             group.Text = "radio button group";
             group.SetPosition(posx, posy);
-            group.AddOption("Radio 1");
-            group.AddOption("Radio 2");
+            group.AddOption("Radio 1").Tooltip = "tooltip 1";
+            group.AddOption("Radio 2").Tooltip = "tooltip 2";
             group.AddOption("");
             posy += 100;
         }

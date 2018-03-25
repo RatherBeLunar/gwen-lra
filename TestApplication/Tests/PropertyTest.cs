@@ -14,7 +14,7 @@ namespace TestApplication
             table.Height = 100;
             InitTable(table);
             PropertyTree tree = new PropertyTree(parent);
-            tree.DrawDebugOutlines = true;
+            tree.DrawDebugOutlines = false;
             tree.Height = 100;
             tree.Width = 200;
             tree.Y = 205;
@@ -26,7 +26,7 @@ namespace TestApplication
         }
         private void InitTable(PropertyTable table)
         {
-            table.Add("text", "val");
+            table.Add("text", "val").Tooltip = "Heyy tooltip";
             table.Add("check", new CheckProperty(null));
             table.Add("Key", new KeyProperty(table));
         }

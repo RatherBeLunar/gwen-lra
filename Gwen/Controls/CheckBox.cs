@@ -55,9 +55,11 @@ namespace Gwen.Controls
             this.MinimumSize = new System.Drawing.Size(15, 15);
             AutoSizeToContents = true;
             m_CheckBox = new CheckBoxButton(this);
+            m_CheckBox.ToolTipProvider = false;
             m_CheckBox.IsTabable = false;
             m_CheckBox.CheckChanged += OnCheckChanged;
             m_Label = new Label(this);
+            m_Label.ToolTipProvider = false;
             m_Label.TextPadding = Padding.Two;
             m_Label.Margin = new Margin(17, 0, 0, 0);
             m_Label.Dock = Pos.Fill;

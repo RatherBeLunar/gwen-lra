@@ -427,6 +427,7 @@ namespace Gwen.Controls
         public Color PaddingOutlineColor { get; set; }
         public Color MarginOutlineColor { get; set; }
         public Color BoundsOutlineColor { get; set; }
+        public virtual bool ToolTipProvider { get; set; } = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlBase"/> class.
@@ -485,7 +486,6 @@ namespace Gwen.Controls
                 InputHandler.MouseFocus = null;
 
             DragAndDrop.ControlDeleted(this);
-            Gwen.ToolTip.ControlDeleted(this);
             Animation.Cancel(this);
 
             foreach (ControlBase child in m_Children)
@@ -535,6 +535,13 @@ namespace Gwen.Controls
             return m_Parent.GetCanvas();
         }
 
+        public string GetTooltip()
+        {
+            if (ToolTipProvider)
+                return Tooltip;
+            else
+                return Parent?.GetTooltip();
+        }
         /// <summary>
         /// Enables the control.
         /// </summary>

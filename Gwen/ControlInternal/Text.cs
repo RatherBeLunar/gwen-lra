@@ -109,6 +109,7 @@ namespace Gwen.ControlInternal
             m_String = String.Empty;
             TextColor = Skin.Colors.Label.Default;
             MouseInputEnabled = false;
+            KeyboardInputEnabled = false;
             AutoSizeToContents = true;
             SizeToContents();
         }

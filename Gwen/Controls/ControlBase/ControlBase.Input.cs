@@ -252,11 +252,6 @@ namespace Gwen.Controls
             if (HoverEnter != null)
                 HoverEnter.Invoke(this, EventArgs.Empty);
 
-            if (Tooltip != null)
-                Gwen.ToolTip.Enable(this);
-            else if (Parent != null && Parent.Tooltip != null)
-                Gwen.ToolTip.Enable(Parent);
-
             Redraw();
         }
 
@@ -275,9 +270,6 @@ namespace Gwen.Controls
         {
             if (HoverLeave != null)
                 HoverLeave.Invoke(this, EventArgs.Empty);
-
-            if (Tooltip != null)
-                Gwen.ToolTip.Disable(this);
 
             Redraw();
         }

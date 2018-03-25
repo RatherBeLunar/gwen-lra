@@ -80,6 +80,7 @@ namespace Gwen.Controls
             // m_Property.Dock = Pos.Left;
             m_Property.ValueChanged += OnValueChanged;
             m_Property.AutoSizeToContents = false;
+            m_Property.ToolTipProvider = false;
             SizeToChildren(false, true);
         }
 
@@ -147,10 +148,6 @@ namespace Gwen.Controls
         private void OnHoverChanged()
         {
             m_Label.Redraw();
-            if (!IsHovered)
-            {
-                ToolTip.Disable(this);
-            }
         }
         public override void SetToolTipText(string text)
         {
