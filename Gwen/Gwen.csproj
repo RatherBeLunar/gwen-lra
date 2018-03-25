@@ -66,8 +66,8 @@
     <Compile Include="Controls\PropertyTree.cs" />
     <Compile Include="ControlInternal\PropertyTreeNode.cs" />
     <Compile Include="Controls\Property\PropertyBase.cs" />
-    <Compile Include="Controls\Property\Check.cs" />
-    <Compile Include="Controls\Property\Text.cs" />
+    <Compile Include="Controls\Property\CheckProperty.cs" />
+    <Compile Include="Controls\Property\TextProperty.cs" />
     <Compile Include="Controls\ResizableControl.cs" />
     <!-- <Compile Include="Controls\RichLabel.cs" /> -->
     <Compile Include="Controls\StatusBar.cs" />
