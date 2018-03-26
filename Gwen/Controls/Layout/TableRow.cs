@@ -80,7 +80,10 @@ namespace Gwen.Controls
             foreach (var child in cells)
             {
                 if (child == null)
+                {
+                    ret.Add(0);
                     continue;
+                }
                 Size childsize;
                 childsize = child.GetSizeToFitContents();
                 childsize += child.Margin.Size;

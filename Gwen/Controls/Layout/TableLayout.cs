@@ -11,7 +11,7 @@ namespace Gwen.Controls
     public class TableLayout : ControlBase
     {
         protected List<int> m_rowwidths = new List<int>();
-        private bool m_autosizerows = false;
+        private bool m_autosizerows = true;
         private int m_cols = 0;
         public bool AutoSizeRows
         {
