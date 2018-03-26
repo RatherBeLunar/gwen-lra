@@ -96,6 +96,7 @@ namespace Gwen.Controls
         public override void Dispose()
         {
             ProcessDelayedDeletes();
+            m_ToolTip.Dispose();
             base.Dispose();
         }
 
@@ -207,7 +208,7 @@ namespace Gwen.Controls
         private void HandleTooltip()
         {
             var hovered = InputHandler.HoveredControl;
-            if (InputHandler.HoveredControl != null && InputHandler.CanShowTooltip)
+            if (!InputHandler.IsLeftMouseDown && hovered != null && InputHandler.TooltipTime >= hovered.TooltipDelay)
             {
                 var tooltip = hovered.GetTooltip();
                 if (!string.IsNullOrEmpty(tooltip))
@@ -297,11 +298,11 @@ namespace Gwen.Controls
         /// Handles mouse button events. Called from Input subsystems.
         /// </summary>
         /// <returns>True if handled.</returns>
-        public bool Input_MouseButton(int button, bool down)
+        public bool Input_MouseButton(int button, bool down, int x, int y)
         {
             if (IsHidden) return false;
 
-            return InputHandler.OnMouseClicked(this, button, down);
+            return InputHandler.OnMouseClicked(this, button, down, x, y);
         }
 
         /// <summary>

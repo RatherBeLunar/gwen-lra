@@ -428,6 +428,11 @@ namespace Gwen.Controls
         public Color MarginOutlineColor { get; set; }
         public Color BoundsOutlineColor { get; set; }
         public virtual bool ToolTipProvider { get; set; } = true;
+        /// <summary>
+        /// Delay in milliseconds until a tooltip can pop up
+        /// </summary>
+        /// <returns></returns>
+        public virtual int TooltipDelay => 400;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlBase"/> class.

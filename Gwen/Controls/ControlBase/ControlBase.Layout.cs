@@ -11,7 +11,7 @@ namespace Gwen.Controls
 {
     public partial class ControlBase
     {
-        public static bool LogLayout = false;
+        public static bool LogLayout = true;
         private bool m_AutoSizeToContents;
         private int m_LayoutSuspendedCount = 0;
         internal bool NeedsLayout => m_NeedsLayout;
