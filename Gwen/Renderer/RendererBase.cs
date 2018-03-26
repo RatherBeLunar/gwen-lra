@@ -411,7 +411,7 @@ namespace Gwen.Renderer
         {
             rect.X = m_RenderOffset.X;
             rect.Y = m_RenderOffset.Y;
-
+            
             Rectangle r = rect;
             if (rect.X < m_ClipRegion.X)
             {

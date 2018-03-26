@@ -242,9 +242,6 @@ namespace Gwen.Controls
         protected override bool OnKeySpace(bool down)
         {
             return base.OnKeySpace(down);
-            //if (down)
-            //    OnClicked(0, 0);
-            //return true;
         }
 
         /// <summary>

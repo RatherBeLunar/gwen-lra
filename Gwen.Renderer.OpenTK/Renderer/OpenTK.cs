@@ -495,6 +495,8 @@ namespace Gwen.Renderer
             {
                 Flush();
             }
+            rect.Width = Math.Max(0, rect.Width);
+            rect.Height = Math.Max(0, rect.Height);
 
             if (m_ClipEnabled)
             {

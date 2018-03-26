@@ -78,9 +78,10 @@ namespace Gwen.Skin.Texturing
 
         private void DrawRect(Renderer.RendererBase render, int i, int x, int y, int w, int h)
         {
-            render.DrawTexturedRect(m_Texture,
-                                    new Rectangle(x, y, w, h),
-                                    m_Rects[i].uv[0], m_Rects[i].uv[1], m_Rects[i].uv[2], m_Rects[i].uv[3]);
+            if (w > 0 && h > 0)
+                render.DrawTexturedRect(m_Texture,
+                                        new Rectangle(x, y, w, h),
+                                        m_Rects[i].uv[0], m_Rects[i].uv[1], m_Rects[i].uv[2], m_Rects[i].uv[3]);
         }
 
         private void Init(Texture texture, float x, float y, float w, float h, Margin inMargin, float drawMarginScale = 1.0f)
