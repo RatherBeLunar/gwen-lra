@@ -24,14 +24,15 @@ namespace Gwen.Controls
 
         #region Methods
 
-        protected override float CalculateValue()
+        protected override double CalculateValue()
         {
-            return (float)m_SliderBar.X / (Width - m_SliderBar.Width);
+            return m_SliderBar.X / (double)(Width - m_SliderBar.Width);
         }
 
 
-        protected override void PrepareLayout()
+        protected override void ProcessLayout(Size size)
         {
+            base.ProcessLayout(size);
             m_SliderBar.SetSize(15, Height);
             UpdateBarFromValue();
         }
@@ -56,7 +57,7 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            skin.DrawSlider(this, true, m_SnapToNotches ? m_NotchCount : 0, m_SliderBar.Width);
+            skin.DrawSlider(this, true, m_SnapToNotches && DrawNotches ? m_NotchCount : 0, m_SliderBar.Width);
         }
 
         protected override void UpdateBarFromValue()

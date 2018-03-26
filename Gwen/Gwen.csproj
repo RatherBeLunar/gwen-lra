@@ -40,7 +40,7 @@
     <Compile Include="ControlInternal\Modal.cs" />
     <Compile Include="ControlInternal\Resizer.cs" />
     <Compile Include="ControlInternal\RightArrow.cs" />
-    <!-- <Compile Include="ControlInternal\SliderBar.cs" /> -->
+    <Compile Include="ControlInternal\SliderBar.cs" />
     <Compile Include="ControlInternal\SplitterBar.cs" />
     <Compile Include="ControlInternal\TreeNodeLabel.cs" />
     <Compile Include="ControlInternal\TreeToggleButton.cs" />
@@ -54,7 +54,6 @@
     <!-- <Compile Include="Controls\EnumRadioButtonGroup.cs" /> -->
     <Compile Include="Controls\EventArguments\ClickedEventArgs.cs" />
     <Compile Include="Controls\EventArguments\ItemSelectedEventArgs.cs" />
-    <!-- <Compile Include="Controls\IntSlider.cs" /> -->
     <Compile Include="Controls\MultilineTextBox.cs" />
     <Compile Include="Controls\Property\KeyProperty.cs" />
     <Compile Include="Controls\Property\LabelProperty.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Controls\Canvas.cs" />
     <!-- <Compile Include="Controls\ColorSlider.cs" /> -->
     <Compile Include="Controls\GroupBox.cs" />
-    <!-- <Compile Include="Controls\HorizontalSlider.cs" /> -->
     <!-- <Compile Include="Controls\IColorPicker.cs" /> -->
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\ComboBox.cs" />
@@ -106,7 +104,9 @@
     <Compile Include="ControlInternal\RadioButtonButton.cs" />
     <Compile Include="Controls\RadioButtonGroup.cs" />
     <Compile Include="Controls\ScrollControl.cs" />
-    <!-- <Compile Include="Controls\Slider.cs" /> -->
+    <Compile Include="Controls\Slider.cs" />
+    <Compile Include="Controls\VerticalSlider.cs" />
+    <Compile Include="Controls\HorizontalSlider.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <!-- <Compile Include="Controls\TabTitleBar.cs" /> -->
     <Compile Include="Controls\TextBox.cs" />
@@ -115,7 +115,6 @@
     <Compile Include="Controls\TreeControl.cs" />
     <Compile Include="Controls\TreeNode.cs" />
     <Compile Include="Controls\VerticalScrollBar.cs" />
-    <!-- <Compile Include="Controls\VerticalSlider.cs" /> -->
     <Compile Include="Controls\WindowControl.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="HSV.cs" />

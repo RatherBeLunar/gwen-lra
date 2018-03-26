@@ -24,22 +24,32 @@ namespace Gwen.Controls
         /// <summary>
         /// Maximum value.
         /// </summary>
-        public float Max { get { return m_Max; } set { SetRange(m_Min, value); } }
+        public double Max { get { return m_Max; } set { SetRange(m_Min, value); } }
 
         /// <summary>
         /// Minimum value.
         /// </summary>
-        public float Min { get { return m_Min; } set { SetRange(value, m_Max); } }
+        public double Min { get { return m_Min; } set { SetRange(value, m_Max); } }
 
         /// <summary>
         /// Number of notches on the slider axis.
         /// </summary>
-        public int NotchCount { get { return m_NotchCount; } set { m_NotchCount = value; } }
+        public int NotchCount
+        {
+            get { return m_NotchCount; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("NotchCount cannot be <= 0");
+                m_NotchCount = value;
+            }
+        }
 
         /// <summary>
         /// Determines whether the slider should snap to notches.
         /// </summary>
         public bool SnapToNotches { get { return m_SnapToNotches; } set { m_SnapToNotches = value; } }
+        public bool DrawNotches { get; set; } = true;
 
         public bool Held
         {
@@ -59,13 +69,15 @@ namespace Gwen.Controls
                 m_SliderBar.Tooltip = value;
             }
         }
-
         /// <summary>
         /// Current value.
         /// </summary>
-        public float Value
+        public double Value
         {
-            get { return m_Min + (m_Value * (m_Max - m_Min)); }
+            get
+            {
+                return m_Min + (m_Value * (m_Max - m_Min)); ;
+            }
             set
             {
                 if (value < m_Min) value = m_Min;
@@ -86,10 +98,12 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="min">Minimum value.</param>
         /// <param name="max">Maximum value.</param>
-        public void SetRange(float min, float max)
+        public void SetRange(double min, double max)
         {
+            var denormalized = Value;
             m_Min = min;
             m_Max = max;
+            Value = denormalized;
         }
 
         #endregion Methods
@@ -97,11 +111,11 @@ namespace Gwen.Controls
         #region Fields
 
         protected readonly SliderBar m_SliderBar;
-        protected float m_Max;
-        protected float m_Min;
+        protected double m_Max;
+        protected double m_Min;
         protected int m_NotchCount;
         protected bool m_SnapToNotches;
-        protected float m_Value;
+        protected double m_Value;
 
         #endregion Fields
 
@@ -130,8 +144,7 @@ namespace Gwen.Controls
         }
 
         #endregion Constructors
-
-        protected virtual float CalculateValue()
+        protected virtual double CalculateValue()
         {
             return 0;
         }
@@ -220,28 +233,9 @@ namespace Gwen.Controls
             return true;
         }
 
-        /// <summary>
-        /// Handler invoked on mouse click (left) event.
-        /// </summary>
-        /// <param name="x">X coordinate.</param>
-        /// <param name="y">Y coordinate.</param>
-        /// <param name="down">If set to <c>true</c> mouse button is down.</param>
-        protected override void OnMouseClickedLeft(int x, int y, bool down)
-        {
-            if (!down && Tooltip != null && !Bounds.Contains(x, y))
-            {
-                ToolTip.Disable(m_SliderBar);
-                ToolTip.Disable(this);
-            }
-        }
-
         protected virtual void OnMoved(ControlBase control, EventArgs args)
         {
             SetValueInternal(CalculateValue());
-            if (Tooltip != null)
-            {
-                ToolTip.Enable(this);
-            }
         }
 
         /// <summary>
@@ -256,12 +250,15 @@ namespace Gwen.Controls
             skin.DrawKeyboardHighlight(this, RenderBounds, 0);
         }
 
-        protected virtual void SetValueInternal(float val)
+        protected virtual void SetValueInternal(double val)
         {
             if (m_SnapToNotches)
             {
-                val = (float)Math.Floor((val * m_NotchCount) + 0.5f);
+                // val = Math.Round(val * m_NotchCount);
+                var notches = m_NotchCount;
+                val = (int)Math.Round(val * m_NotchCount);
                 val /= m_NotchCount;
+
             }
 
             if (m_Value != val)

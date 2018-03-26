@@ -27,7 +27,7 @@ namespace Gwen.Controls
             SizeToChildren(true, true);
             Layout();
             m_Button = new Button(Container);
-            m_Button.Text = "Okay"; // todo: parametrize buttons
+            m_Button.Text = "Okay";
             m_Button.Clicked += (o, e) =>
                 {
                     Result = System.Windows.Forms.DialogResult.OK;
