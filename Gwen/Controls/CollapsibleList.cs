@@ -57,8 +57,8 @@ namespace Gwen.Controls
         protected virtual void Add(CollapsibleCategory category)
         {
             category.Parent = this;
-            category.Dock = Pos.Top;
-            category.Margin = new Margin(1, 0, 1, 1);
+            // category.Dock = Pos.Top;
+            // category.Margin = new Margin(1, 0, 1, 1);
             category.Selected += OnCategorySelected;
             category.Collapsed += OnCategoryCollapsed;
             // this relies on fact that category.m_List is set to its parent

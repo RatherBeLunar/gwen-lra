@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Gwen.ControlInternal;
 
 namespace Gwen.Controls
@@ -6,7 +7,7 @@ namespace Gwen.Controls
     /// <summary>
     /// CollapsibleCategory control. Used in CollapsibleList.
     /// </summary>
-    public class CollapsibleCategory : ControlBase
+    public class CollapsibleCategory : Container
     {
         private readonly Button m_HeaderButton;
         private readonly CollapsibleList m_List;
@@ -30,23 +31,34 @@ namespace Gwen.Controls
         /// Invoked when the category collapsed state has been changed (header button has been pressed).
         /// </summary>
 		public event GwenEventHandler<EventArgs> Collapsed;
-
+        protected override Margin PanelMargin
+        {
+            get
+            {
+                return new Margin(1, 0, 1, 5);
+            }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="CollapsibleCategory"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
         public CollapsibleCategory(CollapsibleList parent) : base(parent)
         {
-            m_HeaderButton = new CategoryHeaderButton(this);
+            m_HeaderButton = new CategoryHeaderButton(null);
             m_HeaderButton.Text = "Category Title"; // [omeg] todo: i18n
             m_HeaderButton.Dock = Pos.Top;
-            m_HeaderButton.Height = 20;
             m_HeaderButton.Toggled += OnHeaderToggle;
+            m_HeaderButton.AutoSizeToContents = true;
+            PrivateChildren.Add(m_HeaderButton);
+            m_HeaderButton.SendToBack();
 
             m_List = parent;
 
-            Padding = new Padding(1, 0, 1, 5);
-            SetSize(512, 512);
+            AutoSizeToContents = true;
+            m_Panel.Dock = Pos.Top;
+            m_Panel.AutoSizeToContents = true;
+            this.Dock = Pos.Top;
+            Margin = new Margin(1, 0, 1, 1);
         }
 
         /// <summary>
@@ -73,8 +85,11 @@ namespace Gwen.Controls
         /// <param name="control">Source control.</param>
 		protected virtual void OnHeaderToggle(ControlBase control, EventArgs args)
         {
+            m_Panel.IsHidden = m_HeaderButton.ToggleState;
+            Invalidate();
+            InvalidateParent();
             if (Collapsed != null)
-				Collapsed.Invoke(this, EventArgs.Empty);
+                Collapsed.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -111,8 +126,8 @@ namespace Gwen.Controls
             CategoryButton button = new CategoryButton(this);
             button.Text = name;
             button.Dock = Pos.Top;
-            button.AutoSizeToContents = true;
-            button.Padding = new Padding(5, 2, 2, 2);
+            button.AutoSizeToContents = false;
+            button.Margin = new Margin(5, 2, 2, 2);
             button.Clicked += OnSelected;
 
             return button;
@@ -140,34 +155,6 @@ namespace Gwen.Controls
                     continue;
 
                 button.ToggleState = false;
-            }
-        }
-
-        /// <summary>
-        /// Function invoked after layout.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void PostLayout()
-        {
-            if (IsCollapsed)
-            {
-                Height = m_HeaderButton.Height;
-            }
-            else
-            {
-                SizeToChildren(false, true);
-            }
-
-            // alternate row coloring
-            bool b = true;
-            foreach (ControlBase child in Children)
-            {
-                CategoryButton button = child as CategoryButton;
-                if (button == null)
-                    continue;
-
-                button.m_Alt = b;
-                b = !b;
             }
         }
     }

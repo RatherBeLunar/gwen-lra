@@ -12,6 +12,8 @@ namespace Gwen.ControlInternal
         {
             get
 			{
+                // return base.CurrentColor;
+
 				if (IsDepressed || ToggleState)
                     return Skin.Colors.Category.Header_Closed;
 				else
@@ -25,7 +27,6 @@ namespace Gwen.ControlInternal
         public CategoryHeaderButton(Controls.ControlBase parent)
             : base(parent)
         {
-            AutoSizeToContents = false;
             ShouldDrawBackground = false;
             IsToggle = true;
             Alignment = Pos.Center;

@@ -31,8 +31,8 @@
     <Compile Include="Anim\Size\Height.cs" />
     <Compile Include="Anim\Size\Width.cs" />
     <Compile Include="Anim\TimedAnimation.cs" />
-    <!-- <Compile Include="ControlInternal\CategoryButton.cs" /> -->
-    <!-- <Compile Include="ControlInternal\CategoryHeaderButton.cs" /> -->
+    <Compile Include="ControlInternal\CategoryButton.cs" />
+    <Compile Include="ControlInternal\CategoryHeaderButton.cs" />
     <!-- <Compile Include="ControlInternal\ColorButton.cs" /> -->
     <!-- <Compile Include="ControlInternal\ColorDisplay.cs" /> -->
     <Compile Include="ControlInternal\DownArrow.cs" />
@@ -47,8 +47,8 @@
     <Compile Include="ControlInternal\UpDownButton_Down.cs" />
     <Compile Include="ControlInternal\UpDownButton_Up.cs" />
     <Compile Include="ControlInternal\CloseButton.cs" />
-    <!-- <Compile Include="Controls\CollapsibleCategory.cs" /> -->
-    <!-- <Compile Include="Controls\CollapsibleList.cs" /> -->
+    <Compile Include="Controls\CollapsibleCategory.cs" />
+    <Compile Include="Controls\CollapsibleList.cs" />
     <!-- <Compile Include="Controls\DockBase.cs" /> -->
     <!-- <Compile Include="Controls\DockedTabControl.cs" /> -->
     <!-- <Compile Include="Controls\EnumRadioButtonGroup.cs" /> -->

@@ -19,7 +19,7 @@ namespace TestApplication
         }
         public void DbgCreate()
         {
-            var test = new SliderTest(this);
+            var test = new LabelTest(this);
         }
         public void CreateStatusbar()
         {
@@ -64,6 +64,8 @@ namespace TestApplication
             var prop = new PropertyTest(page);
             page = tabcontrol.AddPage("Slider");
             var slider = new SliderTest(page);
+            page=tabcontrol.AddPage("Category");
+            var cat = new CategoryTest(page);
             page.FocusTab();
         }
     }

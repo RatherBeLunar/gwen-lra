@@ -10,41 +10,40 @@ namespace Gwen.ControlInternal
     {
         internal bool m_Alt; // for alternate coloring
 
-		protected override System.Drawing.Color CurrentColor
-		{
-			get
-			{
-				if (m_Alt)
-				{
-					if (IsDepressed || ToggleState)
-					{
-						return Skin.Colors.Category.LineAlt.Text_Selected;
-					}
-					if (IsHovered)
-					{
-						return Skin.Colors.Category.LineAlt.Text_Hover;
-					}
-					return Skin.Colors.Category.LineAlt.Text;
-				}
+        protected override System.Drawing.Color CurrentColor
+        {
+            get
+            {
+                if (m_Alt)
+                {
+                    if (IsDepressed || ToggleState)
+                    {
+                        return Skin.Colors.Category.LineAlt.Text_Selected;
+                    }
+                    if (IsHovered)
+                    {
+                        return Skin.Colors.Category.LineAlt.Text_Hover;
+                    }
+                    return Skin.Colors.Category.LineAlt.Text;
+                }
 
-				if (IsDepressed || ToggleState)
-				{
-					return Skin.Colors.Category.Line.Text_Selected;
-				}
-				if (IsHovered)
-				{
-					return Skin.Colors.Category.Line.Text_Hover;
-				}
-				return Skin.Colors.Category.Line.Text;
-			}
-		}
+                if (IsDepressed || ToggleState)
+                {
+                    return Skin.Colors.Category.Line.Text_Selected;
+                }
+                if (IsHovered)
+                {
+                    return Skin.Colors.Category.Line.Text_Hover;
+                }
+                return Skin.Colors.Category.Line.Text;
+            }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
         public CategoryButton(Controls.ControlBase parent) : base(parent)
         {
-            AutoSizeToContents = false;
             Alignment = Pos.Left | Pos.CenterV;
             m_Alt = false;
             IsToggle = true;
