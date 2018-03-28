@@ -29,7 +29,7 @@ namespace TestApplication
                                 
                             }
                         },
-                        Dock = Pos.Fill
+                        Dock = Dock.Fill
                     }
                 },
 
@@ -66,7 +66,7 @@ namespace TestApplication
             sp.AutoSizeRows = false;
             // sp.DrawDebugOutlines = true;
             sp.AutoSizeToContents = true;
-            sp.Dock = Pos.Fill;
+            sp.Dock = Dock.Fill;
             var row = sp.CreateRow();
             CreateButton(row.GetCell(0), "autosize").Clicked += (o, e) =>
             {

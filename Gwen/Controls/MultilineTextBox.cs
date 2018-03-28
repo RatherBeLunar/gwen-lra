@@ -156,7 +156,7 @@ namespace Gwen.Controls
             AcceptTabs = true;
 
             m_ScrollControl = new ScrollControl(this);
-            m_ScrollControl.Dock = Pos.Fill;
+            m_ScrollControl.Dock = Dock.Fill;
             m_ScrollControl.EnableScroll(true, true);
             m_ScrollControl.AutoHideBars = true;
             m_ScrollControl.Margin = Margin.One;

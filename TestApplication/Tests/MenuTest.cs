@@ -22,7 +22,7 @@ namespace TestApplication
                 item.Menu.AddItem("item " + i);
 
             FlowLayout flow = new FlowLayout(parent);
-            flow.Dock = Pos.Fill;
+            flow.Dock = Dock.Fill;
             ComboBox cb = new ComboBox(flow);
             cb.AddItem("Test");
             cb.AddItem("Come on combobox");

@@ -17,7 +17,7 @@ namespace Gwen.Controls
         {
             m_TextBox = new TextBox(this);
             this.Height = m_TextBox.TextHeight;
-            m_TextBox.Dock = Pos.Fill;
+            m_TextBox.Dock = Dock.Fill;
             m_TextBox.ShouldDrawBackground = false;
             m_TextBox.TextChanged += OnValueChanged;
         }

@@ -20,7 +20,7 @@ namespace Gwen.Controls
             var marg = m_text.Margin;
             marg.Left = 2;
             m_text.Margin = marg;
-            m_text.Dock = Pos.Fill;
+            m_text.Dock = Dock.Fill;
             m_text.ShouldDrawBackground = false;
         }
         

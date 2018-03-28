@@ -85,7 +85,7 @@ namespace Gwen.Controls
                 if (child.IsHidden)
                     continue;
                 //ignore fill for now, as it uses total free space.
-                if (child.Dock != Pos.Fill)
+                if (child.Dock != Dock.Fill)
                 {
                     var dock = CalculateBounds(child, ref bounds);
                     child.SetBounds(dock);
@@ -96,7 +96,7 @@ namespace Gwen.Controls
                 if (child.IsHidden)
                     continue;
                 // fill uses leftover space
-                if (child.Dock == Pos.Fill)
+                if (child.Dock == Dock.Fill)
                 {
                     child.SetBounds(bounds.X + child.Margin.Left,
                                     bounds.Y + child.Margin.Top,
@@ -139,17 +139,15 @@ namespace Gwen.Controls
             if (shouldlayout)
             {
                 // if we have a dock property, our parent handles sizing us.
-                bool autosize = AutoSizeToContents && Dock == Pos.None;
+                bool autosize = AutoSizeToContents && Dock == Dock.None;
                 if (autosize)
                 {
-                   var sz = ClampSize(this, GetSizeToFitContents());
-                   SetBounds(X, Y, sz.Width, sz.Height);
+                    var sz = ClampSize(this, GetSizeToFitContents());
+                    SetBounds(X, Y, sz.Width, sz.Height);
                     // setbounds can be overridden, so just get size for
                     // processlayout later.
                 }
                 var oldbounds = Bounds;
-                // children can tell us to layout again, we don't want to
-                // hide that.
                 ProcessLayout(oldbounds.Size);
                 if (Bounds.Size != oldbounds.Size)
                 {
@@ -163,7 +161,7 @@ namespace Gwen.Controls
                 }
                 PostLayout();
                 if (LogLayout)
-                Console.WriteLine("Layout performed on " + this.ToString());
+                    Console.WriteLine("Layout performed on " + this.ToString());
             }
             else
             {
@@ -271,7 +269,7 @@ namespace Gwen.Controls
                 if (child.IsHidden)
                     continue;
                 //ignore fill for now, as it uses total free space.
-                if (child.Dock != Pos.Fill)
+                if (child.Dock != Dock.Fill)
                 {
                     var childsize = child.Bounds.Size;
                     if (child.AutoSizeToContents)
@@ -281,7 +279,7 @@ namespace Gwen.Controls
                     childsize = ClampSize(child, childsize);
                     childsize.Width += child.Margin.Left + child.Margin.Right;
                     childsize.Height += child.Margin.Top + child.Margin.Bottom;
-                    if (child.Dock == Pos.None)
+                    if (child.Dock == Dock.None)
                     {
                         // using the childs coordinates has the side effect
                         // of meaning controls in negative space do not count
@@ -293,7 +291,7 @@ namespace Gwen.Controls
                         continue;
                     }
 
-                    if (child.Dock == Pos.Top || child.Dock == Pos.Bottom)
+                    if (child.Dock == Dock.Top || child.Dock == Dock.Bottom)
                     {
                         verticaldock += childsize.Height;
                         size.Height += childsize.Height;
@@ -303,7 +301,7 @@ namespace Gwen.Controls
                             size.Width += childsize.Width - avail;
                         }
                     }
-                    else if (child.Dock == Pos.Right || child.Dock == Pos.Left)
+                    else if (child.Dock == Dock.Right || child.Dock == Dock.Left)
                     {
                         horzdock += childsize.Width;
                         size.Width += childsize.Width;
@@ -360,12 +358,19 @@ namespace Gwen.Controls
                 ret.Size = control.GetSizeToFitContents();
             }
             ret.Size = ClampSize(control, ret.Size);
-            if (control.Dock == Pos.None)
+            if (control.Dock == Dock.None)
             {
                 return ret;
             }
             Margin cm = control.Margin;
-            if (control.Dock == Pos.Left)
+            if (control.Dock == Dock.ContentFill)
+            {
+                ret = new Rectangle(area.X + cm.Left,
+                                  area.Y + cm.Top,
+                                  ret.Width,
+                                  ret.Height);
+            }
+            else if (control.Dock == Dock.Left)
             {
                 ret = new Rectangle(area.X + cm.Left,
                                 area.Y + cm.Top,
@@ -376,7 +381,7 @@ namespace Gwen.Controls
                 area.X += width;
                 area.Width -= width;
             }
-            else if (control.Dock == Pos.Right)
+            else if (control.Dock == Dock.Right)
             {
                 ret = new Rectangle((area.X + area.Width) - ret.Width - cm.Right,
                                 area.Y + cm.Top,
@@ -386,7 +391,7 @@ namespace Gwen.Controls
                 int width = cm.Left + cm.Right + ret.Width;
                 area.Width -= width;
             }
-            else if (control.Dock == Pos.Top)
+            else if (control.Dock == Dock.Top)
             {
                 ret = new Rectangle(area.X + cm.Left,
                                 area.Y + cm.Top,
@@ -397,13 +402,14 @@ namespace Gwen.Controls
                 area.Y += height;
                 area.Height -= height;
             }
-            else if (control.Dock == Pos.Bottom)
+            else if (control.Dock == Dock.Bottom)
             {
                 ret = new Rectangle(area.X + cm.Left,
                                 (area.Y + area.Height) - ret.Height - cm.Bottom,
                                 area.Width - cm.Left - cm.Right,
                                 ret.Height);
-                area.Height -= ret.Height + cm.Bottom + cm.Top;
+                int height = cm.Top + cm.Bottom + ret.Height;
+                area.Height -= height;
             }
             else
             {

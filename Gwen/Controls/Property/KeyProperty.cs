@@ -21,7 +21,7 @@ namespace Gwen.Controls
             keytxt.Alignment = Pos.CenterV | Pos.Left;
             keytxt.KeyboardInputEnabled = false;
             keytxt.MouseInputEnabled = false;
-            keytxt.Dock = Pos.Fill;
+            keytxt.Dock = Dock.Fill;
             keytxt.ShouldDrawBackground = false;
             KeyboardInputEnabled = true;
             MouseInputEnabled = true;

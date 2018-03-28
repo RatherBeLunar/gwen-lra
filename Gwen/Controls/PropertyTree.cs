@@ -28,7 +28,7 @@ namespace Gwen.Controls
             PropertyTreeNode node = new PropertyTreeNode(this);
             node.Text = label;
             PropertyTable props = new PropertyTable(node);
-            props.Dock = Pos.Top;
+            props.Dock = Dock.Top;
             props.AutoSizeToContents = true;
             node.Table = props;
             return props;

@@ -14,7 +14,7 @@ namespace TestApplication
         private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
-            Dock = Pos.Fill;
+            Dock = Dock.Fill;
             CreateStatusbar();
             Create();
         }
@@ -48,8 +48,8 @@ namespace TestApplication
         private ControlBase AddPage(CollapsibleCategory category, string name)
         {
             var btn = category.Add(name);
-            ControlBase panel = new ControlBase(this);
-            panel.Dock = Pos.Fill;
+            Panel panel = new Panel(this);
+            panel.Dock = Dock.Fill;
             panel.Hide();
             btn.UserData = panel;
             category.Selected += CategorySelected;
@@ -59,7 +59,7 @@ namespace TestApplication
         {
             CollapsibleList list = new CollapsibleList(this);
             list.Margin = new Margin(0,0,1,0);
-            list.Dock = Pos.Left;
+            list.Dock = Dock.Left;
             list.AutoSizeToContents = true;
             var cat = list.Add("Basic");
 

@@ -18,15 +18,15 @@ namespace Gwen.Controls
                 {
                 }
             }
-            public override Pos Dock
+            public override Dock Dock
             {
                 get
                 {
-                    return Pos.None;
+                    return Dock.None;
                 }
                 set
                 {
-                    if (value != Pos.None)
+                    if (value != Dock.None)
                         throw new InvalidOperationException(
                             "Cannot set Dock of tablecell");
                 }

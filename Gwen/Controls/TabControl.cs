@@ -42,7 +42,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Current tab strip position.
         /// </summary>
-        public Pos TabStripPosition { get { return m_TabStrip.StripPosition; } set { m_TabStrip.StripPosition = value; } }
+        public Dock TabStripPosition { get { return m_TabStrip.StripPosition; } set { m_TabStrip.StripPosition = value; } }
 
         /// <summary>
         /// Tab strip.
@@ -72,7 +72,7 @@ namespace Gwen.Controls
             m_ScrollOffset = 0;
 
             m_TabStrip = new TabStrip(null);
-            m_TabStrip.StripPosition = Pos.Top;
+            m_TabStrip.StripPosition = Dock.Top;
 
             // Make this some special control?
             m_Scroll[0] = new ScrollBarButton(null);
@@ -128,10 +128,10 @@ namespace Gwen.Controls
             page.Parent = this;
             page.IsHidden = true;
             page.Margin = new Margin(6, 6, 6, 6);
-            page.Dock = Pos.Fill;
+            page.Dock = Dock.Fill;
 
             button.Parent = m_TabStrip;
-            button.Dock = Pos.Left;
+            button.Dock = Dock.Left;
             if (button.TabControl != null)
                 button.TabControl.UnsubscribeTabEvent(button);
             button.TabControl = this;
@@ -255,7 +255,7 @@ namespace Gwen.Controls
             // This is a limitation we should explore.
             // Really TabControl should have derivitives for tabs placed elsewhere where we could specialize 
             // some functions like this for each direction.
-            bool needed = TabsSize.Width > Width && m_TabStrip.Dock == Pos.Top;
+            bool needed = TabsSize.Width > Width && m_TabStrip.Dock == Dock.Top;
 
             m_Scroll[0].IsHidden = !needed;
             m_Scroll[1].IsHidden = !needed;

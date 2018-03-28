@@ -11,6 +11,12 @@ namespace Gwen.Controls
         public System.Windows.Forms.DialogResult Result { get; set; }
         public string Text { get; private set; }
         public bool Modal = false;
+        public static MessageBox Show(Canvas canvas, string text, string title, bool cancancel = false)
+        {
+            var ret = new MessageBox(canvas, text, title, cancancel);
+            ret.ShowCentered();
+            return ret;
+        }
         public MessageBox(Gwen.Controls.ControlBase ctrl, string text, string title, bool cancelbutton = false) : base(ctrl, title)
         {
             var wrapped = Skin.DefaultFont.WordWrap(text, 200);
@@ -20,7 +26,7 @@ namespace Gwen.Controls
             }
             Container = new ControlBase(m_Panel);
             Container.Margin = new Margin(0, 40, 0, 5);
-            Container.Dock = Pos.Bottom;
+            Container.Dock = Dock.Bottom;
             Container.Height = 30;
             m_Panel.Layout();
             m_Panel.SizeToChildren(true, true);
@@ -36,13 +42,13 @@ namespace Gwen.Controls
                 };
             m_Button.Margin = Margin.One;
             m_Button.Width = 70;
-            m_Button.Dock = Pos.Right;
+            m_Button.Dock = Dock.Right;
             Container.SizeToChildren(false, true);
             if (cancelbutton)
             {
                 Button btn = new Button(Container);
                 btn.Margin = new Margin(1, 1, 7, 1);
-                btn.Dock = Pos.Right;
+                btn.Dock = Dock.Right;
                 btn.Name = "Cancel";
                 btn.Text = "Cancel";
                 btn.Width = 70;
@@ -67,7 +73,7 @@ namespace Gwen.Controls
             Label add = new Label(m_Panel);
             add.Margin = new Margin(0, 0, 0, 0);
             add.Alignment = Pos.CenterH | Pos.Top;
-            add.Dock = Pos.Top;
+            add.Dock = Dock.Top;
             add.AutoSizeToContents = true;
             add.Text = line;
         }

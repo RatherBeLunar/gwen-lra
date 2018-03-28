@@ -55,10 +55,10 @@ namespace Gwen.Controls
         protected override void ProcessLayout(Size size)
         {
             m_ScrollButton[0].Height = size.Width;
-            m_ScrollButton[0].Dock = Pos.Top;
+            m_ScrollButton[0].Dock = Dock.Top;
 
             m_ScrollButton[1].Height = size.Width;
-            m_ScrollButton[1].Dock = Pos.Bottom;
+            m_ScrollButton[1].Dock = Dock.Bottom;
 
             m_Bar.Width = ButtonSize;
             m_Bar.Padding = new Padding(0, ButtonSize, 0, ButtonSize);

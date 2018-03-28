@@ -21,10 +21,10 @@ namespace Gwen.Controls
         public DockedTabControl(ControlBase parent)
             : base(parent)
         {
-            Dock = Pos.Fill;
+            Dock = Dock.Fill;
 
             m_TitleBar = new TabTitleBar(this);
-            m_TitleBar.Dock = Pos.Top;
+            m_TitleBar.Dock = Dock.Top;
             m_TitleBar.IsHidden = true;
         }
 

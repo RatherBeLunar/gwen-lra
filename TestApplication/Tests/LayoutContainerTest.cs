@@ -17,7 +17,7 @@ namespace TestApplication
             FlowLayout sp = new FlowLayout(gb);
             // sp.DrawDebugOutlines = true;
             sp.AutoSizeToContents = true;
-            sp.Dock = Pos.Top;
+            sp.Dock = Dock.Top;
             CreateButton(sp, "Test 1");
             CreateButton(sp, "Test 2");
             CreateButton(sp, "Test 3");
@@ -35,7 +35,7 @@ namespace TestApplication
             sp.AutoSizeRows = false;
             // sp.DrawDebugOutlines = true;
             sp.AutoSizeToContents = true;
-            sp.Dock = Pos.Fill;
+            sp.Dock = Dock.Fill;
             var row = sp.CreateRow();
             CreateButton(row.GetCell(0), "autosize").Clicked += (o, e) =>
             {

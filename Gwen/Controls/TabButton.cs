@@ -81,7 +81,21 @@ namespace Gwen.Controls
         protected override void Render(Skin.SkinBase skin)
         {
             base.Render(skin);
-            skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
+            switch(m_Control.TabStrip.Dock)
+            {
+                case Dock.Top:
+                    skin.DrawTabButton(this, IsActive, Pos.Top);
+                    break;
+                case Dock.Left:
+                    skin.DrawTabButton(this, IsActive, Pos.Left);
+                    break;
+                case Dock.Bottom:
+                    skin.DrawTabButton(this, IsActive, Pos.Bottom);
+                    break;
+                case Dock.Right:
+                    skin.DrawTabButton(this, IsActive, Pos.Right);
+                    break;
+            }
         }
 
         /// <summary>

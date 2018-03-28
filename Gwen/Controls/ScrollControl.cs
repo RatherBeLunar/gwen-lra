@@ -110,19 +110,19 @@ namespace Gwen.Controls
             : base(parent)
         {
             m_VerticalScrollBar = new VerticalScrollBar(null);
-            m_VerticalScrollBar.Dock = Pos.Right;
+            m_VerticalScrollBar.Dock = Dock.Right;
             m_VerticalScrollBar.BarMoved += VBarMoved;
             m_CanScrollV = true;
             m_VerticalScrollBar.NudgeAmount = 30;
 
             m_HorizontalScrollBar = new HorizontalScrollBar(null);
-            m_HorizontalScrollBar.Dock = Pos.Bottom;
+            m_HorizontalScrollBar.Dock = Dock.Bottom;
             m_HorizontalScrollBar.BarMoved += HBarMoved;
             m_CanScrollH = true;
             m_HorizontalScrollBar.NudgeAmount = 30;
             PrivateChildren.Add(m_VerticalScrollBar);
             PrivateChildren.Add(m_HorizontalScrollBar);
-            m_Panel.Dock = Pos.None;
+            m_Panel.Dock = Dock.None;
             SendChildToBack(m_Panel);
             m_Panel.AutoSizeToContents = true;
             m_AutoHideBars = true;

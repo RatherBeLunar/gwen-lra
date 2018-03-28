@@ -16,7 +16,7 @@ namespace Gwen.Controls
 			AutoSizeToContents = false;
 
             Height = 22;
-            Dock = Pos.Bottom;
+            Dock = Dock.Bottom;
             Padding = Padding.Two;
             //Text = "Status Bar"; // [omeg] todo i18n
             Alignment = Pos.Left | Pos.CenterV;
@@ -30,7 +30,7 @@ namespace Gwen.Controls
         public void AddControl(ControlBase control, bool right)
         {
             control.Parent = this;
-            control.Dock = right ? Pos.Right : Pos.Left;
+            control.Dock = right ? Dock.Right : Dock.Left;
         }
 
         /// <summary>

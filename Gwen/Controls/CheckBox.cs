@@ -62,7 +62,7 @@ namespace Gwen.Controls
             m_Label.ToolTipProvider = false;
             m_Label.TextPadding = Padding.Two;
             m_Label.Margin = new Margin(17, 0, 0, 0);
-            m_Label.Dock = Pos.Fill;
+            m_Label.Dock = Dock.Fill;
             m_Label.Clicked += delegate (ControlBase Control, ClickedEventArgs args) { m_CheckBox.Press(Control); };
             m_Label.IsTabable = false;
             Text = "";

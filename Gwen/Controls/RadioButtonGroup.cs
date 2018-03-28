@@ -72,7 +72,7 @@ namespace Gwen.Controls
             lrb.Name = optionName;
             lrb.Text = text;
             lrb.Checked += OnRadioClicked;
-            lrb.Dock = Pos.Top;
+            lrb.Dock = Dock.Top;
             lrb.Margin = new Margin(0, 0, 0, 1); // 1 bottom
             lrb.KeyboardInputEnabled = false; // todo: true?
             lrb.IsTabable = true;

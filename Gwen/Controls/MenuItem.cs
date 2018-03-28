@@ -233,7 +233,7 @@ namespace Gwen.Controls
                 return;
 
             m_Accelerator = new Label(this);
-            m_Accelerator.Dock = Pos.Right;
+            m_Accelerator.Dock = Dock.Right;
             m_Accelerator.Alignment = Pos.Right | Pos.CenterV;
             m_Accelerator.Text = acc;
             m_Accelerator.Margin = new Margin(0, 0, 16, 0);

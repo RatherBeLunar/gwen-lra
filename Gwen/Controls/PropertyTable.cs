@@ -83,7 +83,7 @@ namespace Gwen.Controls
         public PropertyRow Add(string label, PropertyBase prop, string value = "")
         {
             PropertyRow row = new PropertyRow(this, prop);
-            row.Dock = Pos.Top;
+            row.Dock = Dock.Top;
             row.Label = label;
             row.ValueChanged += OnRowValueChanged;
 
@@ -101,7 +101,7 @@ namespace Gwen.Controls
         public PropertyRow Add(string label, KeyProperty prop)
         {
             PropertyRow row = new PropertyRow(this, prop);
-            row.Dock = Pos.Top;
+            row.Dock = Dock.Top;
             row.Label = label;
             row.ValueChanged += OnRowValueChanged;
 

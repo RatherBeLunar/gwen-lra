@@ -9,7 +9,7 @@ namespace TestApplication
         public CategoryTest(ControlBase parent) : base(parent)
         {
             FlowLayout container = new FlowLayout(parent);
-            container.Dock = Pos.Fill;
+            container.Dock = Dock.Fill;
             CollapsibleList list = new CollapsibleList(container);
             // list.DrawDebugOutlines = true;
             list.Width = 200;

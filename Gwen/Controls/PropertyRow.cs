@@ -70,14 +70,14 @@ namespace Gwen.Controls
             : base(parent)
         {
             m_Label = new PropertyRowLabel(this);
-            m_Label.Dock = Pos.Left;
+            m_Label.Dock = Dock.Left;
             m_Label.Alignment = Pos.Left | Pos.Top;
             m_Label.Margin = new Margin(2, 2, 0, 2);
             m_Label.AutoSizeToContents = false;
 
             m_Property = prop;
             m_Property.Parent = this;
-            // m_Property.Dock = Pos.Left;
+            // m_Property.Dock = Dock.Left;
             m_Property.ValueChanged += OnValueChanged;
             m_Property.AutoSizeToContents = false;
             m_Property.ToolTipProvider = false;

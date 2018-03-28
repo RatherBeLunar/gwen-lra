@@ -73,7 +73,7 @@ namespace Gwen.Controls
             SetSize(100, 20);
 
             m_Splitter = new Splitter(this);
-            m_Splitter.Dock = Pos.Right;
+            m_Splitter.Dock = Dock.Right;
             m_Splitter.SetSize(13, 13);
 
             m_Up = new UpDownButton_Up(m_Splitter);

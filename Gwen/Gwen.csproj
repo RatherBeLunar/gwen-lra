@@ -126,6 +126,7 @@
     <Compile Include="Key.cs" />
     <Compile Include="Platform\Windows.cs" />
     <Compile Include="Pos.cs" />
+    <Compile Include="Dock.cs" />
     <Compile Include="Platform\Neutral.cs" />
     <Compile Include="Skin\Simple.cs" />
     <Compile Include="Skin\SkinColors.cs" />

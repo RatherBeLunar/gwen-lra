@@ -80,7 +80,7 @@ namespace Gwen.Controls
         public virtual void AddDivider()
         {
             MenuDivider divider = new MenuDivider(this);
-            divider.Dock = Pos.Top;
+            divider.Dock = Dock.Top;
             divider.Margin = new Margin(IconMarginDisabled ? 0 : 24, 0, 4, 0);
         }
 
@@ -212,7 +212,7 @@ namespace Gwen.Controls
         protected virtual void OnAddItem(MenuItem item)
         {
             item.TextPadding = new Padding(IconMarginDisabled ? 0 : 24, 0, 16, 0);
-            item.Dock = Pos.Top;
+            item.Dock = Dock.Top;
             item.Alignment = Pos.CenterV | Pos.Left;
             item.HoverEnter += OnHoverItem;
             item.SizeToChildren();

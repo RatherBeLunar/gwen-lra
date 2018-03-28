@@ -10,7 +10,7 @@ namespace TestApplication
         {
             TableLayout table = new TableLayout(parent);
             table.ColumnCount = 2;
-            // table.Dock = Pos.Fill;
+            // table.Dock = Dock.Fill;
             table.Width = 500;
             table.Height = 500;
             var row = table.CreateRow();

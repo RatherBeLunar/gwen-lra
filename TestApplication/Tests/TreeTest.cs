@@ -9,7 +9,7 @@ namespace TestApplication
         public TreeTest(ControlBase parent) : base(parent)
         {
             TreeControl tree = new TreeControl(parent);
-            tree.Dock = Pos.Fill;
+            tree.Dock = Dock.Fill;
             tree.AllowMultiSelect = true;
             for (int i = 0; i < 10; i++)
             {

@@ -54,7 +54,7 @@ namespace Gwen.Controls
         public Container(ControlBase parent) : base(parent)
         {
             m_Panel = new Panel(null);
-            m_Panel.Dock = Pos.Fill;
+            m_Panel.Dock = Dock.Fill;
             PrivateChildren.Add(m_Panel);
             this.BoundsOutlineColor = Color.Cyan;
         }

@@ -40,19 +40,19 @@ namespace Gwen.Controls
         /// <summary>
         /// Strip position (top/left/right/bottom).
         /// </summary>
-        public Pos StripPosition
+        public Dock StripPosition
         {
             get { return Dock; }
             set
             {
                 Dock = value;
-                if (Dock == Pos.Top)
+                if (Dock == Dock.Top)
                     Padding = new Padding(5, 0, 0, 0);
-                if (Dock == Pos.Left)
+                if (Dock == Dock.Left)
                     Padding = new Padding(0, 5, 0, 0);
-                if (Dock == Pos.Bottom)
+                if (Dock == Dock.Bottom)
                     Padding = new Padding(5, 0, 0, 0);
-                if (Dock == Pos.Right)
+                if (Dock == Dock.Right)
                     Padding = new Padding(0, 5, 0, 0);
             }
         }
@@ -122,28 +122,28 @@ namespace Gwen.Controls
             if (Children.Count == 0 || !(child is TabButton))
                 return;//???
             var first = child == Children[0];
-            if (Dock == Pos.Top)
+            if (Dock == Dock.Top)
             {
                 child.Margin = new Margin(first ? 0 : -1, 0, 0, 0);
-                child.Dock = Pos.Left;
+                child.Dock = Dock.Left;
             }
 
-            if (Dock == Pos.Left)
+            if (Dock == Dock.Left)
             {
                 child.Margin = new Margin(0, first ? 0 : -1, 0, 0);
-                child.Dock = Pos.Top;
+                child.Dock = Dock.Top;
             }
 
-            if (Dock == Pos.Right)
+            if (Dock == Dock.Right)
             {
                 child.Margin = new Margin(0, first ? 0 : -1, 0, 0);
-                child.Dock = Pos.Top; ;
+                child.Dock = Dock.Top; ;
             }
 
-            if (Dock == Pos.Bottom)
+            if (Dock == Dock.Bottom)
             {
                 child.Margin = new Margin(first ? 0 : -1, 0, 0, 0);
-                child.Dock = Pos.Left;
+                child.Dock = Dock.Left;
             }
         }
         protected override void OnBoundsChanged(Rectangle oldBounds)
@@ -191,11 +191,11 @@ namespace Gwen.Controls
                 {
                     m_TabDragControl.MoveBy(droppedOn.Width - 1, 0);
                 }
-                m_TabDragControl.Dock = Pos.None;
+                m_TabDragControl.Dock = Dock.None;
             }
             else
             {
-                m_TabDragControl.Dock = Pos.Left;
+                m_TabDragControl.Dock = Dock.Left;
                 m_TabDragControl.BringToFront();
             }
         }

@@ -46,7 +46,7 @@ namespace Gwen.Controls
         {
             m_HeaderButton = new CategoryHeaderButton(null);
             m_HeaderButton.Text = "Category Title"; // [omeg] todo: i18n
-            m_HeaderButton.Dock = Pos.Top;
+            m_HeaderButton.Dock = Dock.Top;
             m_HeaderButton.Toggled += OnHeaderToggle;
             m_HeaderButton.AutoSizeToContents = true;
             PrivateChildren.Add(m_HeaderButton);
@@ -55,9 +55,9 @@ namespace Gwen.Controls
             m_List = parent;
 
             AutoSizeToContents = true;
-            m_Panel.Dock = Pos.Top;
+            m_Panel.Dock = Dock.Top;
             m_Panel.AutoSizeToContents = true;
-            this.Dock = Pos.Top;
+            this.Dock = Dock.Top;
             Margin = new Margin(2, 2, 2, 2);
         }
 
@@ -125,7 +125,7 @@ namespace Gwen.Controls
         {
             CategoryButton button = new CategoryButton(this);
             button.Text = name;
-            button.Dock = Pos.Top;
+            button.Dock = Dock.Top;
             button.AutoSizeToContents = true;
             button.Margin = new Margin(2, 0, 2, 0);
             button.Clicked += OnSelected;

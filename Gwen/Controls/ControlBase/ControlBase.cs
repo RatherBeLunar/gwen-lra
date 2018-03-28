@@ -41,7 +41,7 @@ namespace Gwen.Controls
         private bool m_KeyboardInputEnabled;
         private bool m_DrawBackground;
 
-        private Pos m_Dock;
+        private Dock m_Dock;
 
         private Cursor m_Cursor;
 
@@ -113,7 +113,7 @@ namespace Gwen.Controls
         /// <summary>
         /// Dock position.
         /// </summary>
-        public virtual Pos Dock
+        public virtual Dock Dock
         {
             get { return m_Dock; }
             set
@@ -122,12 +122,13 @@ namespace Gwen.Controls
                     return;
                 switch (value)
                 {
-                    case Pos.Right:
-                    case Pos.Top:
-                    case Pos.Bottom:
-                    case Pos.Fill:
-                    case Pos.None:
-                    case Pos.Left:
+                    case Dock.Content:
+                    case Dock.Right:
+                    case Dock.Top:
+                    case Dock.Bottom:
+                    case Dock.Fill:
+                    case Dock.None:
+                    case Dock.Left:
                         m_Dock = value;
                         Invalidate();
                         InvalidateParent();

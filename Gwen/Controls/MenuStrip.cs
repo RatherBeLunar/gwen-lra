@@ -16,7 +16,7 @@ namespace Gwen.Controls
             : base(parent)
         {
             SetBounds(0, 0, 200, 22);
-            Dock = Pos.Top;
+            Dock = Dock.Top;
             m_Panel.Padding = new Padding(0, 0, 0, 0);
         }
 
@@ -59,7 +59,7 @@ namespace Gwen.Controls
         /// <param name="item">Item added.</param>
         protected override void OnAddItem(MenuItem item)
         {
-            item.Dock = Pos.Left;
+            item.Dock = Dock.Left;
             item.TextPadding = new Padding(5, 0, 5, 0);
             item.Padding = new Padding(10, 5, 10, 5);
             item.IsOnStrip = true;

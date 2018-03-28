@@ -132,7 +132,7 @@ namespace Gwen.Controls
             Margin = Margin.One;
 
             m_Table = new Table(this);
-            m_Table.Dock = Pos.Fill;
+            m_Table.Dock = Dock.Fill;
             m_Table.ColumnCount = 1;
             m_Table.BoundsChanged += TableResized;
 
@@ -349,7 +349,7 @@ namespace Gwen.Controls
             m_SizeToContents = true;
             // docking interferes with autosizing so we disable it until sizing is done
             m_OldDock = m_Table.Dock;
-            m_Table.Dock = Pos.None;
+            m_Table.Dock = Dock.None;
             m_Table.SizeToContents(0); // autosize without constraints
         }
 
