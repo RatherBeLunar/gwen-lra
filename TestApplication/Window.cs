@@ -45,9 +45,9 @@ namespace TestApplication
                 fontpng);
 
             var skin = new Gwen.Skin.TexturedBase(renderer,
-                skinpng,
-                colorxml)
+                skinpng)
             { DefaultFont = gamefont_15 };
+            // var skin = new Gwen.Skin.Simple(renderer) { DefaultFont = gamefont_15 };
             Canvas = new Canvas(skin);
             Canvas.SetSize(ClientSize.Width, ClientSize.Height);
             input.Initialize(Canvas);

@@ -10,7 +10,6 @@ namespace TestApplication
             TabControl tab = new TabControl(parent);
             tab.Width = 300;
             tab.Height = 200;
-            tab.SetPosition(100, 100);
             var page = tab.AddPage("Layout Test");
             Label l = new Label(page);
             l.Text = "0,0 100x100";
@@ -68,7 +67,8 @@ namespace TestApplication
             {
                 tab.GetPage("Page 3").RemoveTab();
             };
-            page = tab.AddPage("stretch");
+            page = tab.AddPage("disabled");
+            page.TabButton.IsDisabled = true;
             page = tab.AddPage("stretch");
             page = tab.AddPage("stretch");
         }

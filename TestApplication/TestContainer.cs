@@ -11,6 +11,7 @@ namespace TestApplication
         // tree control multi select should only be if holding ctrl, right?
         // window has no font scaling for title
         // on ishidden change, fire mouseup
+        private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
             Dock = Pos.Fill;
@@ -32,41 +33,73 @@ namespace TestApplication
             br.Text = "Right button";
             sb.AddControl(br, true);
         }
+        private void CategorySelected(object sender, ItemSelectedEventArgs e)
+        {
+            if (_focus != e.SelectedItem.UserData)
+            {
+                if (_focus != null)
+                {
+                    _focus.Hide();
+                }
+                _focus = (ControlBase)e.SelectedItem.UserData;
+                _focus.Show();
+            }
+        }
+        private ControlBase AddPage(CollapsibleCategory category, string name)
+        {
+            var btn = category.Add(name);
+            ControlBase panel = new ControlBase(this);
+            panel.Dock = Pos.Fill;
+            panel.Hide();
+            btn.UserData = panel;
+            category.Selected += CategorySelected;
+            return panel;
+        }
         public void Create()
         {
-            TabControl tabcontrol = new TabControl(this);
-            tabcontrol.Dock = Pos.Fill;
+            CollapsibleList list = new CollapsibleList(this);
+            list.Margin = new Margin(0,0,1,0);
+            list.Dock = Pos.Left;
+            list.AutoSizeToContents = true;
+            var cat = list.Add("Basic");
 
-            var page = tabcontrol.AddPage("Labels");
+            var page = AddPage(cat, "Labels");
             var label = new LabelTest(page);
 
-            page = tabcontrol.AddPage("Buttons");
+            page = AddPage(cat, "Buttons");
             var btn = new ButtonTest(page);
 
-            page = tabcontrol.AddPage("Tab Control");
+            page = AddPage(cat, "Layout");
+            var layout = new LayoutTest(page);
+            page = AddPage(cat, "Textbox");
+            var textbox = new TextBoxTest(page);
+            page = AddPage(cat, "Slider");
+            var slider = new SliderTest(page);
+            cat = list.Add("Containers");
+
+            page = AddPage(cat, "Container");
+            var container = new ContainerTest(page);
+
+            page = AddPage(cat, "Tab Control");
             var tab = new TabTest(page);
 
-            page = tabcontrol.AddPage("Layout");
-            var layout = new LayoutTest(page);
-
-            page = tabcontrol.AddPage("TreeControl");
+            page = AddPage(cat, "TreeControl");
             var tree = new TreeTest(page);
 
-            page = tabcontrol.AddPage("Textbox");
-            var textbox = new TextBoxTest(page);
-            page = tabcontrol.AddPage("Window");
+            page = AddPage(cat, "Window");
             var window = new WindowTest(page);
-            page = tabcontrol.AddPage("Container");
-            var container = new ContainerTest(page);
-            page = tabcontrol.AddPage("Menu");
+
+            cat = list.Add("Composite controls");
+
+            page = AddPage(cat, "Menu");
             var menu = new MenuTest(page);
-            page = tabcontrol.AddPage("Property");
+            page = AddPage(cat, "Property");
             var prop = new PropertyTest(page);
-            page = tabcontrol.AddPage("Slider");
-            var slider = new SliderTest(page);
-            page=tabcontrol.AddPage("Category");
-            var cat = new CategoryTest(page);
-            page.FocusTab();
+            page = AddPage(cat, "Category");
+            var collapse = new CategoryTest(page);
+            _focus = page;
+            _focus.Show();
+            //    page.FocusTab();
         }
     }
 }
