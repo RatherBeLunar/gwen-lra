@@ -298,29 +298,32 @@ namespace Gwen.Input
                 // to the top when one of their children have been clicked.
                 if (down)
                     HoveredControl.Touch();
-                switch (mouseButton)
+                if (!HoveredControl.IsDisabled)
                 {
-                    case 0:
-                        {
-                            if (DragAndDrop.OnMouseButton(HoveredControl, MousePosition.X, MousePosition.Y, down))
+                    switch (mouseButton)
+                    {
+                        case 0:
+                            {
+                                if (DragAndDrop.OnMouseButton(HoveredControl, MousePosition.X, MousePosition.Y, down))
+                                    return true;
+
+                                if (isDoubleClick)
+                                    HoveredControl.InputMouseDoubleClickedLeft(MousePosition.X, MousePosition.Y);
+                                else
+                                    HoveredControl.InputMouseClickedLeft(MousePosition.X, MousePosition.Y, down);
+                                UpdateHoveredControl(canvas);
                                 return true;
+                            }
 
-                            if (isDoubleClick)
-                                HoveredControl.InputMouseDoubleClickedLeft(MousePosition.X, MousePosition.Y);
-                            else
-                                HoveredControl.InputMouseClickedLeft(MousePosition.X, MousePosition.Y, down);
-                            UpdateHoveredControl(canvas);
-                            return true;
-                        }
-
-                    case 1:
-                        {
-                            if (isDoubleClick)
-                                HoveredControl.InputMouseDoubleClickedRight(MousePosition.X, MousePosition.Y);
-                            else
-                                HoveredControl.InputMouseClickedRight(MousePosition.X, MousePosition.Y, down);
-                            return true;
-                        }
+                        case 1:
+                            {
+                                if (isDoubleClick)
+                                    HoveredControl.InputMouseDoubleClickedRight(MousePosition.X, MousePosition.Y);
+                                else
+                                    HoveredControl.InputMouseClickedRight(MousePosition.X, MousePosition.Y, down);
+                                return true;
+                            }
+                    }
                 }
 
                 return false;
@@ -343,6 +346,7 @@ namespace Gwen.Input
             if (null == KeyboardFocus) return false;
             if (KeyboardFocus.GetCanvas() != canvas) return false;
             if (!KeyboardFocus.IsVisible) return false;
+            if (KeyboardFocus.IsDisabled) return false;
 
             int iKey = (int)key;
             if (down)
@@ -375,36 +379,35 @@ namespace Gwen.Input
 
         private static void UpdateHoveredControl(Controls.ControlBase inCanvas)
         {
+            Controls.ControlBase hovered;
+
             if (MouseFocus != null && MouseFocus.GetCanvas() == inCanvas)
+            {
+                hovered = MouseFocus;
+            }
+            else
+            {
+                hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
+            }
+
+            if (HoveredControl != hovered)
             {
                 if (HoveredControl != null)
                 {
                     var oldHover = HoveredControl;
                     HoveredControl = null;
                     oldHover.Redraw();
+                    oldHover.InputMouseLeft();
+                    if (oldHover.IsMouseDepressed)
+                        oldHover.InputMouseClickedLeft(MousePosition.X, MousePosition.Y, false);
+                    if (oldHover.IsMouseRightDepressed)
+                        oldHover.InputMouseClickedRight(MousePosition.X, MousePosition.Y, false);
                 }
-                HoveredControl = MouseFocus;
-            }
-            else
-            {
-                Controls.ControlBase hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
-
-                if (hovered != HoveredControl)
+                if (hovered != null)
                 {
-                    if (HoveredControl != null)
-                    {
-                        var oldHover = HoveredControl;
-                        HoveredControl = null;
-                        oldHover.InputMouseLeft();
-                    }
-
-                    HoveredControl = hovered;
-
-                    if (HoveredControl != null)
-                    {
-                        HoveredControl.InputMouseEntered();
-                    }
+                    hovered.InputMouseEntered();
                 }
+                HoveredControl = hovered;
             }
         }
 

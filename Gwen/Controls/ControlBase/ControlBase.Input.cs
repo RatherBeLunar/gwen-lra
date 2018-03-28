@@ -58,7 +58,8 @@ namespace Gwen.Controls
                 return Clicked != null || RightClicked != null || DoubleClicked != null || DoubleRightClicked != null;
             }
         }
-
+        internal bool IsMouseDepressed = false;
+        internal bool IsMouseRightDepressed = false;
 
         /// <summary>
         /// Focuses the control.
@@ -75,7 +76,7 @@ namespace Gwen.Controls
             OnKeyboardFocus();
             Redraw();
         }
-		
+
         /// <summary>
         /// Unfocuses the control.
         /// </summary>
@@ -175,6 +176,7 @@ namespace Gwen.Controls
         /// </summary>
         internal void InputMouseClickedLeft(int x, int y, bool down)
         {
+            IsMouseDepressed = down;
             OnMouseClickedLeft(x, y, down);
         }
 
@@ -195,6 +197,7 @@ namespace Gwen.Controls
         /// </summary>
         internal void InputMouseClickedRight(int x, int y, bool down)
         {
+            IsMouseRightDepressed = down;
             OnMouseClickedRight(x, y, down);
         }
 
