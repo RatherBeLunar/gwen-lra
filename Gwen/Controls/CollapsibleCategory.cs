@@ -35,7 +35,7 @@ namespace Gwen.Controls
         {
             get
             {
-                return new Margin(1, 0, 1, 5);
+                return new Margin(0, 0, 0, 5);
             }
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace Gwen.Controls
             m_Panel.Dock = Pos.Top;
             m_Panel.AutoSizeToContents = true;
             this.Dock = Pos.Top;
-            Margin = new Margin(1, 0, 1, 1);
+            Margin = new Margin(2, 2, 2, 2);
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace Gwen.Controls
             CategoryButton button = new CategoryButton(this);
             button.Text = name;
             button.Dock = Pos.Top;
-            button.AutoSizeToContents = false;
-            button.Margin = new Margin(5, 2, 2, 2);
+            button.AutoSizeToContents = true;
+            button.Margin = new Margin(2, 2, 2, 2);
             button.Clicked += OnSelected;
 
             return button;
@@ -155,6 +155,26 @@ namespace Gwen.Controls
                     continue;
 
                 button.ToggleState = false;
+            }
+        }
+
+        /// <summary>
+        /// Function invoked after layout.
+        /// </summary>
+        /// <param name="skin">Skin to use.</param>
+        protected override void PostLayout()
+        {
+            base.PostLayout();
+            // alternate row coloring
+            bool b = false;
+            foreach (ControlBase child in Children)
+            {
+                CategoryButton button = child as CategoryButton;
+                if (button == null)
+                    continue;
+
+                button.m_Alt = b;
+                b = !b;
             }
         }
     }

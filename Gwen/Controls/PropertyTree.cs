@@ -15,6 +15,7 @@ namespace Gwen.Controls
         public PropertyTree(ControlBase parent)
             : base(parent)
         {
+            m_Panel.Padding = new Padding(1,1,1,1);
         }
 
         /// <summary>

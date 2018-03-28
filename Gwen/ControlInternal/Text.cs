@@ -107,7 +107,7 @@ namespace Gwen.ControlInternal
             m_Font = Skin.DefaultFont;
 
             m_String = String.Empty;
-            TextColor = Skin.Colors.Label.Default;
+            TextColor = Skin.Colors.Text.Foreground;
             MouseInputEnabled = false;
             KeyboardInputEnabled = false;
             AutoSizeToContents = true;

@@ -93,7 +93,7 @@ namespace Gwen.Controls
             m_Title.Text = title;
             m_Title.Dock = Pos.Fill;
             m_Title.TextPadding = new Padding(8, 4, 0, 0);
-            m_Title.TextColor = Skin.Colors.Window.TitleInactive;
+            m_Title.TextColor = Skin.Colors.Text.Foreground;
 
             m_CloseButton = new CloseButton(m_TitleBar, this);
             m_CloseButton.SetSize(24, 24);
@@ -183,9 +183,9 @@ namespace Gwen.Controls
             bool hasFocus = IsOnTop;
 
             if (hasFocus)
-                m_Title.TextColor = Skin.Colors.Window.TitleActive;
+                m_Title.TextColor = Skin.Colors.Text.Foreground;
             else
-                m_Title.TextColor = Skin.Colors.Window.TitleInactive;
+                m_Title.TextColor = Skin.Colors.Text.Inactive;
 
             skin.DrawWindow(this, m_TitleBar.Bottom + m_Title.Margin.Bottom, hasFocus);
         }

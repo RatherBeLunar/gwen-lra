@@ -46,20 +46,20 @@ namespace Gwen.Controls
             {
                 if (IsDisabled)
                 {
-                    return Skin.Colors.Button.Disabled;
+                    return Skin.Colors.Text.Disabled;
                 }
 
                 if (IsDepressed || ToggleState)
                 {
-                    return Skin.Colors.Button.Down;
+                    return Skin.Colors.Text.Highlight;
                 }
 
                 if (IsHovered)
                 {
-                    return Skin.Colors.Button.Hover;
+                    return Skin.Colors.Text.Contrast;
                 }
 
-                return Skin.Colors.Button.Normal;
+                return Skin.Colors.Text.Foreground;
             }
         }
         /// <summary>

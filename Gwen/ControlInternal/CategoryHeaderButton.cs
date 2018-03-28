@@ -11,13 +11,11 @@ namespace Gwen.ControlInternal
         protected override System.Drawing.Color CurrentColor
         {
             get
-			{
-                // return base.CurrentColor;
-
-				if (IsDepressed || ToggleState)
-                    return Skin.Colors.Category.Header_Closed;
-				else
-					return Skin.Colors.Category.Header;
+            {
+                if (IsDepressed || ToggleState)
+                    return Skin.Colors.Text.Disabled;//maybe not?
+                else
+                    return Skin.Colors.Text.Foreground;
             }
         }
         /// <summary>

@@ -14,20 +14,24 @@ namespace Gwen.ControlInternal
 			{
 				if (IsDisabled)
 				{
-                    return Skin.Colors.Button.Disabled;
+                    return Skin.Colors.Text.Disabled;
 				}
 
-				if (IsDepressed || ToggleState)
+				if (IsDepressed)
 				{
-                    return Skin.Colors.Tree.Selected;
+                    return Skin.Colors.Text.Contrast;
 				}
+                if (ToggleState)
+                {
+                    return Skin.Colors.Text.Highlight;
+                }
 
 				if (IsHovered)
 				{
-                    return Skin.Colors.Tree.Hover;
+                    return Skin.Colors.Text.ContrastLow;
 				}
 
-                return Skin.Colors.Tree.Normal;
+                return Skin.Colors.Text.Foreground;
             }
         }
         /// <summary>

@@ -264,22 +264,24 @@ namespace Gwen.Skin
         public virtual void DrawPropertyRow(Controls.ControlBase control, int iWidth, bool bBeingEdited, bool hovered)
         {
             Rectangle rect = control.RenderBounds;
+            bool drawbox = true;
+            if (bBeingEdited)
+                m_Renderer.DrawColor = Colors.Accent;
+            else if (hovered)
+                m_Renderer.DrawColor = Colors.Accent;
+            else
+            {
+                drawbox = false;
+            }
+            if (drawbox)
+                m_Renderer.DrawFilledRect(new Rectangle(0, rect.Y, iWidth, rect.Height));
 
             if (bBeingEdited)
-                m_Renderer.DrawColor = Colors.Properties.Column_Selected;
+                m_Renderer.DrawColor = Colors.Text.Disabled;
             else if (hovered)
-                m_Renderer.DrawColor = Colors.Properties.Column_Hover;
+                m_Renderer.DrawColor = Colors.Text.Disabled;
             else
-                m_Renderer.DrawColor = Colors.Properties.Column_Normal;
-
-            m_Renderer.DrawFilledRect(new Rectangle(0, rect.Y, iWidth, rect.Height));
-
-            if (bBeingEdited)
-                m_Renderer.DrawColor = Colors.Properties.Line_Selected;
-            else if (hovered)
-                m_Renderer.DrawColor = Colors.Properties.Line_Hover;
-            else
-                m_Renderer.DrawColor = Colors.Properties.Line_Normal;
+                m_Renderer.DrawColor = Colors.Text.Disabled;
 
             m_Renderer.DrawFilledRect(new Rectangle(iWidth, rect.Y, 1, rect.Height));
 

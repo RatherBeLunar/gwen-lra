@@ -53,8 +53,9 @@ namespace Gwen.Controls
             Alignment = Pos.Top | Pos.Left;
             TextPadding = new Padding(5, 3, 3, 3);
             Padding = Padding.Two;
-            KeyboardInputEnabled = true;
+            // KeyboardInputEnabled = true;
             AutoSizeToContents = true;
+            ShouldDrawBackground = false;
         }
 
         public override void DragAndDrop_StartDragging(DragDrop.Package package, int x, int y)
@@ -79,6 +80,7 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
+            base.Render(skin);
             skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
         }
 
@@ -138,34 +140,25 @@ namespace Gwen.Controls
                 {
                     if (IsDisabled)
                     {
-                        return Skin.Colors.Tab.Active.Disabled;
+                        return Skin.Colors.Text.Disabled;
                     }
-                    if (IsDepressed)
-                    {
-                        return Skin.Colors.Tab.Active.Down;
-                    }
-                    if (IsHovered)
-                    {
-                        return Skin.Colors.Tab.Active.Hover;
-                    }
-
-                    return Skin.Colors.Tab.Active.Normal;
+                    return Skin.Colors.Text.Foreground;
                 }
 
                 if (IsDisabled)
                 {
-                    return Skin.Colors.Tab.Inactive.Disabled;
+                    return Skin.Colors.Text.Disabled;
                 }
                 if (IsDepressed)
                 {
-                    return Skin.Colors.Tab.Inactive.Down;
+                    return Skin.Colors.Text.ContrastLow;
                 }
                 if (IsHovered)
                 {
-                    return Skin.Colors.Tab.Inactive.Hover;
+                    return Skin.Colors.Text.ContrastLow;
                 }
 
-                return Skin.Colors.Tab.Inactive.Normal;
+                return Skin.Colors.Text.Foreground;
             }
         }
     }

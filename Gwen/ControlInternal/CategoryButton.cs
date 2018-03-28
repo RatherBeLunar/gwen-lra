@@ -18,24 +18,24 @@ namespace Gwen.ControlInternal
                 {
                     if (IsDepressed || ToggleState)
                     {
-                        return Skin.Colors.Category.LineAlt.Text_Selected;
+                        return Skin.Colors.Text.Contrast;
                     }
                     if (IsHovered)
                     {
-                        return Skin.Colors.Category.LineAlt.Text_Hover;
+                        return Skin.Colors.Text.Foreground;
                     }
-                    return Skin.Colors.Category.LineAlt.Text;
+                    return Skin.Colors.Text.Foreground;
                 }
 
                 if (IsDepressed || ToggleState)
                 {
-                    return Skin.Colors.Category.Line.Text_Selected;
+                    return Skin.Colors.Text.Contrast;
                 }
                 if (IsHovered)
                 {
-                    return Skin.Colors.Category.Line.Text_Hover;
+                    return Skin.Colors.Text.Foreground;
                 }
-                return Skin.Colors.Category.Line.Text;
+                return Skin.Colors.Text.Foreground;
             }
         }
         /// <summary>
@@ -48,6 +48,7 @@ namespace Gwen.ControlInternal
             m_Alt = false;
             IsToggle = true;
             TextPadding = new Padding(3, 0, 3, 0);
+            ShouldDrawBackground = false;
         }
 
         /// <summary>
@@ -59,23 +60,24 @@ namespace Gwen.ControlInternal
             if (m_Alt)
             {
                 if (IsDepressed || ToggleState)
-                    Skin.Renderer.DrawColor = skin.Colors.Category.LineAlt.Button_Selected;
+                    Skin.Renderer.DrawColor = skin.Colors.AccentHigh;
                 else if (IsHovered)
-                    Skin.Renderer.DrawColor = skin.Colors.Category.LineAlt.Button_Hover;
+                    Skin.Renderer.DrawColor = skin.Colors.AccentHigh;
                 else
-                    Skin.Renderer.DrawColor = skin.Colors.Category.LineAlt.Button;
+                    Skin.Renderer.DrawColor = skin.Colors.BackgroundHighlight;
             }
             else
             {
                 if (IsDepressed || ToggleState)
-                    Skin.Renderer.DrawColor = skin.Colors.Category.Line.Button_Selected;
+                    Skin.Renderer.DrawColor = skin.Colors.AccentHigh;
                 else if (IsHovered)
-                    Skin.Renderer.DrawColor = skin.Colors.Category.Line.Button_Hover;
+                    Skin.Renderer.DrawColor = skin.Colors.AccentHigh;
                 else
-                    Skin.Renderer.DrawColor = skin.Colors.Category.Line.Button;
+                    Skin.Renderer.DrawColor = skin.Colors.Background;
             }
 
             skin.Renderer.DrawFilledRect(RenderBounds);
+            base.Render(Skin);
         }
     }
 }

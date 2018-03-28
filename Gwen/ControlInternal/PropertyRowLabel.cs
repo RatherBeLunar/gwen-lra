@@ -15,21 +15,21 @@ namespace Gwen.ControlInternal
 			{
 				if (IsDisabled)
 				{
-                    return Skin.Colors.Button.Disabled;
+                    return Skin.Colors.Text.Disabled;
 				}
 
 				else if (m_PropertyRow != null && m_PropertyRow.IsEditing)
 				{
-					return Skin.Colors.Properties.Label_Selected;
+					return Skin.Colors.Text.Highlight;
 				}
 
 				else if (m_PropertyRow != null && m_PropertyRow.IsHovered)
 				{
-					return Skin.Colors.Properties.Label_Hover;
+					return Skin.Colors.Text.Highlight;
 				}
 				else
 				{
-					return Skin.Colors.Properties.Label_Normal;
+					return Skin.Colors.Text.Foreground;
 				}
             }
         }

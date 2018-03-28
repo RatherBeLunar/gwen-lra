@@ -17,7 +17,7 @@ namespace Gwen.ControlInternal
         public PropertyTreeNode(Controls.ControlBase parent)
             : base(parent)
         {
-            m_Title.TextColorOverride = Skin.Colors.Properties.Title;
+            m_Title.TextColorOverride = Skin.Colors.Foreground;
         }
 
         /// <summary>

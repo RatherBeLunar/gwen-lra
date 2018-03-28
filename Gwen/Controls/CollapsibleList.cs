@@ -23,7 +23,7 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public CollapsibleList(ControlBase parent) : base(parent)
         {
-			MouseInputEnabled = true;
+            MouseInputEnabled = true;
             EnableScroll(false, true);
             AutoHideBars = true;
         }

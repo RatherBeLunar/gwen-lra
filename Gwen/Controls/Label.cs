@@ -167,15 +167,15 @@ namespace Gwen.Controls
             {
                 if (IsDisabled)
                 {
-                    return Skin.Colors.Button.Disabled;
+                    return Skin.Colors.Text.Disabled;
                 }
                 else if (IsHovered && ClickEventAssigned)
                 {
-                    return Skin.Colors.Button.Hover;
+                    return Skin.Colors.Text.Contrast;
                 }
                 else
                 {
-                    return Skin.Colors.Button.Normal;
+                    return Skin.Colors.Text.Foreground;
                 }
             }
         }
@@ -265,8 +265,8 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            base.Render(skin);
             m_Text.TextColor = CurrentColor;
+            base.Render(skin);
         }
         public override Size GetSizeToFitContents()
         {
