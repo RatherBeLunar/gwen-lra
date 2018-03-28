@@ -127,7 +127,7 @@ namespace Gwen.Controls
             button.Text = name;
             button.Dock = Pos.Top;
             button.AutoSizeToContents = true;
-            button.Margin = new Margin(2, 2, 2, 2);
+            button.Margin = new Margin(2, 0, 2, 0);
             button.Clicked += OnSelected;
 
             return button;
