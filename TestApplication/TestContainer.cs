@@ -77,19 +77,20 @@ namespace TestApplication
             var slider = new SliderTest(page);
             cat = list.Add("Containers");
 
-            page = AddPage(cat, "Container");
+            page = AddPage(cat, "Generic Container");
             var container = new ContainerTest(page);
+            page = AddPage(cat, "Layout Container");
+            var layoutcontainer = new LayoutContainerTest(page);
+            page = AddPage(cat, "Window");
+            var window = new WindowTest(page);
 
             page = AddPage(cat, "Tab Control");
             var tab = new TabTest(page);
 
+            cat = list.Add("Composite controls");
+
             page = AddPage(cat, "TreeControl");
             var tree = new TreeTest(page);
-
-            page = AddPage(cat, "Window");
-            var window = new WindowTest(page);
-
-            cat = list.Add("Composite controls");
 
             page = AddPage(cat, "Menu");
             var menu = new MenuTest(page);

@@ -4,61 +4,30 @@ using Gwen.Controls;
 using Gwen;
 namespace TestApplication
 {
-    public class ContainerTest : ControlTest
+    public class LayoutContainerTest : ControlTest
     {
-        public ContainerTest(ControlBase parent) : base(parent)
+        public LayoutContainerTest(ControlBase parent) : base(parent)
         {
             GroupBox gb = new GroupBox(parent);
-            gb.Text = "group box";
+            gb.Text = "Flow layout";
             gb.Width = 120;
             gb.Height = 120;
-            gb.AddChild(new Button(null) { Text = "Button" });
 
-            Panel panel = new Panel(parent)
-            {
-                Children =
-                {
-                    new FlowLayout(null)
-                    {
-                        Children =
-                        {
-                            new Label(null) { Text = "A label in a panel"},
-                            new Button(null)
-                            {
-                                Text = "A button in a panel",
-                                
-                            }
-                        },
-                        Dock = Pos.Fill
-                    }
-                },
 
-            };
-            panel.SetBounds(130, 130, 150, 150);
-            ScrollControl sc = new ScrollControl(parent)
-            {
-                Children =
-                {
-                    new Label(null)
-                    {
-                        Text = "Scroll control"
-                    },
-                    new Button(null)
-                    {
-                        X = 180,
-                        Y = 180,
-                        Text = "Scroll to me"
-                    },
-                    new Button(null)
-                    {
-                        X = 180,
-                        Y = 380,
-                        Text = "No, scroll to me."
-                    },
-                }
-            };
-            sc.SetBounds(0, 300, 200, 200);
-
+            FlowLayout sp = new FlowLayout(gb);
+            // sp.DrawDebugOutlines = true;
+            sp.AutoSizeToContents = true;
+            sp.Dock = Pos.Top;
+            CreateButton(sp, "Test 1");
+            CreateButton(sp, "Test 2");
+            CreateButton(sp, "Test 3");
+            CreateButton(sp, "Test 4");
+            gb = new GroupBox(parent);
+            gb.Y += 130;
+            gb.Text = "Table layout";
+            gb.Width = 200;
+            gb.Height = 200;
+            CreateTable(gb);
         }
         private void CreateTable(ControlBase container)
         {
