@@ -474,12 +474,10 @@ namespace Gwen.Skin
             InitializeColors();
             InitializeTextures();
         }
-        private string _colorxml = null;
-        public TexturedBase(Renderer.RendererBase renderer, Texture texture, string colorxml = null)
+        public TexturedBase(Renderer.RendererBase renderer, Texture texture)
             : base(renderer)
         {
             m_Texture = texture;
-            _colorxml = colorxml;
             InitializeColors();
             InitializeTextures();
         }
