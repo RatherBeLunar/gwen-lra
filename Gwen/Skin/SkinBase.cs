@@ -260,6 +260,13 @@ namespace Gwen.Skin
 
             Renderer.DrawFilledRect(new Rectangle(14 + 7, labelHeight + 1, 1, lastBranch + halfWay - labelHeight));
         }
+        public virtual void DrawPanel(Controls.ControlBase control)
+        {
+            Renderer.DrawColor = Colors.Background;
+            Renderer.DrawFilledRect(control.RenderBounds);
+            Renderer.DrawColor = Colors.BackgroundHighlight;
+            Renderer.DrawLinedRect(control.RenderBounds);
+        }
 
         public virtual void DrawPropertyRow(Controls.ControlBase control, int iWidth, bool bBeingEdited, bool hovered)
         {

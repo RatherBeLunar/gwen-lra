@@ -716,6 +716,10 @@ namespace Gwen.Skin
                     Textures.CheckBox.Active.Normal.Draw(Renderer, control.RenderBounds);
             }
         }
+        public override void DrawPanel(Controls.ControlBase control)
+        {
+            Textures.Panel.Normal.Draw(Renderer, control.RenderBounds);
+        }
 
         public override void DrawColorDisplay(Controls.ControlBase control, Color color)
         {
