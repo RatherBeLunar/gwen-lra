@@ -250,8 +250,8 @@ namespace Gwen.Controls
 
         protected override void ProcessLayout(Size size)
         {
-            m_Text.AlignToEdge(m_Align, m_TextPadding + Padding, 0, 0);
             base.ProcessLayout(size);
+            m_Text.AlignToEdge(m_Align, TextPadding, 0, 0);
         }
 
         /// <summary>
@@ -270,11 +270,7 @@ namespace Gwen.Controls
         }
         public override Size GetSizeToFitContents()
         {
-            var sz = m_Text.GetSizeToFitContents();
-            sz.Width += Padding.Left + Padding.Right;
-            sz.Height += Padding.Top + Padding.Bottom;
-            sz.Width += TextPadding.Left + TextPadding.Right;
-            sz.Height += TextPadding.Top + TextPadding.Bottom;
+            var sz = m_Text.GetSizeToFitContents() + Padding.Size + TextPadding.Size;
             return sz;
         }
 
