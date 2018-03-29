@@ -20,11 +20,6 @@ namespace Gwen
         ///</summary>
         ///<remarks>Doesn't play well with AutoSizeToContents</remarks>
         Fill = 1 << 7,
-
-        ///<summary>
-        ///Fill, but it occupies the space it asks for if AutoSizeToContents is true
-        ///</summary>
-        Content = 1 << 8,
         // Center = CenterV | CenterH,
     }
 }

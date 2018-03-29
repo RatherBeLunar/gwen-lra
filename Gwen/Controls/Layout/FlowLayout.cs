@@ -20,11 +20,11 @@ namespace Gwen.Controls
         public override Size GetSizeToFitContents()
         {
             Size size = Size.Empty;
-            if (Dock == Dock.Top || Dock == Dock.Bottom || Dock == Dock.Content)
+            if (Dock == Dock.Top || Dock == Dock.Bottom)
             {
                 size.Width = Parent.InnerSize.Width - Parent.Padding.Width - Margin.Width;
             }
-            if (Dock == Dock.Left || Dock == Dock.Right || Dock == Dock.Content)
+            if (Dock == Dock.Left || Dock == Dock.Right)
             {
                 size.Height = Parent.InnerSize.Height - Parent.Padding.Height - Margin.Height;
             }

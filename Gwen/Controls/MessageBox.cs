@@ -27,7 +27,7 @@ namespace Gwen.Controls
             Container = new ControlBase(m_Panel);
             Container.Margin = new Margin(0, 40, 0, 5);
             Container.Dock = Dock.Bottom;
-            Container.Height = 30;
+            Container.AutoSizeToContents = true;
             m_Panel.Layout();
             m_Panel.SizeToChildren(true, true);
             SizeToChildren(true, true);

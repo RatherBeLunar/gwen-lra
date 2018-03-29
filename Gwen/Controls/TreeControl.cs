@@ -49,7 +49,6 @@ namespace Gwen.Controls
         {
             KeyboardInputEnabled = true;
             m_MultiSelect = false;
-            Dock = Dock.None;
             m_Panel.BoundsOutlineColor = System.Drawing.Color.Red;
             m_Panel.AutoSizeToContents = true;
         }

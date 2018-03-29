@@ -167,7 +167,7 @@ namespace Gwen.Controls
             // m_Title.BoundsChanged += 
             PrivateChildren.Insert(0, m_ToggleButton);
             PrivateChildren.Insert(0, m_Title);
-            m_Panel.Dock = Dock.Top;
+            m_Panel.Dock = Dock.Fill;
             Layout();//figure out placement before hiding stuff.
             m_Panel.Hide();
             m_ToggleButton.Hide();

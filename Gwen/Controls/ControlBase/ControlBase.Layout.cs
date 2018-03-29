@@ -82,27 +82,19 @@ namespace Gwen.Controls
                                             size.Height - (control.Padding.Bottom + control.Padding.Top));
             foreach (var child in control.m_Children)
             {
-                if (child.IsHidden)
+                if (child.IsHidden || child.Dock == Dock.Fill)
                     continue;
                 //ignore fill for now, as it uses total free space.
-                if (child.Dock != Dock.Fill)
-                {
-                    var dock = CalculateBounds(child, ref bounds);
-                    child.SetBounds(dock);
-                }
+                var dock = CalculateBounds(child, ref bounds);
+                child.SetBounds(dock);
             }
             foreach (var child in control.m_Children)
             {
-                if (child.IsHidden)
+                if (child.IsHidden || child.Dock != Dock.Fill)
                     continue;
                 // fill uses leftover space
-                if (child.Dock == Dock.Fill)
-                {
-                    child.SetBounds(bounds.X + child.Margin.Left,
-                                    bounds.Y + child.Margin.Top,
-                                    bounds.Width - child.Margin.Left - child.Margin.Right,
-                                    bounds.Height - child.Margin.Top - child.Margin.Bottom);
-                }
+                var dock = CalculateBounds(child, ref bounds);
+                child.SetBounds(dock);
             }
         }
         public void SuspendLayout()
@@ -263,7 +255,6 @@ namespace Gwen.Controls
             Size maxundocked = Size.Empty;
             int verticaldock = 0;
             int horzdock = 0;
-            // Adjust bounds for padding
             foreach (var child in control.m_Children)
             {
                 if (child.IsHidden)
@@ -277,8 +268,8 @@ namespace Gwen.Controls
                         childsize = child.GetSizeToFitContents();
                     }
                     childsize = ClampSize(child, childsize);
-                    childsize.Width += child.Margin.Left + child.Margin.Right;
-                    childsize.Height += child.Margin.Top + child.Margin.Bottom;
+                    childsize.Width += child.Margin.Width;
+                    childsize.Height += child.Margin.Height;
                     if (child.Dock == Dock.None)
                     {
                         // using the childs coordinates has the side effect
@@ -290,43 +281,66 @@ namespace Gwen.Controls
                         maxundocked.Height = Math.Max(maxundocked.Height, child.Y + childsize.Height);
                         continue;
                     }
-
+                    var horzfreespace = size.Width - horzdock;
+                    var vertfreespace = size.Height - verticaldock;
                     if (child.Dock == Dock.Top || child.Dock == Dock.Bottom)
                     {
                         verticaldock += childsize.Height;
-                        size.Height += childsize.Height;
-                        var avail = size.Width - horzdock;
-                        if (childsize.Width > avail)
+                        size.Height += Math.Max(0, childsize.Height - vertfreespace); ;
+                        if (childsize.Width > horzfreespace)
                         {
-                            size.Width += childsize.Width - avail;
+                            //size to be wide enough to fit
+                            size.Width += childsize.Width - horzfreespace;
                         }
                     }
                     else if (child.Dock == Dock.Right || child.Dock == Dock.Left)
                     {
                         horzdock += childsize.Width;
-                        size.Width += childsize.Width;
-                        var avail = size.Height - verticaldock;
-                        if (childsize.Height > size.Height - verticaldock)
+                        size.Width += Math.Max(0, childsize.Width - horzfreespace);
+                        if (childsize.Height > vertfreespace)
                         {
-                            size.Height += childsize.Height - avail;
+                            //size to be tall enough to fit
+                            size.Height += childsize.Height - vertfreespace;
                         }
                     }
                 }
-                else
+            }
+            // There could be more than one fill control, but we arent advanced
+            // enough to give them all equal spacing. So we just make sure we
+            // can fit the largest one
+            Size fill = Size.Empty;
+            foreach (var child in control.m_Children)
+            {
+                if (child.IsHidden)
+                    continue;
+                if (child.Dock == Dock.Fill)
                 {
-                    var childsize = child.Bounds.Size;
+                    // fill is lowest priority
+                    Size childsize;
                     if (child.AutoSizeToContents)
                     {
-                        childsize = child.GetSizeToFitContents();
+                        childsize = child.Bounds.Size;
+                        if (child.AutoSizeToContents)
+                        {
+                            childsize = child.GetSizeToFitContents();
+                        }
+                        childsize = ClampSize(child, childsize);
+                        childsize.Width += child.Margin.Width;
+                        childsize.Height += child.Margin.Height;
                     }
-                    childsize = ClampSize(child, childsize);
-                    childsize.Width += child.Margin.Left + child.Margin.Right;
-                    childsize.Height += child.Margin.Top + child.Margin.Bottom;
-                    // fill is lowest priority
-                    maxundocked.Width = Math.Max(maxundocked.Width, childsize.Width);
-                    maxundocked.Height = Math.Max(maxundocked.Height, childsize.Height);
+                    else
+                    {
+                        childsize.Width = child.MinimumSize.Width + child.Margin.Width;
+                        childsize.Height = child.MinimumSize.Height + child.Margin.Height;
+                    }
+                    fill.Width = Math.Max(fill.Width, childsize.Width);
+                    fill.Height = Math.Max(fill.Height, childsize.Height);
                 }
             }
+            var horzavail = size.Width - horzdock;
+            var vertavail = size.Height - verticaldock;
+            size.Width += Math.Max(0, fill.Width - horzavail);
+            size.Height += Math.Max(0, fill.Height - vertavail);
             // if theres a control placed somewhere greater than our dock needs,
             // size to that.
             size.Width = Math.Max(maxundocked.Width, size.Width);
@@ -362,53 +376,53 @@ namespace Gwen.Controls
             {
                 return ret;
             }
-            Margin cm = control.Margin;
-            if (control.Dock == Dock.ContentFill)
+            Margin margin = control.Margin;
+            if (control.Dock == Dock.Fill)
             {
-                ret = new Rectangle(area.X + cm.Left,
-                                  area.Y + cm.Top,
-                                  ret.Width,
-                                  ret.Height);
+                ret = new Rectangle(area.X + control.Margin.Left,
+                                    area.Y + control.Margin.Top,
+                                    area.Width - control.Margin.Width,
+                                    area.Height - control.Margin.Height);
             }
             else if (control.Dock == Dock.Left)
             {
-                ret = new Rectangle(area.X + cm.Left,
-                                area.Y + cm.Top,
+                ret = new Rectangle(area.X + margin.Left,
+                                area.Y + margin.Top,
                                 ret.Width,
-                                area.Height - cm.Top - cm.Bottom);
+                                area.Height - margin.Height);
 
-                int width = cm.Left + cm.Right + ret.Width;
+                int width = margin.Width + ret.Width;
                 area.X += width;
                 area.Width -= width;
             }
             else if (control.Dock == Dock.Right)
             {
-                ret = new Rectangle((area.X + area.Width) - ret.Width - cm.Right,
-                                area.Y + cm.Top,
+                ret = new Rectangle((area.X + area.Width) - ret.Width - margin.Right,
+                                area.Y + margin.Top,
                                 ret.Width,
-                                area.Height - cm.Top - cm.Bottom);
+                                area.Height - margin.Height);
 
-                int width = cm.Left + cm.Right + ret.Width;
+                int width = margin.Width + ret.Width;
                 area.Width -= width;
             }
             else if (control.Dock == Dock.Top)
             {
-                ret = new Rectangle(area.X + cm.Left,
-                                area.Y + cm.Top,
-                                area.Width - cm.Left - cm.Right,
+                ret = new Rectangle(area.X + margin.Left,
+                                area.Y + margin.Top,
+                                area.Width - margin.Width,
                                 ret.Height);
 
-                int height = cm.Top + cm.Bottom + ret.Height;
+                int height = margin.Height + ret.Height;
                 area.Y += height;
                 area.Height -= height;
             }
             else if (control.Dock == Dock.Bottom)
             {
-                ret = new Rectangle(area.X + cm.Left,
-                                (area.Y + area.Height) - ret.Height - cm.Bottom,
-                                area.Width - cm.Left - cm.Right,
+                ret = new Rectangle(area.X + margin.Left,
+                                (area.Y + area.Height) - ret.Height - margin.Bottom,
+                                area.Width - margin.Width,
                                 ret.Height);
-                int height = cm.Top + cm.Bottom + ret.Height;
+                int height = margin.Height + ret.Height;
                 area.Height -= height;
             }
             else

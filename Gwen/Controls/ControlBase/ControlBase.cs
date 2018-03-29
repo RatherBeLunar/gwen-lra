@@ -122,7 +122,6 @@ namespace Gwen.Controls
                     return;
                 switch (value)
                 {
-                    case Dock.Content:
                     case Dock.Right:
                     case Dock.Top:
                     case Dock.Bottom:
