@@ -8,17 +8,14 @@ namespace TestApplication
         public TabTest(ControlBase parent) : base(parent)
         {
             TabControl tab = new TabControl(parent);
+            tab.DrawDebugOutlines = true;
             tab.Width = 300;
             tab.Height = 200;
             var page = tab.AddPage("Layout Test");
             Label l = new Label(page);
             l.Text = "0,0 100x100";
-            l.SetSize(100, 100);
-            l.AutoSizeToContents = false;
-            l = new Label(page);
-            l.Text = "100,100";
-            l.SetPosition(100, 100);
-            l.AutoSizeToContents = false;
+            // l.SetSize(100, 100);
+            l.AutoSizeToContents = true;
             var btn = new Button(page);
             btn.Y += 100;
             btn.Text = "Reorder";

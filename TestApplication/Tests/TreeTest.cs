@@ -9,12 +9,20 @@ namespace TestApplication
         public TreeTest(ControlBase parent) : base(parent)
         {
             TreeControl tree = new TreeControl(parent);
+            Checkbox cb = new Checkbox(parent);
+            cb.Dock = Dock.Bottom;
+            cb.Text = "Multiselect";
+            cb.CheckChanged += (o, e) =>
+            {
+                tree.AllowMultiSelect = cb.IsChecked;
+            };
             tree.Dock = Dock.Fill;
             tree.AllowMultiSelect = true;
+            cb.IsChecked = tree.AllowMultiSelect;
             for (int i = 0; i < 10; i++)
             {
                 var root = tree.AddNode("root " + i);
-                if (i ==  0)
+                if (i == 0)
                 {
                     for (int ix = 0; ix < 100; ix++)
                     {
@@ -30,7 +38,6 @@ namespace TestApplication
                 if (i == 1 || i == 5 || i == 8)
                     root.ExpandAll();
             }
-            tree.SizeToChildren();
         }
     }
 }

@@ -14,9 +14,8 @@ namespace TestApplication
         Canvas Canvas;
         bool _slow = false;
         bool _steps = false;
-        public Window() : base(500, 600, GraphicsMode.Default, "UI Test")
+        public Window() : base(600, 600, GraphicsMode.Default, "UI Test")
         {
-
         }
 
 

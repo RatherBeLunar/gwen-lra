@@ -11,7 +11,6 @@ namespace TestApplication
             FlowLayout container = new FlowLayout(parent);
             container.Dock = Dock.Fill;
             CollapsibleList list = new CollapsibleList(container);
-            // list.DrawDebugOutlines = true;
             list.Width = 200;
             list.Height = 200;
             var l = list.Add("Hell0 i am cat");

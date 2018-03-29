@@ -15,12 +15,11 @@ namespace TestApplication
         public TestContainer(ControlBase parent) : base(parent)
         {
             Dock = Dock.Fill;
-            CreateStatusbar();
             Create();
         }
         public void DbgCreate()
         {
-            var test = new LabelTest(this);
+            var test = new CategoryTest(this);
         }
         public void CreateStatusbar()
         {
@@ -57,8 +56,10 @@ namespace TestApplication
         }
         public void Create()
         {
+            CreateStatusbar();
+
             CollapsibleList list = new CollapsibleList(this);
-            list.Margin = new Margin(0,0,1,0);
+            list.Margin = new Margin(0, 0, 1, 0);
             list.Dock = Dock.Left;
             list.AutoSizeToContents = true;
             var cat = list.Add("Basic");
