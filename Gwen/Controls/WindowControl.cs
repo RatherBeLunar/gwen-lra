@@ -39,9 +39,23 @@ namespace Gwen.Controls
             get { return base.IsHidden; }
             set
             {
-                if (!value)
-                    BringToFront();
+                if (IsHidden == value)
+                    return;
                 base.IsHidden = value;
+                if (m_Modal != null)
+                {
+                    m_Modal.IsHidden = value;
+                }
+                if (!value)
+                {
+                    BringToFront();
+                    Focus();
+                    if (m_Modal != null)
+                    {
+                        m_Modal.BringToFront();
+                        m_Modal.Layout();
+                    }
+                }
                 if (IsHiddenChanged != null)
                 {
                     IsHiddenChanged.Invoke(this, EventArgs.Empty);
@@ -69,6 +83,24 @@ namespace Gwen.Controls
                 return Margin.Two;
             }
         }
+        public override bool AutoSizeToContents
+        {
+            get
+            {
+                return base.AutoSizeToContents;
+            }
+            set
+            {
+                if (AutoSizeToContents != value)
+                {
+                    base.AutoSizeToContents = value;
+                    if (value)
+                    {
+                        DisableResizing();
+                    }
+                }
+            }
+        }
         #endregion Properties
 
         #region Constructors
@@ -79,54 +111,67 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         /// <param name="caption">Window caption.</param>
         /// <param name="modal">Determines whether the window should be modal.</param>
-        public WindowControl(ControlBase parent, string title = "", bool modal = false)
+        public WindowControl(ControlBase parent, string title = "")
             : base(parent)
         {
-            m_TitleBar = new Dragger(null);
-            PrivateChildren.Add(m_TitleBar);
-            m_TitleBar.Height = 24;
-            m_TitleBar.Target = this;
-            m_TitleBar.Dock = Pos.Top;
+            m_TitleBar = new Dragger(null)
+            {
+                Height = 24,
+                Target = this,
+                Dock = Dock.Top,
+                Margin = new Margin(0, 0, 0, 6)
+            };
+            PrivateChildren.Insert(0, m_TitleBar);
 
-            m_Title = new Label(m_TitleBar);
-            m_Title.Alignment = Pos.Left | Pos.Top;
-            m_Title.Text = title;
-            m_Title.Dock = Pos.Fill;
-            m_Title.TextPadding = new Padding(8, 4, 0, 0);
-            m_Title.TextColor = Skin.Colors.Text.Foreground;
+            m_Title = new Label(m_TitleBar)
+            {
+                Alignment = Pos.Left | Pos.Top,
+                Text = title,
+                Dock = Dock.Fill,
+                TextPadding = new Padding(8, 4, 0, 0),
+                TextColor = Skin.Colors.Text.Foreground,
+            };
 
-            m_CloseButton = new CloseButton(m_TitleBar, this);
-            m_CloseButton.SetSize(24, 24);
-            m_CloseButton.Dock = Pos.Right;
+            m_CloseButton = new CloseButton(m_TitleBar, this)
+            {
+                Width = 24,
+                Height = 24,
+                Dock = Dock.Right,
+                IsTabable = false,
+                Name = "closeButton"
+            };
             m_CloseButton.Clicked += CloseButtonPressed;
-            m_CloseButton.IsTabable = false;
-            m_CloseButton.Name = "closeButton";
             //Create a blank content control, dock it to the top - Should this be a ScrollControl?
             GetResizer(8).Hide();
-            BringToFront();
             IsTabable = false;
-            Focus();
             MinimumSize = new Size(100, 50);
             ClampMovement = true;
             KeyboardInputEnabled = false;
-
-            if (modal)
-                MakeModal();
+            m_Panel.Dock = Dock.Fill;
+            m_Panel.AutoSizeToContents = true;
+            IsHidden = true;
+            HideResizersOnDisable = false;
         }
 
         #endregion Constructors
 
         #region Methods
-
+        public void ShowCentered()
+        {
+            if (IsHidden)
+            {
+                base.Show();
+                var canvas = GetCanvas();
+                if (canvas != null)
+                {
+                    Layout();
+                    SetPosition((canvas.Width / 2) - (Width / 2), (canvas.Height / 2) - (Height / 2));
+                }
+            }
+        }
         public void Close()
         {
             CloseButtonPressed(this, EventArgs.Empty);
-        }
-
-        public override void DisableResizing()
-        {
-            base.DisableResizing();
-            Padding = new Padding(6, 0, 6, 0);
         }
 
         /// <summary>
@@ -145,11 +190,7 @@ namespace Gwen.Controls
                 m_Modal.ShouldDrawBackground = true;
             else
                 m_Modal.ShouldDrawBackground = false;
-        }
-
-        public void ToggleHidden()
-        {
-            IsHidden = !IsHidden;
+            m_Modal.IsHidden = IsHidden;
         }
 
         public override void Touch()

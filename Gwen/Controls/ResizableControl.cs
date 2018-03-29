@@ -10,13 +10,16 @@ namespace Gwen.Controls
     public class ResizableControl : Container
     {
         private bool m_ClampMovement;
-        private readonly Resizer[] m_Resizer;
+        protected readonly Resizer[] m_Resizer;
 
         /// <summary>
         /// Determines whether control's position should be restricted to its parent bounds.
         /// </summary>
         public bool ClampMovement { get { return m_ClampMovement; } set { m_ClampMovement = value; } }
-
+        /// <summary>
+        /// True if DisableResizing should hide the resizers
+        /// </summary>
+        protected bool HideResizersOnDisable = true;
         /// <summary>
         /// Invoked when the control has been resized.
         /// </summary>
@@ -34,11 +37,11 @@ namespace Gwen.Controls
             m_ClampMovement = false;
 
             m_Resizer[2] = new Resizer(null);
+            PrivateChildren.Insert(0, m_Resizer[2]);
             m_Resizer[2].Dock = Dock.Bottom;
             m_Resizer[2].ResizeDir = Pos.Bottom;
             m_Resizer[2].Resized += OnResized;
             m_Resizer[2].Target = this;
-            PrivateChildren.Add(m_Resizer[2]);
 
             m_Resizer[1] = new Resizer(m_Resizer[2]);
             m_Resizer[1].Dock = Dock.Left;
@@ -53,11 +56,11 @@ namespace Gwen.Controls
             m_Resizer[3].Target = this;
 
             m_Resizer[8] = new Resizer(null);
+            PrivateChildren.Insert(0, m_Resizer[8]);
             m_Resizer[8].Dock = Dock.Top;
             m_Resizer[8].ResizeDir = Pos.Top;
             m_Resizer[8].Resized += OnResized;
             m_Resizer[8].Target = this;
-            PrivateChildren.Add(m_Resizer[8]);
 
             m_Resizer[7] = new Resizer(m_Resizer[8]);
             m_Resizer[7].Dock = Dock.Left;
@@ -72,18 +75,18 @@ namespace Gwen.Controls
             m_Resizer[9].Target = this;
 
             m_Resizer[4] = new Resizer(null);
+            PrivateChildren.Insert(0, m_Resizer[4]);
             m_Resizer[4].Dock = Dock.Left;
             m_Resizer[4].ResizeDir = Pos.Left;
             m_Resizer[4].Resized += OnResized;
             m_Resizer[4].Target = this;
-           PrivateChildren.Add(m_Resizer[4]);
 
             m_Resizer[6] = new Resizer(null);
+            PrivateChildren.Insert(0, m_Resizer[6]);
             m_Resizer[6].Dock = Dock.Right;
             m_Resizer[6].ResizeDir = Pos.Right;
             m_Resizer[6].Resized += OnResized;
             m_Resizer[6].Target = this;
-           PrivateChildren.Add(m_Resizer[6]);
         }
 
         /// <summary>
@@ -93,7 +96,7 @@ namespace Gwen.Controls
 		protected virtual void OnResized(ControlBase control, EventArgs args)
         {
             if (Resized != null)
-				Resized.Invoke(this, EventArgs.Empty);
+                Resized.Invoke(this, EventArgs.Empty);
         }
 
         protected Resizer GetResizer(int i)
@@ -111,8 +114,8 @@ namespace Gwen.Controls
                 if (m_Resizer[i] == null)
                     continue;
                 m_Resizer[i].MouseInputEnabled = false;
-                m_Resizer[i].IsHidden = true;
-                Padding = new Padding(m_Resizer[i].Width, m_Resizer[i].Width, m_Resizer[i].Width, m_Resizer[i].Width);
+                if (HideResizersOnDisable)
+                    m_Resizer[i].IsHidden = true;
             }
         }
 
@@ -127,7 +130,6 @@ namespace Gwen.Controls
                     continue;
                 m_Resizer[i].MouseInputEnabled = true;
                 m_Resizer[i].IsHidden = false;
-                Padding = new Padding(0, 0, 0, 0); // todo: check if ok
             }
         }
 
@@ -167,10 +169,12 @@ namespace Gwen.Controls
         /// <param name="width">New width.</param>
         /// <param name="height">New height.</param>
         /// <returns>True if bounds changed.</returns>
-        public override bool SetSize(int width, int height) {
+        public override bool SetSize(int width, int height)
+        {
             bool Changed = base.SetSize(width, height);
-            if (Changed) {
-				OnResized(this, EventArgs.Empty);
+            if (Changed)
+            {
+                OnResized(this, EventArgs.Empty);
             }
             return Changed;
         }
