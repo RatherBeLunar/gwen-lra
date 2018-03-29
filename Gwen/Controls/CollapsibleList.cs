@@ -49,19 +49,25 @@ namespace Gwen.Controls
 
             return null;
         }
-
-        /// <summary>
-        /// Adds a category to the list.
-        /// </summary>
-        /// <param name="category">Category control to add.</param>
-        protected virtual void Add(CollapsibleCategory category)
+        
+        protected override void OnChildAdded(ControlBase child)
         {
-            category.Parent = this;
-            category.Dock = Dock.Top;
-            // category.Margin = new Margin(1, 0, 1, 1);
-            category.Selected += OnCategorySelected;
-            category.Collapsed += OnCategoryCollapsed;
-            // this relies on fact that category.m_List is set to its parent
+            base.OnChildAdded(child);
+            if (child is CollapsibleCategory cat)
+            {
+                cat.Selected += OnCategorySelected;
+                cat.Collapsed += OnCategoryCollapsed;
+            }
+        }
+
+        protected override void OnChildRemoved(ControlBase child)
+        {
+            base.OnChildRemoved(child);
+            if (child is CollapsibleCategory cat)
+            {
+                cat.Selected -= OnCategorySelected;
+                cat.Collapsed -= OnCategoryCollapsed;
+            }
         }
 
         /// <summary>
@@ -71,10 +77,7 @@ namespace Gwen.Controls
         /// <returns>Newly created control.</returns>
         public virtual CollapsibleCategory Add(string categoryName)
         {
-            CollapsibleCategory cat = new CollapsibleCategory(this);
-            cat.Text = categoryName;
-            Add(cat);
-            return cat;
+            return new CollapsibleCategory(this) { Text = categoryName };
         }
 
         /// <summary>

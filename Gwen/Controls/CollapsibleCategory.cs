@@ -55,7 +55,7 @@ namespace Gwen.Controls
             m_List = parent;
 
             AutoSizeToContents = true;
-            m_Panel.Dock = Dock.Top;
+            m_Panel.Dock = Dock.Fill;
             m_Panel.AutoSizeToContents = true;
             this.Dock = Dock.Top;
             Margin = new Margin(2, 2, 2, 2);
@@ -123,14 +123,25 @@ namespace Gwen.Controls
         /// <returns>Newly created control.</returns>
         public Button Add(string name)
         {
-            CategoryButton button = new CategoryButton(this);
-            button.Text = name;
-            button.Dock = Dock.Top;
-            button.AutoSizeToContents = true;
-            button.Margin = new Margin(2, 0, 2, 0);
-            button.Clicked += OnSelected;
+            return new CategoryButton(this) { Text = name };
+        }
+        
+        protected override void OnChildAdded(ControlBase child)
+        {
+            base.OnChildAdded(child);
+            if (child is CategoryButton btn)
+            {
+                btn.Clicked += OnSelected;
+            }
+        }
 
-            return button;
+        protected override void OnChildRemoved(ControlBase child)
+        {
+            base.OnChildRemoved(child);
+            if (child is CategoryButton btn)
+            {
+                btn.Clicked -= OnSelected;
+            }
         }
 
         /// <summary>
