@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Gwen.Skin.Texturing
 {
@@ -46,22 +47,77 @@ namespace Gwen.Skin.Texturing
             //     render.DrawTexturedRect(m_Texture, r, m_Rects[0].uv[0], m_Rects[0].uv[1], m_Rects[8].uv[2], m_Rects[8].uv[3]);
             //     return;
             // }
+            var clip = render.ClipRegion;
+            // clipping may not be enabled, but we're labeling that 'user fault' right now
+            render.AddClipRegion(r);
+            render.ClipRegion = new Rectangle(render.ClipRegion.X + r.X, render.ClipRegion.Y + r.Y, render.ClipRegion.Width, render.ClipRegion.Height);
+            DrawRect(
+                render,
+                0,
+                r.X,
+                r.Y,
+                m_Margin.Left,
+                m_Margin.Top);
+            DrawRect(
+                render,
+                1,
+                r.X + m_Margin.Left,
+                r.Y,
+                r.Width - m_Margin.Left - m_Margin.Right,
+                m_Margin.Top);
+            DrawRect(
+                render,
+                 2,
+                 (r.X + r.Width) - m_Margin.Right,
+                 r.Y,
+                 m_Margin.Right,
+                 m_Margin.Top);
 
-            DrawRect(render, 0, r.X, r.Y, m_Margin.Left, m_Margin.Top);
-            DrawRect(render, 1, r.X + m_Margin.Left, r.Y, r.Width - m_Margin.Left - m_Margin.Right, m_Margin.Top);
-            DrawRect(render, 2, (r.X + r.Width) - m_Margin.Right, r.Y, m_Margin.Right, m_Margin.Top);
+            DrawRect(
+                render,
+                3,
+                r.X,
+                r.Y + m_Margin.Top,
+                m_Margin.Left,
+                r.Height - m_Margin.Top - m_Margin.Bottom);
+            DrawRect(
+                render,
+                4,
+                r.X + m_Margin.Left,
+                r.Y + m_Margin.Top,
+                r.Width - m_Margin.Left - m_Margin.Right,
+                r.Height - m_Margin.Top - m_Margin.Bottom);
+            DrawRect(
+                render,
+                5,
+                (r.X + r.Width) - m_Margin.Right,
+                r.Y + m_Margin.Top,
+                m_Margin.Right,
+                r.Height - m_Margin.Top - m_Margin.Bottom);
 
-            DrawRect(render, 3, r.X, r.Y + m_Margin.Top, m_Margin.Left, r.Height - m_Margin.Top - m_Margin.Bottom);
-            DrawRect(render, 4, r.X + m_Margin.Left, r.Y + m_Margin.Top, r.Width - m_Margin.Left - m_Margin.Right,
-                     r.Height - m_Margin.Top - m_Margin.Bottom);
-            DrawRect(render, 5, (r.X + r.Width) - m_Margin.Right, r.Y + m_Margin.Top, m_Margin.Right,
-                     r.Height - m_Margin.Top - m_Margin.Bottom);
-
-            DrawRect(render, 6, r.X, (r.Y + r.Height) - m_Margin.Bottom, m_Margin.Left, m_Margin.Bottom);
-            DrawRect(render, 7, r.X + m_Margin.Left, (r.Y + r.Height) - m_Margin.Bottom,
-                     r.Width - m_Margin.Left - m_Margin.Right, m_Margin.Bottom);
-            DrawRect(render, 8, (r.X + r.Width) - m_Margin.Right, (r.Y + r.Height) - m_Margin.Bottom, m_Margin.Right,
-                     m_Margin.Bottom);
+            DrawRect(
+                render,
+                6,
+                r.X,
+                (r.Y + r.Height) - m_Margin.Bottom,
+                m_Margin.Left,
+                m_Margin.Bottom);
+            DrawRect(
+                render,
+                7,
+                r.X + m_Margin.Left,
+                (r.Y + r.Height) - m_Margin.Bottom,
+                r.Width - m_Margin.Left - m_Margin.Right,
+                m_Margin.Bottom);
+            DrawRect(
+                render,
+                8,
+                (r.X + r.Width) - m_Margin.Right,
+                (r.Y + r.Height) - m_Margin.Bottom,
+                m_Margin.Right,
+                m_Margin.Bottom);
+                
+            render.ClipRegion = clip;
         }
 
         #endregion Methods
@@ -90,18 +146,59 @@ namespace Gwen.Skin.Texturing
 
             m_Margin = inMargin;
 
-            SetRect(0, x, y, m_Margin.Left, m_Margin.Top);
-            SetRect(1, x + m_Margin.Left, y, w - m_Margin.Left - m_Margin.Right, m_Margin.Top);
-            SetRect(2, (x + w) - m_Margin.Right, y, m_Margin.Right, m_Margin.Top);
+            SetRect(0,
+            x,
+            y,
+            m_Margin.Left,
+            m_Margin.Top);
 
-            SetRect(3, x, y + m_Margin.Top, m_Margin.Left, h - m_Margin.Top - m_Margin.Bottom);
-            SetRect(4, x + m_Margin.Left, y + m_Margin.Top, w - m_Margin.Left - m_Margin.Right,
-                    h - m_Margin.Top - m_Margin.Bottom);
-            SetRect(5, (x + w) - m_Margin.Right, y + m_Margin.Top, m_Margin.Right, h - m_Margin.Top - m_Margin.Bottom - 1);
+            SetRect(1,
+            x + m_Margin.Left,
+            y,
+            w - m_Margin.Left - m_Margin.Right,
+            m_Margin.Top);
 
-            SetRect(6, x, (y + h) - m_Margin.Bottom, m_Margin.Left, m_Margin.Bottom);
-            SetRect(7, x + m_Margin.Left, (y + h) - m_Margin.Bottom, w - m_Margin.Left - m_Margin.Right, m_Margin.Bottom);
-            SetRect(8, (x + w) - m_Margin.Right, (y + h) - m_Margin.Bottom, m_Margin.Right, m_Margin.Bottom);
+            SetRect(2,
+            (x + w) - m_Margin.Right,
+            y,
+            m_Margin.Right,
+            m_Margin.Top);
+
+            SetRect(3,
+            x,
+            y + m_Margin.Top,
+            m_Margin.Left,
+            h - m_Margin.Top - m_Margin.Bottom);
+
+            SetRect(4,
+            x + m_Margin.Left,
+            y + m_Margin.Top,
+            w - m_Margin.Left - m_Margin.Right,
+            h - m_Margin.Top - m_Margin.Bottom);
+
+            SetRect(5,
+            (x + w) - m_Margin.Right,
+            y + m_Margin.Top,
+            m_Margin.Right,
+            h - m_Margin.Top - m_Margin.Bottom - 1);
+
+            SetRect(6,
+            x,
+            (y + h) - m_Margin.Bottom,
+            m_Margin.Left,
+            m_Margin.Bottom);
+
+            SetRect(7,
+            x + m_Margin.Left,
+            (y + h) - m_Margin.Bottom,
+            w - m_Margin.Left - m_Margin.Right,
+            m_Margin.Bottom);
+
+            SetRect(8,
+            (x + w) - m_Margin.Right,
+            (y + h) - m_Margin.Bottom,
+            m_Margin.Right,
+            m_Margin.Bottom);
 
             m_Margin.Left = (int)(m_Margin.Left * drawMarginScale);
             m_Margin.Right = (int)(m_Margin.Right * drawMarginScale);
