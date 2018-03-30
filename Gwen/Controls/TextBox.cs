@@ -76,6 +76,19 @@ namespace Gwen.Controls
                 SetupDefault();
             }
         }
+        public override string Text
+        {
+            get
+            {
+                return base.Text;
+            }
+            set
+            {
+                base.Text = value;
+                m_CursorPos = Math.Min(m_CursorPos, Text.Length);
+                m_CursorEnd = Math.Min(m_CursorEnd, Text.Length);
+            }
+        }
         #endregion Properties
 
         #region Constructors
@@ -217,10 +230,12 @@ namespace Gwen.Controls
 
             string str = Text;
             str = str.Insert(m_CursorPos, text);
-            SetText(str);
-
+            // we adjust cursor pos ahead of time because settext can manipulate
+            // Text, breaking our cursor pos.
             m_CursorPos += text.Length;
             m_CursorEnd = m_CursorPos;
+            SetText(str);
+
 
             RefreshCursorBounds();
             ResetCaretBlink();
@@ -525,7 +540,7 @@ namespace Gwen.Controls
         {
             //base.OnMouseDoubleClickedLeft(x, y);
             int c = GetClosestCharacter(x, y).X;
-            
+
             OnSelectAll(this, EventArgs.Empty);
             ResetCaretBlink();
         }
@@ -628,7 +643,7 @@ namespace Gwen.Controls
             base.Render(skin);
 
             if (ShouldDrawBackground)
-                skin.DrawTextBox(this);
+                skin.DrawTextBox(this, HasFocus);
 
             if (!HasFocus) return;
 
