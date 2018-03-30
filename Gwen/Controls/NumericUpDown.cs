@@ -42,12 +42,30 @@ namespace Gwen.Controls
         /// <summary>
         /// Maximum value.
         /// </summary>
-        public double Max { get { return m_Max; } set { m_Max = value; } }
+        public double Max
+        {
+            get { return m_Max; }
+            set
+            {
+                m_Max = value;
+                if (Value > m_Max)
+                    Value = m_Max;
+            }
+        }
 
         /// <summary>
         /// Minimum value.
         /// </summary>
-        public double Min { get { return m_Min; } set { m_Min = value; } }
+        public double Min
+        {
+            get { return m_Min; }
+            set
+            {
+                m_Min = value;
+                if (Value < m_Min)
+                    Value = m_Min;
+            }
+        }
         public double IncrementSize { get; set; } = 1;
 
         /// <summary>
@@ -139,10 +157,8 @@ namespace Gwen.Controls
         protected override void ProcessLayout(System.Drawing.Size size)
         {
             int ctrlsize = size.Height - m_BtnContainer.Margin.Height;
-            m_Down.Height = ctrlsize / 2;
-            m_Up.Height = ctrlsize / 2;
-            m_Up.Width = m_Up.Height + m_Up.Height / 2;
-            m_Down.Width = m_Up.Height + m_Up.Height / 2;
+            m_Up.SetSize(ctrlsize / 2 + (ctrlsize / 4), ctrlsize / 2);
+            m_Down.SetSize(ctrlsize / 2 + (ctrlsize / 4), ctrlsize / 2);
             base.ProcessLayout(size);
         }
 
