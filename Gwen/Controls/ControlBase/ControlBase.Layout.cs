@@ -624,16 +624,6 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="x">Target x coordinate.</param>
         /// <param name="y">Target y coordinate.</param>
-        public virtual void SetPosition(float x, float y)
-        {
-            SetPosition((int)x, (int)y);
-        }
-
-        /// <summary>
-        /// Sets the control position.
-        /// </summary>
-        /// <param name="x">Target x coordinate.</param>
-        /// <param name="y">Target y coordinate.</param>
         public virtual void SetPosition(int x, int y)
         {
             SetBounds(x, y, Width, Height);
