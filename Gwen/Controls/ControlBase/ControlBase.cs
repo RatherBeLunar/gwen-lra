@@ -91,12 +91,16 @@ namespace Gwen.Controls
             {
                 if (m_Parent == value)
                     return;
-
+                    
                 if (m_Parent != null)
                 {
                     m_Parent.RemoveChild(this, false);
                 }
 
+                if (value != null && value.Parent == this)
+                    throw new InvalidOperationException("Cannot assign a parent that is a child of this control");
+                if (value == this)
+                    throw new InvalidOperationException("A control cannot parent itself self");
                 m_Parent = value;
 
                 if (m_Parent != null)
@@ -255,7 +259,20 @@ namespace Gwen.Controls
         /// <summary>
         /// Indicates whether the control is disabled.
         /// </summary>
-        public bool IsDisabled { get { return m_Disabled; } set { m_Disabled = value; } }
+        public bool IsDisabled
+        {
+            get
+            {
+                if (m_Disabled)
+                    return true;
+                if (m_Parent != null)
+                {
+                    return m_Parent.IsDisabled;
+                }
+                return false;
+            }
+            set { m_Disabled = value; }
+        }
 
         /// <summary>
         /// Indicates whether the control is hidden.

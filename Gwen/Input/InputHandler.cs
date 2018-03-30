@@ -197,10 +197,10 @@ namespace Gwen.Input
         /// <param name="control">Unused.</param>
         public static void OnCanvasThink(Controls.ControlBase control)
         {
-            if (MouseFocus != null && !MouseFocus.IsVisible)
+            if (MouseFocus != null && !MouseFocus.IsVisible && !MouseFocus.IsDisabled)
                 MouseFocus = null;
 
-            if (KeyboardFocus != null && (!KeyboardFocus.IsVisible || !KeyboardFocus.KeyboardInputEnabled))
+            if (KeyboardFocus != null && (!KeyboardFocus.IsVisible || !KeyboardFocus.KeyboardInputEnabled || KeyboardFocus.IsDisabled))
                 KeyboardFocus = null;
 
             if (null == KeyboardFocus) return;
@@ -389,6 +389,8 @@ namespace Gwen.Input
             {
                 hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
             }
+            if (hovered != null && hovered.IsDisabled)
+                hovered = null;
 
             if (HoveredControl != hovered)
             {
