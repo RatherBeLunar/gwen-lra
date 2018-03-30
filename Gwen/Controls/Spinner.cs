@@ -6,12 +6,12 @@ namespace Gwen.Controls
     /// <summary>
     /// Numeric up/down.
     /// </summary>
-    public class NumericUpDown : ControlBase
+    public class Spinner : ControlBase
     {
         public class NumericUpDownTextbox : TextBoxNumeric
         {
-            NumericUpDown m_parent;
-            public NumericUpDownTextbox(NumericUpDown parent) : base(parent)
+            Spinner m_parent;
+            public NumericUpDownTextbox(Spinner parent) : base(parent)
             {
                 m_parent = parent;
             }
@@ -117,10 +117,10 @@ namespace Gwen.Controls
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
+        /// Initializes a new instance of the <see cref="Spinner"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public NumericUpDown(ControlBase parent)
+        public Spinner(ControlBase parent)
             : base(parent)
         {
             //   Padding = Padding.One;
