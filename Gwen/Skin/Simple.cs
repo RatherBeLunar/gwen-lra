@@ -6,7 +6,7 @@ namespace Gwen.Skin
     /// <summary>
     /// Simple skin (non-textured). Deprecated and incomplete, do not use.
     /// </summary>
-    [Obsolete]
+    // [Obsolete]
     public class Simple : Skin.SkinBase
     {
         private readonly Color m_colBorderColor;
@@ -46,6 +46,27 @@ namespace Gwen.Skin
             m_colToolTipBorder = Color.FromArgb(255, 0, 0, 0);
 
             m_colModal = Color.FromArgb(150, 25, 25, 25);
+            Colors.Text.Contrast = Color.FromArgb(255, Color.FromArgb(0x0077cc));
+            Colors.Text.ContrastLow = Color.FromArgb(255, Color.FromArgb(0x004d84));
+            Colors.Text.Foreground = Color.FromArgb(255, Color.FromArgb(0x374047));
+            Colors.Text.Disabled = Color.FromArgb(255, Color.FromArgb(0x7f8a93));
+            Colors.Text.Highlight = Color.FromArgb(255, Color.FromArgb(0xf8f9f9));
+            Colors.Text.Inactive = Color.FromArgb(255, Color.FromArgb(0xbec4c8));
+            Colors.Accent = Color.FromArgb(255, Color.FromArgb(0x0077cc));
+            Colors.AccentHigh = Color.FromArgb(255, Color.FromArgb(0xc6e1f3));
+            Colors.AccentLow = Color.FromArgb(255, Color.FromArgb(0x004d84));
+            Colors.Background = Color.FromArgb(255, Color.FromArgb(0xf8f9f9));
+            Colors.BackgroundHighlight = Color.FromArgb(255, Color.FromArgb(0xebedee));
+            Colors.Foreground = Color.FromArgb(255, Color.FromArgb(0x374047));
+            Colors.ForegroundHighlight = Color.FromArgb(255, Color.FromArgb(0xdee1e3));
+
+
+            Colors.Tree.Lines = Colors.Text.Disabled;
+            Colors.Properties.Border = Colors.Text.Disabled;
+
+            Colors.ModalBackground = Color.FromArgb(20, Colors.Background);
+
+            Colors.TooltipText = Colors.Text.Foreground;
         }
 
         #region UI elements
@@ -134,7 +155,7 @@ namespace Gwen.Skin
             else m_Renderer.DrawColor = m_colControl;
 
             m_Renderer.DrawFilledRect(new Rectangle(1, 1, w - 2, h - 2));
-            
+
             if (depressed) m_Renderer.DrawColor = m_colControlDark;
             else if (bHovered) m_Renderer.DrawColor = m_colControl;
             else m_Renderer.DrawColor = m_colControlDark;
@@ -300,7 +321,7 @@ namespace Gwen.Skin
             if (bHovered) m_Renderer.DrawColor = m_colControl;
             else m_Renderer.DrawColor = m_colControlDark;
 
-            m_Renderer.DrawFilledRect(Util.FloatRect(1, rect.Height*0.5f, rect.Width - 2, rect.Height*0.5f - 1));
+            m_Renderer.DrawFilledRect(Util.FloatRect(1, rect.Height * 0.5f, rect.Width - 2, rect.Height * 0.5f - 1));
 
             m_Renderer.DrawColor = m_colControlBright;
             m_Renderer.DrawShavedCornerRect(new Rectangle(1, 1, rect.Width - 2, rect.Height));
