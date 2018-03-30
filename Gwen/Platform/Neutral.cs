@@ -10,7 +10,16 @@ namespace Gwen.Platform
     /// </summary>
     public static class Neutral
     {
+        public class CursorImplementation
+        {
+            public virtual void SetCursor(Cursor cursor)
+            {
+                Cursor.Current = cursor;
+            }
+        }
+        public static CursorImplementation CursorSetter;
         private static Stopwatch _timecounter = Stopwatch.StartNew();
+        private static Cursor current = Cursors.Default;
 
         /// <summary>
         /// Changes the mouse cursor.
@@ -18,7 +27,15 @@ namespace Gwen.Platform
         /// <param name="cursor">Cursor type.</param>
         public static void SetCursor(Cursor cursor)
         {
-            Cursor.Current = cursor;
+            if (CursorSetter == null)
+            {
+                CursorSetter = new CursorImplementation();
+            }
+            if (current != cursor)
+            {
+                current = cursor;
+                CursorSetter.SetCursor(cursor);
+            }
         }
 
         /// <summary>
