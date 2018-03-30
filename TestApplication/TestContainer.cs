@@ -11,6 +11,10 @@ namespace TestApplication
         // tree control multi select should only be if holding ctrl, right?
         // window has no font scaling for title
         // on ishidden change, fire mouseup
+        // progressbar
+        // category recolor
+        // dpi
+        // cursors
         private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
@@ -69,11 +73,15 @@ namespace TestApplication
 
             page = AddPage(cat, "Buttons");
             var btn = new ButtonTest(page);
+            page = AddPage(cat, "ProgressBar");
+            var prog = new ProgressBarTest(page);
 
             page = AddPage(cat, "Layout");
             var layout = new LayoutTest(page);
             page = AddPage(cat, "Textbox");
             var textbox = new TextBoxTest(page);
+            _focus = page;
+            _focus.Show();
             page = AddPage(cat, "Slider");
             var slider = new SliderTest(page);
             cat = list.Add("Containers");
@@ -99,8 +107,6 @@ namespace TestApplication
             var prop = new PropertyTest(page);
             page = AddPage(cat, "Category");
             var collapse = new CategoryTest(page);
-            _focus = page;
-            _focus.Show();
             //    page.FocusTab();
         }
     }

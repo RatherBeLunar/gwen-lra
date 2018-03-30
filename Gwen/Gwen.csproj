@@ -82,6 +82,7 @@
     <Compile Include="ControlInternal\Text.cs" />
     <Compile Include="Controls\ScrollBar.cs" />
     <Compile Include="Controls\Button.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Controls\Canvas.cs" />
     <!-- <Compile Include="Controls\ColorSlider.cs" /> -->
     <Compile Include="Controls\GroupBox.cs" />

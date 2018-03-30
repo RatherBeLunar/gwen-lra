@@ -50,15 +50,15 @@ namespace Gwen.Controls
         public ProgressBar(ControlBase parent)
             : base(parent)
         {
-			AutoSizeToContents = false;
-
-            SetSize(128, 32);
+            AutoSizeToContents = false;
+            Height = m_Text.Height + 6;
+            Width = 100;
             TextPadding = Padding.Three;
             IsHorizontal = true;
 
             Alignment = Pos.Center;
             m_Progress = 0;
-            m_AutoLabel = true;
+            m_AutoLabel = false;
         }
 
         /// <summary>

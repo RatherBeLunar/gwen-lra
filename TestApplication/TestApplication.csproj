@@ -53,6 +53,7 @@
     <Compile Include="Tests\TreeTest.cs" />
     <Compile Include="Tests\TextBoxTest.cs" />
     <Compile Include="Tests\WindowTest.cs" />
+    <Compile Include="Tests\ProgressBarTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -60,6 +61,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
