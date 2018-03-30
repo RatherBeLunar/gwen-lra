@@ -8,7 +8,7 @@ namespace TestApplication
         public TabTest(ControlBase parent) : base(parent)
         {
             TabControl tab = new TabControl(parent);
-            tab.DrawDebugOutlines = true;
+            // tab.DrawDebugOutlines = true;
             tab.Width = 300;
             tab.Height = 200;
             var page = tab.AddPage("Layout Test");

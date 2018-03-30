@@ -136,10 +136,10 @@ namespace Gwen.Skin
         {
         }
 
-        public virtual void DrawTextBox(Controls.ControlBase control)
+        public virtual void DrawTextBox(Controls.ControlBase control, bool inFocus)
         {
         }
-
+        
         public virtual void DrawWindow(Controls.ControlBase control, int topHeight, bool inFocus)
         {
         }

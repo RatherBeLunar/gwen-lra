@@ -920,7 +920,7 @@ namespace Gwen.Controls
             base.Render(skin);
 
             if (ShouldDrawBackground)
-                skin.DrawTextBox(this);
+                skin.DrawTextBox(this, HasFocus);
 
             if (!HasFocus) return;
 

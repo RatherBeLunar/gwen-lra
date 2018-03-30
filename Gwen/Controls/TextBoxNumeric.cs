@@ -3,16 +3,20 @@
 namespace Gwen.Controls
 {
     /// <summary>
-    /// Numeric text box - accepts only float numbers.
+    /// Numeric text box - accepts only double numbers.
     /// </summary>
     public class TextBoxNumeric : TextBox
     {
-        #region Properties
+
+        /// <summary>
+        /// Current numeric value.
+        /// </summary>
+        protected double m_Value;
 
         /// <summary>
         /// Current numerical value.
         /// </summary>
-        public virtual float Value
+        public virtual double Value
         {
             get { return m_Value; }
             set
@@ -25,8 +29,7 @@ namespace Gwen.Controls
                 }
             }
         }
-
-        #endregion Properties
+        public bool OnlyWholeNumbers = false;
 
         #region Constructors
 
@@ -55,28 +58,18 @@ namespace Gwen.Controls
                 base.SetText(str, doEvents);
         }
 
-        public virtual void SetValue(float v)
+        public virtual void SetValue(double v)
         {
             m_Value = v;
         }
 
         #endregion Methods
 
-        #region Fields
-
-        /// <summary>
-        /// Current numeric value.
-        /// </summary>
-        protected float m_Value;
-
-        #endregion Fields
-
         protected virtual bool IsTextAllowed(string str)
         {
             if (str == "" || str == "-")
                 return true; // annoying if single - is not allowed
-            float d;
-            return float.TryParse(str, out d);
+            return double.TryParse(str, out double d);
         }
 
         /// <summary>
@@ -126,7 +119,10 @@ namespace Gwen.Controls
         {
             if (Validate(Text))
             {
-                SetValue(float.Parse(Text));
+                var val = double.Parse(Text);
+                if (OnlyWholeNumbers)
+                    val = (int)val;
+                SetValue(val);
             }
             else if (String.IsNullOrEmpty(Text) || Text == "-")
             {
@@ -141,8 +137,8 @@ namespace Gwen.Controls
         /// <returns>True if the text is allowed.</returns>
         protected virtual bool Validate(string str)
         {
-            float d;
-            if (!float.TryParse(str, out d))
+            double d;
+            if (!double.TryParse(str, out d))
                 return false;
             return true;
         }
