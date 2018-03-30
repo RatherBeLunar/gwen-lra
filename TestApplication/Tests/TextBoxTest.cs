@@ -25,17 +25,17 @@ namespace TestApplication
             FlowLayout flow = new FlowLayout(parent);
             flow.SetPosition(0, 400);
             flow.AutoSizeToContents = true;
-            var nud = new NumericUpDown(flow);
+            var nud = new Spinner(flow);
             nud.SetPosition(0, 400);
             nud.Min = 0;
             nud.Max = 100;
             Label l = new Label(flow);
             nud.ValueChanged += (o, e) =>
             {
-                l.Text = "reported value: " + nud.Value;
+                l.Text = "reported value: " + ((Spinner)o).Value;
             };
             nud.Value = 1;
-            nud = new NumericUpDown(parent);
+            nud = new Spinner(parent);
             nud.SetPosition(0, 500);
             nud.Min = -10;
             nud.Max = 10;
