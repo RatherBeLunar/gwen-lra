@@ -113,8 +113,6 @@ namespace Gwen.Renderer
             switch (lock_format)
             {
                 case PixelFormat.Format32bppArgb:
-                    byte[] etc = new byte[100 * 4];
-                    Marshal.Copy(data.Scan0, etc, 0, 400);
                     GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, t.Width, t.Height, 0, global::OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
                     break;
 
