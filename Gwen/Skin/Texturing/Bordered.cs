@@ -150,55 +150,55 @@ namespace Gwen.Skin.Texturing
             x,
             y,
             m_Margin.Left,
-            m_Margin.Top);
+            m_Margin.Top);//TL
 
             SetRect(1,
             x + m_Margin.Left,
             y,
             w - m_Margin.Left - m_Margin.Right,
-            m_Margin.Top);
+            m_Margin.Top);// Top middle
 
             SetRect(2,
             (x + w) - m_Margin.Right,
             y,
             m_Margin.Right,
-            m_Margin.Top);
+            m_Margin.Top);//top right
 
             SetRect(3,
             x,
             y + m_Margin.Top,
             m_Margin.Left,
-            h - m_Margin.Top - m_Margin.Bottom);
+            h - m_Margin.Top - m_Margin.Bottom);// middle left
 
             SetRect(4,
             x + m_Margin.Left,
             y + m_Margin.Top,
             w - m_Margin.Left - m_Margin.Right,
-            h - m_Margin.Top - m_Margin.Bottom);
+            h - m_Margin.Top - m_Margin.Bottom);//middle middle
 
             SetRect(5,
             (x + w) - m_Margin.Right,
             y + m_Margin.Top,
             m_Margin.Right,
-            h - m_Margin.Top - m_Margin.Bottom - 1);
+            h - m_Margin.Top - m_Margin.Bottom);//middle right
 
             SetRect(6,
             x,
             (y + h) - m_Margin.Bottom,
             m_Margin.Left,
-            m_Margin.Bottom);
+            m_Margin.Bottom);//bottom left
 
             SetRect(7,
             x + m_Margin.Left,
             (y + h) - m_Margin.Bottom,
             w - m_Margin.Left - m_Margin.Right,
-            m_Margin.Bottom);
+            m_Margin.Bottom);//bottom middle
 
             SetRect(8,
             (x + w) - m_Margin.Right,
             (y + h) - m_Margin.Bottom,
             m_Margin.Right,
-            m_Margin.Bottom);
+            m_Margin.Bottom);//bottom right
 
             m_Margin.Left = (int)(m_Margin.Left * drawMarginScale);
             m_Margin.Right = (int)(m_Margin.Right * drawMarginScale);
