@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Gwen.Controls
 {
+    [Obsolete("Not implemented properly")]
     public class MultilineTextBox : Label
     {
         #region Events
@@ -193,7 +194,8 @@ namespace Gwen.Controls
 
                 m_TextLines[StartPoint.Y] = m_TextLines[StartPoint.Y].Remove(start, end - start);
             }
-            else {
+            else
+            {
                 /* Remove Start */
                 if (StartPoint.X < m_TextLines[StartPoint.Y].Length)
                 {
@@ -241,7 +243,8 @@ namespace Gwen.Controls
                 str = m_TextLines[m_CursorPos.Y];
                 str = str.Substring(start, end - start);
             }
-            else {
+            else
+            {
                 str = String.Empty;
                 str += m_TextLines[StartPoint.Y].Substring(StartPoint.X); //Copy start
                 for (int i = 1; i < EndPoint.Y - StartPoint.Y; i++)
@@ -342,7 +345,8 @@ namespace Gwen.Controls
                 {
                     sub += m_TextLines[Best.Y][x];
                 }
-                else {
+                else
+                {
                     sub += " ";
                 }
 
@@ -487,7 +491,8 @@ namespace Gwen.Controls
                 {
                     return true; //Nothing left to delete
                 }
-                else {
+                else
+                {
                     string lhs = m_TextLines[m_CursorPos.Y - 1];
                     string rhs = m_TextLines[m_CursorPos.Y];
                     m_TextLines.RemoveAt(m_CursorPos.Y);
@@ -496,7 +501,8 @@ namespace Gwen.Controls
                     m_TextLines[m_CursorPos.Y] = lhs + rhs;
                 }
             }
-            else {
+            else
+            {
                 string CurrentLine = m_TextLines[m_CursorPos.Y];
                 string lhs = CurrentLine.Substring(0, CursorPosition.X - 1);
                 string rhs = CurrentLine.Substring(CursorPosition.X);
@@ -533,7 +539,8 @@ namespace Gwen.Controls
                 {
                     return true; //Nothing left to delete
                 }
-                else {
+                else
+                {
                     string lhs = m_TextLines[m_CursorPos.Y];
                     string rhs = m_TextLines[m_CursorPos.Y + 1];
                     m_TextLines.RemoveAt(m_CursorPos.Y + 1);
@@ -541,7 +548,8 @@ namespace Gwen.Controls
                     m_TextLines[m_CursorPos.Y] = lhs + rhs;
                 }
             }
-            else {
+            else
+            {
                 string CurrentLine = m_TextLines[m_CursorPos.Y];
                 string lhs = CurrentLine.Substring(0, CursorPosition.X);
                 string rhs = CurrentLine.Substring(CursorPosition.X + 1);
@@ -644,7 +652,8 @@ namespace Gwen.Controls
             {
                 m_CursorPos.X = Math.Min(m_CursorPos.X - 1, m_TextLines[m_CursorPos.Y].Length);
             }
-            else {
+            else
+            {
                 if (m_CursorPos.Y > 0)
                 {
                     OnKeyUp(down);
@@ -711,7 +720,8 @@ namespace Gwen.Controls
             {
                 m_CursorPos.X = Math.Min(m_CursorPos.X + 1, m_TextLines[m_CursorPos.Y].Length);
             }
-            else {
+            else
+            {
                 if (m_CursorPos.Y < m_TextLines.Count - 1)
                 {
                     OnKeyDown(down);
@@ -802,7 +812,8 @@ namespace Gwen.Controls
 
                 InputHandler.MouseFocus = this;
             }
-            else {
+            else
+            {
                 if (InputHandler.MouseFocus == this)
                 {
                     CursorPosition = coords;
@@ -944,7 +955,8 @@ namespace Gwen.Controls
                     skin.Renderer.DrawColor = Color.FromArgb(200, 50, 170, 255);
                     skin.Renderer.DrawFilledRect(SelectionBounds);
                 }
-                else {
+                else
+                {
                     /* Start */
                     Point pA = GetCharacterPosition(StartPoint);
                     Point pB = GetCharacterPosition(new Point(m_TextLines[StartPoint.Y].Length, StartPoint.Y));
@@ -1015,7 +1027,8 @@ namespace Gwen.Controls
                 {
                     return CursorPosition.X > CursorEnd.X ? CursorPosition : CursorEnd;
                 }
-                else {
+                else
+                {
                     return CursorPosition.Y > CursorEnd.Y ? CursorPosition : CursorEnd;
                 }
             }
@@ -1029,7 +1042,8 @@ namespace Gwen.Controls
                 {
                     return CursorPosition.X < CursorEnd.X ? CursorPosition : CursorEnd;
                 }
-                else {
+                else
+                {
                     return CursorPosition.Y < CursorEnd.Y ? CursorPosition : CursorEnd;
                 }
             }

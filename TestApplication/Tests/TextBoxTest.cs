@@ -17,11 +17,11 @@ namespace TestApplication
             tb.SetPosition(0, 200);
             tb.Height = 50;
             tb.Text = "my size is different";
-            var mtb = new MultilineTextBox(parent);
-            mtb.Width = 100;
-            mtb.SetPosition(0, 300);
-            mtb.Height = 50;
-            mtb.Text = "im multilined. lol..";
+            // var mtb = new MultilineTextBox(parent);
+            // mtb.Width = 100;
+            // mtb.SetPosition(0, 300);
+            // mtb.Height = 50;
+            // mtb.Text = "im multilined. lol..";
             FlowLayout flow = new FlowLayout(parent);
             flow.SetPosition(0, 400);
             flow.AutoSizeToContents = true;
