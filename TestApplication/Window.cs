@@ -7,17 +7,19 @@ using Gwen.Controls;
 using System.Drawing;
 using TestApplication.Tests;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Threading;
 namespace TestApplication
 {
     public class Window : GameWindow
     {
-        public class CursorImpl : Gwen.Platform.Neutral.CursorImplementation
+        public class PlatformImpl : Gwen.Platform.Neutral.PlatformImplementation
         {
 
             private GameWindow game;
-            public CursorImpl(GameWindow game)
+            public PlatformImpl(GameWindow game)
             {
                 this.game = game;
             }
@@ -28,10 +30,91 @@ namespace TestApplication
                     game.Cursor = cursor;
                 }
             }
+            public override bool SetClipboardText(string text)
+            {
+                bool ret = false;
+                Thread staThread = new Thread(
+                    () =>
+                    {
+                        try
+                        {
+                            Clipboard.SetText(text);
+                            ret = true;
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                    });
+                staThread.SetApartmentState(ApartmentState.STA);
+                staThread.Start();
+                staThread.Join();
+                // at this point either you have clipboard data or an exception
+                return ret;
+            }
+            public override string GetClipboardText()
+            {
+                // code from http://forums.getpaint.net/index.php?/topic/13712-trouble-accessing-the-clipboard/page__view__findpost__p__226140
+                string ret = String.Empty;
+                Thread staThread = new Thread(
+                    () =>
+                    {
+                        try
+                        {
+                            if (!Clipboard.ContainsText())
+                                return;
+                            ret = Clipboard.GetText();
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                    });
+                staThread.SetApartmentState(ApartmentState.STA);
+                staThread.Start();
+                staThread.Join();
+                // at this point either you have clipboard data or an exception
+                return ret;
+            }
             //dont use this, lol
-            public override void SetCursor(System.Windows.Forms.Cursor cursor)
+            public override void SetCursor(Gwen.Cursor c)
             {
                 // Bitmap.FromHicon(cursor.Handle);
+                System.Windows.Forms.Cursor cursor;
+                switch (c.Name)
+                {
+                    default:
+                    case "Default":
+                        game.Cursor = MouseCursor.Default;
+                        return;
+                    case "SizeWE":
+                        cursor = System.Windows.Forms.Cursors.SizeWE;
+                        break;
+                    case "SizeNWSE":
+                        cursor = System.Windows.Forms.Cursors.SizeNWSE;
+                        break;
+                    case "SizeNS":
+                        cursor = System.Windows.Forms.Cursors.SizeNS;
+                        break;
+                    case "SizeNESW":
+                        cursor = System.Windows.Forms.Cursors.SizeNESW;
+                        break;
+                    case "SizeAll":
+                        cursor = System.Windows.Forms.Cursors.SizeAll;
+                        break;
+                    case "IBeam":
+                        cursor = System.Windows.Forms.Cursors.IBeam;
+                        break;
+                    case "Help":
+                        cursor = System.Windows.Forms.Cursors.Help;
+                        break;
+                    case "Hand":
+                        cursor = System.Windows.Forms.Cursors.Hand;
+                        break;
+                    case "No":
+                        cursor = System.Windows.Forms.Cursors.No;
+                        break;
+                }
                 var t = cursor.GetType();
                 var whatever = cursor.GetType().GetMethod("ToBitmap", BindingFlags.Instance | BindingFlags.NonPublic);
                 var bmp = (Bitmap)whatever.Invoke(cursor, new object[] { false, true });
@@ -55,7 +138,7 @@ namespace TestApplication
         bool _steps = false;
         public Window() : base(600, 600, GraphicsMode.Default, "UI Test")
         {
-            Gwen.Platform.Neutral.CursorSetter = new CursorImpl(this);
+            Gwen.Platform.Neutral.Implementation = new PlatformImpl(this);
         }
 
 
@@ -83,9 +166,7 @@ namespace TestApplication
                 fontdata,
                 fontpng);
 
-            var skin = new Gwen.Skin.TexturedBase(renderer,
-                skinpng)
-            { DefaultFont = gamefont_15 };
+            var skin = new Gwen.Skin.TexturedBase(renderer, skinpng) { DefaultFont = gamefont_15 };
             // var skin = new Gwen.Skin.Simple(renderer) { DefaultFont = gamefont_15 };
             Canvas = new Canvas(skin);
             Canvas.SetSize(ClientSize.Width, ClientSize.Height);
