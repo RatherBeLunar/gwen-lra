@@ -122,6 +122,7 @@ namespace Gwen.Controls
             AddAccelerator("Ctrl + X", OnCut);
             AddAccelerator("Ctrl + V", OnPaste);
             AddAccelerator("Ctrl + A", OnSelectAll);
+            Cursor = Cursors.IBeam;
         }
 
         #endregion Constructors

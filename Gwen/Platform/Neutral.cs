@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace Gwen.Platform
@@ -10,14 +9,13 @@ namespace Gwen.Platform
     /// </summary>
     public static class Neutral
     {
-        public class CursorImplementation
+        public abstract class PlatformImplementation
         {
-            public virtual void SetCursor(Cursor cursor)
-            {
-                Cursor.Current = cursor;
-            }
+            public abstract void SetCursor(Cursor cursor);
+            public abstract bool SetClipboardText(string text);
+            public abstract string GetClipboardText();
         }
-        public static CursorImplementation CursorSetter;
+        public static PlatformImplementation Implementation;
         private static Stopwatch _timecounter = Stopwatch.StartNew();
         private static Cursor current = Cursors.Default;
 
@@ -27,14 +25,14 @@ namespace Gwen.Platform
         /// <param name="cursor">Cursor type.</param>
         public static void SetCursor(Cursor cursor)
         {
-            if (CursorSetter == null)
+            if (Implementation == null)
             {
-                CursorSetter = new CursorImplementation();
+                throw new InvalidOperationException("Platform handler not set.");
             }
             if (current != cursor)
             {
                 current = cursor;
-                CursorSetter.SetCursor(cursor);
+                Implementation.SetCursor(cursor);
             }
         }
 
@@ -44,27 +42,11 @@ namespace Gwen.Platform
         /// <returns>Clipboard text.</returns>
         public static string GetClipboardText()
         {
-            // code from http://forums.getpaint.net/index.php?/topic/13712-trouble-accessing-the-clipboard/page__view__findpost__p__226140
-            string ret = String.Empty;
-            Thread staThread = new Thread(
-                () =>
-                {
-                    try
-                    {
-                        if (!Clipboard.ContainsText())
-                            return;
-                        ret = Clipboard.GetText();
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-                });
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            // at this point either you have clipboard data or an exception
-            return ret;
+            if (Implementation == null)
+            {
+                throw new InvalidOperationException("Platform handler not set.");
+            }
+            return Implementation.GetClipboardText();
         }
 
         /// <summary>
@@ -74,25 +56,11 @@ namespace Gwen.Platform
         /// <returns>True if succeeded.</returns>
         public static bool SetClipboardText(string text)
         {
-            bool ret = false;
-            Thread staThread = new Thread(
-                () =>
-                {
-                    try
-                    {
-                        Clipboard.SetText(text);
-                        ret = true;
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-                });
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            // at this point either you have clipboard data or an exception
-            return ret;
+            if (Implementation == null)
+            {
+                throw new InvalidOperationException("Platform handler not set.");
+            }
+            return Implementation.SetClipboardText(text);
         }
 
         /// <summary>
@@ -102,82 +70,6 @@ namespace Gwen.Platform
         public static double GetTimeInSeconds()
         {
             return _timecounter.Elapsed.TotalSeconds;
-        }
-
-        /// <summary>
-        /// Displays an open file dialog.
-        /// </summary>
-        /// <param name="title">Dialog title.</param>
-        /// <param name="startPath">Initial path.</param>
-        /// <param name="extension">File extension filter.</param>
-        /// <param name="callback">Callback that is executed after the dialog completes.</param>
-        /// <returns>True if succeeded.</returns>
-        public static bool FileOpen(string title, string startPath, string extension, Action<string> callback)
-        {
-            var dialog = new OpenFileDialog
-            {
-                Title = title,
-                InitialDirectory = startPath,
-                DefaultExt = @"*.*",
-                Filter = extension,
-                CheckPathExists = true,
-                Multiselect = false
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                if (callback != null)
-                {
-                    callback(dialog.FileName);
-                }
-            }
-            else
-            {
-                if (callback != null)
-                {
-                    callback(String.Empty);
-                }
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Displays a save file dialog.
-        /// </summary>
-        /// <param name="title">Dialog title.</param>
-        /// <param name="startPath">Initial path.</param>
-        /// <param name="extension">File extension filter.</param>
-        /// <param name="callback">Callback that is executed after the dialog completes.</param>
-        /// <returns>True if succeeded.</returns>
-        public static bool FileSave(string title, string startPath, string extension, Action<string> callback)
-        {
-            var dialog = new SaveFileDialog
-            {
-                Title = title,
-                InitialDirectory = startPath,
-                DefaultExt = @"*.*",
-                Filter = extension,
-                CheckPathExists = true,
-                OverwritePrompt = true
-            };
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                if (callback != null)
-                {
-                    callback(dialog.FileName);
-                }
-            }
-            else
-            {
-                if (callback != null)
-                {
-                    callback(String.Empty);
-                }
-                return false;
-            }
-
-            return true;
         }
     }
 }

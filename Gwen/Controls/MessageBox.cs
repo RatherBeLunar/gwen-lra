@@ -8,7 +8,7 @@ namespace Gwen.Controls
         private readonly Button m_Button;
         public EventHandler<EventArgs> Dismissed;
         public ControlBase Container;
-        public System.Windows.Forms.DialogResult Result { get; set; }
+        public DialogResult Result { get; set; }
         public string Text { get; private set; }
         public bool Modal = false;
         public static MessageBox Show(Canvas canvas, string text, string title, bool cancancel = false)
@@ -36,7 +36,7 @@ namespace Gwen.Controls
             m_Button.Text = "Okay";
             m_Button.Clicked += (o, e) =>
                 {
-                    Result = System.Windows.Forms.DialogResult.OK;
+                    Result = DialogResult.OK;
                     Close();
                     DismissedHandler(o, e);
                 };
@@ -54,7 +54,7 @@ namespace Gwen.Controls
                 btn.Width = 70;
                 btn.Clicked += (o, e) =>
                 {
-                    Result = System.Windows.Forms.DialogResult.Cancel;
+                    Result = DialogResult.Cancel;
                     Close();
                     DismissedHandler(o, e);
                 };

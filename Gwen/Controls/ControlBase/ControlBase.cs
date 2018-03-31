@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace Gwen.Controls
 {
@@ -91,7 +90,7 @@ namespace Gwen.Controls
             {
                 if (m_Parent == value)
                     return;
-                    
+
                 if (m_Parent != null)
                 {
                     m_Parent.RemoveChild(this, false);
