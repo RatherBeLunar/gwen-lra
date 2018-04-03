@@ -73,8 +73,8 @@ namespace Gwen.Controls
 
             float barWidth = (m_ViewableContentSize / m_ContentSize) * (size.Width - (ButtonSize * 2));
 
-            if (barWidth < ButtonSize * 0.5f)
-                barWidth = (int)(ButtonSize * 0.5f);
+            if (barWidth < ButtonSize)
+                barWidth = ButtonSize;
 
             m_Bar.Width = (int)(barWidth);
             m_Bar.IsHidden = Width - (ButtonSize * 2) <= barWidth;

@@ -89,7 +89,6 @@ namespace Gwen.Controls
 
             NudgeAmount = 20;
         }
-
         /// <summary>
         /// Sets the scroll amount (0-1).
         /// </summary>

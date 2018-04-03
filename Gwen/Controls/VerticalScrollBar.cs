@@ -66,8 +66,8 @@ namespace Gwen.Controls
             float barHeight = 0.0f;
             if (m_ContentSize > 0.0f) barHeight = (m_ViewableContentSize / m_ContentSize) * (size.Height - (ButtonSize * 2));
 
-            if (barHeight < ButtonSize * 0.5f)
-                barHeight = (int)(ButtonSize * 0.5f);
+            if (barHeight < ButtonSize)
+                barHeight = (int)(ButtonSize);
 
             m_Bar.Height = (int)(barHeight);
             m_Bar.IsHidden = Height - (ButtonSize * 2) <= barHeight;
