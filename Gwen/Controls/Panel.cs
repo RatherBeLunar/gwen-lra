@@ -36,7 +36,8 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            skin.DrawPanel(this);
+            if (ShouldDrawBackground)
+                skin.DrawPanel(this);
         }
 
         #endregion Methods

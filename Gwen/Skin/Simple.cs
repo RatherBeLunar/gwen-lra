@@ -60,13 +60,7 @@ namespace Gwen.Skin
             Colors.Foreground = Color.FromArgb(255, Color.FromArgb(0x374047));
             Colors.ForegroundHighlight = Color.FromArgb(255, Color.FromArgb(0xdee1e3));
 
-
-            Colors.Tree.Lines = Colors.Text.Disabled;
-            Colors.Properties.Border = Colors.Text.Disabled;
-
             Colors.ModalBackground = Color.FromArgb(20, Colors.Background);
-
-            Colors.TooltipText = Colors.Text.Foreground;
         }
 
         #region UI elements
@@ -388,7 +382,7 @@ namespace Gwen.Skin
             m_Renderer.DrawShavedCornerRect(new Rectangle(rect.X, rect.Y, rect.Width, rect.Height));
         }
 
-        public override void DrawWindowCloseButton(Controls.ControlBase control, bool depressed, bool hovered, bool disabled)
+        public override void DrawWindowCloseButton(Controls.ControlBase control, bool depressed, bool hovered, bool disabled, bool inactive)
         {
             // TODO
             DrawButton(control, depressed, hovered, disabled);
@@ -429,38 +423,22 @@ namespace Gwen.Skin
             m_Renderer.DrawLinedRect(rect);
         }
 
-        public override void DrawProgressBar(Controls.ControlBase control, bool horizontal, float progress)
+        public override void DrawProgressBar(Controls.ControlBase control, float progress)
         {
             Rectangle rect = control.RenderBounds;
             Color FillColour = Color.FromArgb(255, 0, 211, 40);
 
-            if (horizontal)
-            {
-                //Background
-                m_Renderer.DrawColor = m_colControlDark;
-                m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
+            //Background
+            m_Renderer.DrawColor = m_colControlDark;
+            m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
 
-                //Right half
-                m_Renderer.DrawColor = FillColour;
-                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * progress - 2, rect.Height - 2));
+            //Right half
+            m_Renderer.DrawColor = FillColour;
+            m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * progress - 2, rect.Height - 2));
 
-                m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
-                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width - 2, rect.Height * 0.45f));
-            }
-            else
-            {
-                //Background 
-                m_Renderer.DrawColor = m_colControlDark;
-                m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
+            m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
+            m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width - 2, rect.Height * 0.45f));
 
-                //Top half
-                m_Renderer.DrawColor = FillColour;
-                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1 + (rect.Height * (1 - progress)), rect.Width - 2,
-                                                         rect.Height * progress - 2));
-
-                m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
-                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * 0.45f, rect.Height - 2));
-            }
 
             m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
             m_Renderer.DrawShavedCornerRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
@@ -499,7 +477,7 @@ namespace Gwen.Skin
             }
         }
 
-        public override void DrawSlider(Controls.ControlBase control, bool horizontal, int numNotches, int barSize)
+        public override void DrawSlider(Controls.ControlBase control, bool horizontal, int numNotches, int barSize, double val)
         {
             Rectangle rect = control.RenderBounds;
             Rectangle notchRect = rect;

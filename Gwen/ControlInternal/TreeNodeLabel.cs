@@ -11,26 +11,29 @@ namespace Gwen.ControlInternal
         protected override System.Drawing.Color CurrentColor
         {
             get
-			{
-				if (IsDisabled)
-				{
+            {
+                if (IsDisabled)
+                {
                     return Skin.Colors.Text.Disabled;
-				}
+                }
 
-				if (IsDepressed)
-				{
+                if (Parent is TreeNode node && node.IsSelected)
+                {
+                    return Skin.Colors.Text.AccentForeground;
+                }
+                if (IsDepressed)
+                {
                     return Skin.Colors.Text.Contrast;
-				}
+                }
                 if (ToggleState)
                 {
                     return Skin.Colors.Text.Highlight;
                 }
 
-				if (IsHovered)
-				{
+                if (IsHovered)
+                {
                     return Skin.Colors.Text.ContrastLow;
-				}
-
+                }
                 return Skin.Colors.Text.Foreground;
             }
         }

@@ -15,7 +15,7 @@ namespace Gwen.ControlInternal
                 if (IsDepressed || ToggleState)
                     return Skin.Colors.Text.Disabled;//maybe not?
                 else
-                    return Skin.Colors.Text.Foreground;
+                    return Skin.Colors.Text.Highlight;
             }
         }
         /// <summary>

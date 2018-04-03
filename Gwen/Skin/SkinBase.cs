@@ -139,12 +139,12 @@ namespace Gwen.Skin
         public virtual void DrawTextBox(Controls.ControlBase control, bool inFocus)
         {
         }
-        
+
         public virtual void DrawWindow(Controls.ControlBase control, int topHeight, bool inFocus)
         {
         }
 
-        public virtual void DrawWindowCloseButton(Controls.ControlBase control, bool depressed, bool hovered, bool disabled)
+        public virtual void DrawWindowCloseButton(Controls.ControlBase control, bool depressed, bool hovered, bool disabled, bool inactive)
         {
         }
 
@@ -172,7 +172,7 @@ namespace Gwen.Skin
         {
         }
 
-        public virtual void DrawProgressBar(Controls.ControlBase control, bool horizontal, float progress)
+        public virtual void DrawProgressBar(Controls.ControlBase control, float progress)
         {
         }
 
@@ -184,7 +184,7 @@ namespace Gwen.Skin
         {
         }
 
-        public virtual void DrawSlider(Controls.ControlBase control, bool horizontal, int numNotches, int barSize)
+        public virtual void DrawSlider(Controls.ControlBase control, bool horizontal, int numNotches, int barSize, double val)
         {
         }
 
@@ -251,7 +251,7 @@ namespace Gwen.Skin
 
         public virtual void DrawTreeNode(Controls.ControlBase ctrl, bool open, bool selected, int labelHeight, int labelWidth, int halfWay, int lastBranch, bool isRoot)
         {
-            Renderer.DrawColor = Colors.Tree.Lines;
+            Renderer.DrawColor = Colors.ForegroundInactive;
 
             if (!isRoot)
                 Renderer.DrawFilledRect(new Rectangle(8, halfWay, 16 - 9, 1));
@@ -284,11 +284,11 @@ namespace Gwen.Skin
                 m_Renderer.DrawFilledRect(new Rectangle(0, rect.Y, iWidth, rect.Height));
 
             if (bBeingEdited)
-                m_Renderer.DrawColor = Colors.Text.Disabled;
+                m_Renderer.DrawColor = Colors.ForegroundInactive;
             else if (hovered)
-                m_Renderer.DrawColor = Colors.Text.Disabled;
+                m_Renderer.DrawColor = Colors.ForegroundInactive;
             else
-                m_Renderer.DrawColor = Colors.Text.Disabled;
+                m_Renderer.DrawColor = Colors.ForegroundInactive;
 
             m_Renderer.DrawFilledRect(new Rectangle(iWidth, rect.Y, 1, rect.Height));
 
@@ -322,7 +322,7 @@ namespace Gwen.Skin
         {
             Rectangle rect = control.RenderBounds;
 
-            m_Renderer.DrawColor = Colors.Properties.Border;
+            m_Renderer.DrawColor = Colors.ForegroundHighlight;
 
             m_Renderer.DrawFilledRect(new Rectangle(rect.X, rect.Y, BorderLeft, rect.Height));
             m_Renderer.DrawFilledRect(new Rectangle(rect.X + BorderLeft, rect.Y, rect.Width - BorderLeft, BorderTop));

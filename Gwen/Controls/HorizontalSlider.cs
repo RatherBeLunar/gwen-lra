@@ -57,7 +57,7 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            skin.DrawSlider(this, true, m_SnapToNotches && DrawNotches ? m_NotchCount : 0, m_SliderBar.Width);
+            skin.DrawSlider(this, true, m_SnapToNotches && DrawNotches ? m_NotchCount : 0, m_SliderBar.Width, m_Value);
         }
 
         protected override void UpdateBarFromValue()

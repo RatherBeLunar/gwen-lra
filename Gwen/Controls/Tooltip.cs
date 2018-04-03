@@ -8,8 +8,8 @@ namespace Gwen.Controls
         public Tooltip(ControlBase parent) : base(parent)
         {
             TextPadding = new Padding(5, 3, 5, 3);
-            TextColorOverride = Skin.Colors.TooltipText;
-            TextColor = Skin.Colors.TooltipText;
+            TextColorOverride = Skin.Colors.Text.Foreground;
+            TextColor = Skin.Colors.Text.Foreground;
         }
         protected override void Render(Skin.SkinBase skin)
         {

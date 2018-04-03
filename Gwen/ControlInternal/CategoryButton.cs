@@ -50,7 +50,7 @@ namespace Gwen.ControlInternal
             TextPadding = new Padding(3, 0, 3, 0);
             ShouldDrawBackground = false;
             Dock = Dock.Top;
-            Margin = new Margin(2, 0, 2, 0);
+            Margin = new Margin(1, 0, 1, 0);
         }
 
         /// <summary>

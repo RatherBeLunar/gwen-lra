@@ -125,7 +125,7 @@ namespace Gwen.Controls
         {
             return new CategoryButton(this) { Text = name };
         }
-        
+
         protected override void OnChildAdded(ControlBase child)
         {
             base.OnChildAdded(child);
