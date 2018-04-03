@@ -31,6 +31,60 @@ namespace Gwen.Skin.Texturing
         {
             Draw(render, r, Color.White);
         }
+        private void DrawRect(Renderer.RendererBase render, int i, int x, int y, int w, int h)
+        {
+            if (w > 0 && h > 0)
+                render.DrawTexturedRect(m_Texture,
+                                        new Rectangle(x, y, w, h),
+                                        m_Rects[i].uv[0], m_Rects[i].uv[1], m_Rects[i].uv[2], m_Rects[i].uv[3]);
+        }
+        private void DrawRect(Renderer.RendererBase renderer, Rectangle r, int i, int cellx, int celly)
+        {
+            System.Diagnostics.Debug.Assert(cellx >= 0 && cellx <= 2 && celly >= 0 && celly <= 2, "BorderedTexture indices out of range");
+            var xleft = r.X;
+            var xmid = r.X + m_Margin.Left;
+            var xright = (r.X + r.Width) - m_Margin.Right;
+            var ytop = r.Y;
+            var ymid = r.Y + m_Margin.Top;
+            var ybottom = (r.Y + r.Height) - m_Margin.Bottom;
+            int x = 0;
+            int w = 0;
+            int y = 0;
+            int h = 0;
+            switch (cellx)
+            {
+                case 0://left
+                    x = xleft;
+                    w = m_Margin.Left;
+                    break;
+                case 1://middle
+                    x = xmid;
+                    w = r.Width - m_Margin.Left - m_Margin.Right;
+                    break;
+                case 2://right
+                    // x = Math.Max(xmid, xright);
+                    x = Math.Max(xmid, xright);
+                    w = m_Margin.Right;
+                    break;
+            }
+
+            switch (celly)
+            {
+                case 0://top
+                    y = ytop;
+                    h = m_Margin.Top;
+                    break;
+                case 1://middle
+                    y = ymid;
+                    h = r.Height - m_Margin.Top - m_Margin.Bottom;
+                    break;
+                case 2://bottom
+                    y = Math.Max(ymid, ybottom);
+                    h = m_Margin.Bottom;
+                    break;
+            }
+            DrawRect(renderer, i, x, y, w, h);
+        }
 
         public void Draw(Renderer.RendererBase render, Rectangle r, Color col)
         {
@@ -51,72 +105,17 @@ namespace Gwen.Skin.Texturing
             // clipping may not be enabled, but we're labeling that 'user fault' right now
             render.AddClipRegion(r);
             render.ClipRegion = new Rectangle(render.ClipRegion.X + r.X, render.ClipRegion.Y + r.Y, render.ClipRegion.Width, render.ClipRegion.Height);
-            DrawRect(
-                render,
-                0,
-                r.X,
-                r.Y,
-                m_Margin.Left,
-                m_Margin.Top);
-            DrawRect(
-                render,
-                1,
-                r.X + m_Margin.Left,
-                r.Y,
-                r.Width - m_Margin.Left - m_Margin.Right,
-                m_Margin.Top);
-            DrawRect(
-                render,
-                 2,
-                 (r.X + r.Width) - m_Margin.Right,
-                 r.Y,
-                 m_Margin.Right,
-                 m_Margin.Top);
 
-            DrawRect(
-                render,
-                3,
-                r.X,
-                r.Y + m_Margin.Top,
-                m_Margin.Left,
-                r.Height - m_Margin.Top - m_Margin.Bottom);
-            DrawRect(
-                render,
-                4,
-                r.X + m_Margin.Left,
-                r.Y + m_Margin.Top,
-                r.Width - m_Margin.Left - m_Margin.Right,
-                r.Height - m_Margin.Top - m_Margin.Bottom);
-            DrawRect(
-                render,
-                5,
-                (r.X + r.Width) - m_Margin.Right,
-                r.Y + m_Margin.Top,
-                m_Margin.Right,
-                r.Height - m_Margin.Top - m_Margin.Bottom);
+            DrawRect(render, r, 0, 0, 0);
+            DrawRect(render, r, 1, 1, 0);
+            DrawRect(render, r, 2, 2, 0);
+            DrawRect(render, r, 3, 0, 1);
+            DrawRect(render, r, 4, 1, 1);
+            DrawRect(render, r, 5, 2, 1);
+            DrawRect(render, r, 6, 0, 2);
+            DrawRect(render, r, 7, 1, 2);
+            DrawRect(render, r, 8, 2, 2);
 
-            DrawRect(
-                render,
-                6,
-                r.X,
-                (r.Y + r.Height) - m_Margin.Bottom,
-                m_Margin.Left,
-                m_Margin.Bottom);
-            DrawRect(
-                render,
-                7,
-                r.X + m_Margin.Left,
-                (r.Y + r.Height) - m_Margin.Bottom,
-                r.Width - m_Margin.Left - m_Margin.Right,
-                m_Margin.Bottom);
-            DrawRect(
-                render,
-                8,
-                (r.X + r.Width) - m_Margin.Right,
-                (r.Y + r.Height) - m_Margin.Bottom,
-                m_Margin.Right,
-                m_Margin.Bottom);
-                
             render.ClipRegion = clip;
         }
 
@@ -132,13 +131,6 @@ namespace Gwen.Skin.Texturing
 
         #endregion Fields
 
-        private void DrawRect(Renderer.RendererBase render, int i, int x, int y, int w, int h)
-        {
-            if (w > 0 && h > 0)
-                render.DrawTexturedRect(m_Texture,
-                                        new Rectangle(x, y, w, h),
-                                        m_Rects[i].uv[0], m_Rects[i].uv[1], m_Rects[i].uv[2], m_Rects[i].uv[3]);
-        }
 
         private void Init(Texture texture, float x, float y, float w, float h, Margin inMargin, float drawMarginScale = 1.0f)
         {
