@@ -10,6 +10,28 @@ namespace Gwen.Controls
     /// </summary>
     public class WindowControl : ResizableControl
     {
+        private class TitleLabel : Label
+        {
+            private WindowControl m_Window;
+            protected override Color CurrentColor
+            {
+                get
+                {
+                    if (m_Window.IsOnTop)
+                    {
+                        return Skin.Colors.Text.AccentForeground;
+                    }
+                    else
+                    {
+                        return Skin.Colors.Text.Foreground;
+                    }
+                }
+            }
+            public TitleLabel(ControlBase parent, WindowControl window) : base(parent)
+            {
+                m_Window = window;
+            }
+        }
         #region Events
 
         /// <summary>
@@ -68,7 +90,16 @@ namespace Gwen.Controls
         /// </summary>
         public override bool IsOnTop
         {
-            get { return Parent.Children.Where(x => x is WindowControl).Last() == this; }
+            get
+            {
+                if (Parent != null)
+                {
+                    for (int i = Parent.Children.Count - 1; i >= 0; i--)
+                        if (Parent.Children[i] is WindowControl win)
+                            return win == this;
+                }
+                return false;
+            }
         }
 
         /// <summary>
@@ -123,13 +154,13 @@ namespace Gwen.Controls
             };
             PrivateChildren.Insert(0, m_TitleBar);
 
-            m_Title = new Label(m_TitleBar)
+            m_Title = new TitleLabel(m_TitleBar, this)
             {
                 Alignment = Pos.Left | Pos.Top,
                 Text = title,
                 Dock = Dock.Fill,
                 TextPadding = new Padding(8, 4, 0, 0),
-                TextColor = Skin.Colors.Text.Foreground,
+                TextColor = Skin.Colors.Text.AccentForeground,
             };
 
             m_CloseButton = new CloseButton(m_TitleBar, this)
@@ -222,11 +253,6 @@ namespace Gwen.Controls
         protected override void Render(Skin.SkinBase skin)
         {
             bool hasFocus = IsOnTop;
-
-            if (hasFocus)
-                m_Title.TextColor = Skin.Colors.Text.Foreground;
-            else
-                m_Title.TextColor = Skin.Colors.Text.Inactive;
 
             skin.DrawWindow(this, m_TitleBar.Bottom + m_Title.Margin.Bottom, hasFocus);
         }
