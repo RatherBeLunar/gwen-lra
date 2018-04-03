@@ -48,12 +48,14 @@ namespace Gwen.Controls
                 Dock = value;
                 if (Dock == Dock.Top)
                     Padding = new Padding(5, 0, 0, 0);
-                if (Dock == Dock.Left)
-                    Padding = new Padding(0, 5, 0, 0);
-                if (Dock == Dock.Bottom)
-                    Padding = new Padding(5, 0, 0, 0);
-                if (Dock == Dock.Right)
-                    Padding = new Padding(0, 5, 0, 0);
+                else
+                    throw new NotImplementedException("Alternative tab control docks are not inplemented properly yet.");
+                // if (Dock == Dock.Left)
+                //     Padding = new Padding(0, 5, 0, 0);
+                // if (Dock == Dock.Bottom)
+                //     Padding = new Padding(0, 0, 0, 5);
+                // if (Dock == Dock.Right)
+                //     Padding = new Padding(0, 5, 0, 0);
             }
         }
 
