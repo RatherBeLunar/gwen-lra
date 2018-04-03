@@ -31,6 +31,7 @@ namespace Gwen.ControlInternal
             : base(parent)
         {
             AutoSizeToContents = false;
+            ShouldDrawBackground = false;
             SetSize(15, 15);
 			IsToggle = true;
         }
