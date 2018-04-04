@@ -172,7 +172,7 @@ namespace Gwen.Skin
         {
         }
 
-        public virtual void DrawProgressBar(Controls.ControlBase control, float progress)
+        public virtual void DrawProgressBar(Controls.ControlBase control, bool horz, float progress)
         {
         }
 

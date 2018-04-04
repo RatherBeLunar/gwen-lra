@@ -423,22 +423,38 @@ namespace Gwen.Skin
             m_Renderer.DrawLinedRect(rect);
         }
 
-        public override void DrawProgressBar(Controls.ControlBase control, float progress)
+        public override void DrawProgressBar(Controls.ControlBase control, bool horizontal, float progress)
         {
             Rectangle rect = control.RenderBounds;
             Color FillColour = Color.FromArgb(255, 0, 211, 40);
 
-            //Background
-            m_Renderer.DrawColor = m_colControlDark;
-            m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
+            if (horizontal)
+            {
+                //Background
+                m_Renderer.DrawColor = m_colControlDark;
+                m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
 
-            //Right half
-            m_Renderer.DrawColor = FillColour;
-            m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * progress - 2, rect.Height - 2));
+                //Right half
+                m_Renderer.DrawColor = FillColour;
+                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * progress - 2, rect.Height - 2));
 
-            m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
-            m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width - 2, rect.Height * 0.45f));
+                m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
+                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width - 2, rect.Height * 0.45f));
+            }
+            else
+            {
+                //Background 
+                m_Renderer.DrawColor = m_colControlDark;
+                m_Renderer.DrawFilledRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
 
+                //Top half
+                m_Renderer.DrawColor = FillColour;
+                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1 + (rect.Height * (1 - progress)), rect.Width - 2,
+                                                         rect.Height * progress - 2));
+
+                m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
+                m_Renderer.DrawFilledRect(Util.FloatRect(1, 1, rect.Width * 0.45f, rect.Height - 2));
+            }
 
             m_Renderer.DrawColor = Color.FromArgb(150, 255, 255, 255);
             m_Renderer.DrawShavedCornerRect(new Rectangle(1, 1, rect.Width - 2, rect.Height - 2));
