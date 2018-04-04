@@ -452,35 +452,20 @@ namespace Gwen.Skin
     public class TexturedBase : Skin.SkinBase
     {
         #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TexturedBase"/> class.
-        /// </summary>
-        /// <param name="renderer">Renderer to use.</param>
-        /// <param name="textureName">Name of the skin texture map.</param>
-        public TexturedBase(Renderer.RendererBase renderer, string textureName)
-            : base(renderer)
-        {
-            m_Texture = new Texture(Renderer);
-            m_Texture.Load(textureName);
-
-            InitializeColors();
-            InitializeTextures();
-        }
-
-        public TexturedBase(Renderer.RendererBase renderer, Stream textureData)
+        public TexturedBase(Renderer.RendererBase renderer, Stream textureData, string colorxml)
             : base(renderer)
         {
             m_Texture = new Texture(Renderer);
             m_Texture.LoadStream(textureData);
-
+            _colorxml = colorxml;
             InitializeColors();
             InitializeTextures();
         }
-        public TexturedBase(Renderer.RendererBase renderer, Texture texture)
+        public TexturedBase(Renderer.RendererBase renderer, Texture texture, string colorxml)
             : base(renderer)
         {
             m_Texture = texture;
+            _colorxml = colorxml;
             InitializeColors();
             InitializeTextures();
         }
@@ -506,14 +491,42 @@ namespace Gwen.Skin
 
         private readonly Texture m_Texture;
 
+        private string _colorxml = null;
         #endregion Fields
 
         #region Initialization
-
+        private Color LoadColor(System.Xml.XmlDocument read, string name)
+        {
+            var culture = System.Globalization.CultureInfo.InvariantCulture;
+            return Color.FromArgb(255, Color.FromArgb(int.Parse(read.DocumentElement[name].InnerText, System.Globalization.NumberStyles.HexNumber, culture)));
+        }
         private void InitializeColors()
         {
+            System.Xml.XmlDocument read = new System.Xml.XmlDocument();
+
+            read.LoadXml(_colorxml);
             //https://palx.jxnblk.com/07c
-            //todo, load from something.
+            Colors.Text.Contrast = LoadColor(read, "Text.Contrast");
+            Colors.Text.ContrastLow = LoadColor(read, "Text.ContrastLow");
+            Colors.Text.Foreground = LoadColor(read, "Text.Foreground");
+            Colors.Text.Highlight = LoadColor(read, "Text.Highlight");
+            Colors.Text.AccentForeground = LoadColor(read, "Text.AccentForeground");
+            Colors.Text.Inactive = LoadColor(read, "Text.Inactive");
+            Colors.Text.Disabled = LoadColor(read, "Text.Disabled");
+
+            Colors.Accent = LoadColor(read, "Accent");
+            Colors.AccentHigh = LoadColor(read, "AccentHigh");
+            Colors.AccentLow = LoadColor(read, "AccentLow");
+            Colors.Background = LoadColor(read, "Background");
+            Colors.BackgroundHighlight = LoadColor(read, "BackgroundHighlight");
+            Colors.Foreground = LoadColor(read, "Foreground");
+            Colors.ForegroundHighlight = LoadColor(read, "ForegroundHighlight");
+            Colors.ForegroundInactive = LoadColor(read, "ForegroundInactive");
+            Colors.ModalBackground = Color.FromArgb(128, Colors.Background);
+
+        }
+        private void InitializeDefaultColors()
+        {
             Colors.Text.Contrast = Color.FromArgb(255, Color.FromArgb(0x0077cc));       // #0077cc
             Colors.Text.ContrastLow = Color.FromArgb(255, Color.FromArgb(0x004d84));    // #004d84
             Colors.Text.Foreground = Color.FromArgb(255, Color.FromArgb(0x374047));     // #374047
@@ -531,7 +544,6 @@ namespace Gwen.Skin
             Colors.Text.AccentForeground = Colors.Background;
 
             Colors.ModalBackground = Color.FromArgb(128, Colors.Background);
-
         }
         private void InitializeTextures()
         {

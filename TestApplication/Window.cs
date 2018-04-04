@@ -166,7 +166,7 @@ namespace TestApplication
                 fontdata,
                 fontpng);
 
-            var skin = new Gwen.Skin.TexturedBase(renderer, skinpng) { DefaultFont = gamefont_15 };
+            var skin = new Gwen.Skin.TexturedBase(renderer, skinpng, colorxml) { DefaultFont = gamefont_15 };
             // var skin = new Gwen.Skin.Simple(renderer) { DefaultFont = gamefont_15 };
             Canvas = new Canvas(skin);
             Canvas.SetSize(ClientSize.Width, ClientSize.Height);
@@ -224,10 +224,11 @@ namespace TestApplication
                 skinpng.Dispose();
                 skinpng = new Texture(Canvas.Skin.Renderer);
                 var skinimg = new Bitmap(Image.FromFile("DefaultSkin.png"));
+                var colorxml = System.IO.File.ReadAllText("DefaultColors.xml");
                 Gwen.Renderer.OpenTK.LoadTextureInternal(
                     skinpng,
                     skinimg);
-                var skin = new Gwen.Skin.TexturedBase(Canvas.Skin.Renderer, skinpng) { DefaultFont = Canvas.Skin.DefaultFont };
+                var skin = new Gwen.Skin.TexturedBase(Canvas.Skin.Renderer, skinpng, colorxml) { DefaultFont = Canvas.Skin.DefaultFont };
                 // Canvas.Skin = skin;
                 Canvas.SetSkin(skin, true);
                 skinimg.Dispose();
