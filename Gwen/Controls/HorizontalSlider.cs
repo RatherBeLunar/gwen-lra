@@ -46,9 +46,14 @@ namespace Gwen.Controls
         protected override void OnMouseClickedLeft(int x, int y, bool down)
         {
             base.OnMouseClickedLeft(x, y, down);
-            m_SliderBar.MoveTo((int)(CanvasPosToLocal(new Point(x, y)).X - m_SliderBar.Width * 0.5), m_SliderBar.Y);
-            m_SliderBar.InputMouseClickedLeft(x, y, down);
-            OnMoved(m_SliderBar, EventArgs.Empty);
+            if (down)
+            {
+                IsMouseDepressed = false;//we forfeit our mouse down event and right to a mouse up event
+
+                m_SliderBar.MoveTo((int)(CanvasPosToLocal(new Point(x, y)).X - m_SliderBar.Width * 0.5), m_SliderBar.Y);
+                m_SliderBar.InputMouseClickedLeft(x, y, down);
+                OnMoved(m_SliderBar, EventArgs.Empty);
+            }
         }
 
         /// <summary>
