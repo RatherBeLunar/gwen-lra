@@ -3,5 +3,6 @@
 *.pdb
 *.exe
 **/obj
+**/bin
+**/packages
 *.userprefs
-TestApplication/bin/*

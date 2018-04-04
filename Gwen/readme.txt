@@ -1,1 +1,1 @@
-﻿Too many changes from original GWEN to list here :P
+﻿Gwen has been modified specifically for use in line rider advanced. 
