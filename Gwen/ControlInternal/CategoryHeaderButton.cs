@@ -13,7 +13,7 @@ namespace Gwen.ControlInternal
             get
             {
                 if (IsDepressed || ToggleState)
-                    return Skin.Colors.Text.Disabled;//maybe not?
+                    return Skin.Colors.Text.Highlight;
                 else
                     return Skin.Colors.Text.Highlight;
             }
@@ -29,6 +29,7 @@ namespace Gwen.ControlInternal
             IsToggle = true;
             Alignment = Pos.Center;
             TextPadding = new Padding(3, 0, 3, 0);
+            Margin = new Margin(0, 0, 0, 1);
         }
     }
 }

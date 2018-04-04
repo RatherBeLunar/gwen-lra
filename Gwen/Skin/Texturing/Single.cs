@@ -56,8 +56,8 @@ namespace Gwen.Skin.Texturing
 
         public void DrawCenter(Renderer.RendererBase render, Rectangle r, Color col)
         {
-            r.X += (int)((r.Width - m_Width) * 0.5);
-            r.Y += (int)((r.Height - m_Height) * 0.5);
+            r.X += (int)Math.Round((r.Width - m_Width) * 0.5);
+            r.Y += (int)Math.Round((r.Height - m_Height) * 0.5);
             r.Width = m_Width;
             r.Height = m_Height;
 
