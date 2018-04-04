@@ -51,6 +51,21 @@ namespace Gwen.Controls
 
             m_Bar.Dragged += OnBarMoved;
         }
+        /// <summary>
+        /// Handler invoked on mouse wheel event.
+        /// </summary>
+        /// <param name="delta">Scroll delta.</param>
+        /// <returns></returns>
+        protected override bool OnMouseWheeled(int delta)
+        {
+            if (IsVisible)
+            {
+                if (SetScrollAmount(
+                    ScrollAmount - NudgePercent * (delta / 60.0f), false))
+                    return true;
+            }
+            return false;
+        }
 
         protected override void ProcessLayout(Size size)
         {
