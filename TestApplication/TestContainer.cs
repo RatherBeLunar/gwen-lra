@@ -15,6 +15,7 @@ namespace TestApplication
         // category recolor
         // dpi
         // cursors
+        // horz scroll respond when hovered to wheel
         private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
@@ -23,7 +24,7 @@ namespace TestApplication
         }
         public void DbgCreate()
         {
-            var test = new CategoryTest(this);
+            var test = new ButtonTest(this);
         }
         public void CreateStatusbar()
         {
@@ -80,8 +81,6 @@ namespace TestApplication
             var layout = new LayoutTest(page);
             page = AddPage(cat, "Textbox");
             var textbox = new TextBoxTest(page);
-            _focus = page;
-            _focus.Show();
             page = AddPage(cat, "Slider");
             var slider = new SliderTest(page);
             cat = list.Add("Containers");
@@ -103,6 +102,8 @@ namespace TestApplication
 
             page = AddPage(cat, "Menu");
             var menu = new MenuTest(page);
+            _focus = page;
+            _focus.Show();
             page = AddPage(cat, "Property");
             var prop = new PropertyTest(page);
             page = AddPage(cat, "Category");

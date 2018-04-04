@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Gwen.Controls;
+using Gwen;
 namespace TestApplication
 {
     public class TabTest : ControlTest

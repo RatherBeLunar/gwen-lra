@@ -26,7 +26,7 @@ namespace TestApplication
                             new Button(null)
                             {
                                 Text = "A button in a panel",
-                                
+
                             }
                         },
                         Dock = Dock.Fill
@@ -58,6 +58,13 @@ namespace TestApplication
                 }
             };
             sc.SetBounds(0, 300, 200, 200);
+            VerticalScrollBar vs = new VerticalScrollBar(sc);
+            vs.NudgeAmount = 30;
+            vs.ViewableContentSize = 10;
+            vs.ContentSize = 120;
+            vs.Disable();
+            vs.Height = 100;
+            vs.Y += 20;
 
         }
         private void CreateTable(ControlBase container)

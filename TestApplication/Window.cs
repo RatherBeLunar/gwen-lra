@@ -141,13 +141,13 @@ namespace TestApplication
             Gwen.Platform.Neutral.Implementation = new PlatformImpl(this);
         }
 
-
+        Texture skinpng;
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             input = new Gwen.Input.OpenTK(this);
             var renderer = new Gwen.Renderer.OpenTK();
-            var skinpng = new Texture(renderer);
+            skinpng = new Texture(renderer);
             var skinimg = new Bitmap(Image.FromFile("DefaultSkin.png"));
             var font = new Bitmap(Image.FromFile("gamefont_15_0.png"));
             var fontdata = System.IO.File.ReadAllText("gamefont_15.fnt");
@@ -172,6 +172,8 @@ namespace TestApplication
             Canvas.SetSize(ClientSize.Width, ClientSize.Height);
             input.Initialize(Canvas);
             TestContainer container = new TestContainer(Canvas);
+            font.Dispose();
+            skinimg.Dispose();
         }
         protected override void OnClosed(EventArgs e)
         {
@@ -216,6 +218,19 @@ namespace TestApplication
                 //sdl eats exceptions
                 Console.WriteLine(ex.ToString());
                 throw ex;
+            }
+            if (e.Key == OpenTK.Input.Key.F5)
+            {
+                skinpng.Dispose();
+                skinpng = new Texture(Canvas.Skin.Renderer);
+                var skinimg = new Bitmap(Image.FromFile("DefaultSkin.png"));
+                Gwen.Renderer.OpenTK.LoadTextureInternal(
+                    skinpng,
+                    skinimg);
+                var skin = new Gwen.Skin.TexturedBase(Canvas.Skin.Renderer, skinpng) { DefaultFont = Canvas.Skin.DefaultFont };
+                // Canvas.Skin = skin;
+                Canvas.SetSkin(skin, true);
+                skinimg.Dispose();
             }
             if (e.Key == OpenTK.Input.Key.F12)
             {

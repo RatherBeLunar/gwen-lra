@@ -69,10 +69,12 @@ namespace TestApplication
             btn.Text = "Open Messagebox";
             btn.Clicked += (sender, arguments) =>
             {
-                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, It word wraps and all that jazz.", "Caption", true);
+                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, "+filler, "Caption", true);
+                filler += ",wrap filler ";
                 // mb.ShowCentered();
             };
         }
+        string filler = "with wrap filler";
         private void CreateWindow()
         {
             WindowControl win = new WindowControl(Parent, "Hello World");

@@ -41,6 +41,16 @@ namespace TestApplication
             slider2.SnapToNotches = true;
             slider2.Tooltip = "I have notches but theyre hidden";
             slider2.DrawNotches = false;
+            row = table.CreateRow();
+            slider2 = new HorizontalSlider(row.GetCell(1));
+            slider2.SnapToNotches = true;
+            slider2.Disable();
+            slider2.Width = 100;
+            slider2.SetRange(-100, 100);
+            slider2.NotchCount = 15;
+            slider2.SnapToNotches = true;
+            slider2.Tooltip = "I have notches but theyre hidden";
+            slider2.DrawNotches = false;
         }
         private void InitTable(PropertyTable table)
         {

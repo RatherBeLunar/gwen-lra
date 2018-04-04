@@ -12,7 +12,9 @@ namespace TestApplication
             var item = menu.AddItem("Test");
 
             item.Menu.AddItem("I'm a menu item");
-            item.Menu.AddItem("Short");
+            var chk = item.Menu.AddItem("Check");
+            chk.IsCheckable = true;
+            chk.IsChecked = true;
             var ex = item.Menu.AddItem("Expand me");
             ex.Menu.AddItem("I was expanded");
             item.Menu.AddDivider();
@@ -27,6 +29,11 @@ namespace TestApplication
             cb.AddItem("Test");
             cb.AddItem("Come on combobox");
             cb.AddItem("maybe");
+            cb = new ComboBox(flow);
+            cb.AddItem("Disabled");
+            cb.AddItem("combobox");
+            cb.AddItem("maybe");
+            cb.Disable();
         }
     }
 }
