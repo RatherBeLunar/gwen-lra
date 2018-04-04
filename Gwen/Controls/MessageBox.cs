@@ -19,8 +19,19 @@ namespace Gwen.Controls
         }
         public MessageBox(Gwen.Controls.ControlBase ctrl, string text, string title, bool cancelbutton = false) : base(ctrl, title)
         {
-            var wrapped = Skin.DefaultFont.WordWrap(text, 200);
-            foreach (var line in wrapped)
+            var charsize = Skin.Renderer.MeasureText(Skin.DefaultFont, "_").X;
+            int maxwidth = charsize * 30;
+            int maxwidth2 = charsize * 50;
+            var wrapped1 = Skin.DefaultFont.WordWrap(text, maxwidth);
+            var wrapped2 = Skin.DefaultFont.WordWrap(text, maxwidth2);
+            var wrap = wrapped2;
+            // this is a cheat that doesnt work perfectly, but decently for making
+            // short messageboxes appear ok
+            if (wrapped1.Count == wrapped2.Count)
+            {
+                wrap = wrapped1;
+            }
+            foreach (var line in wrap)
             {
                 AddLine(line);
             }
@@ -41,7 +52,6 @@ namespace Gwen.Controls
                     DismissedHandler(o, e);
                 };
             m_Button.Margin = Margin.One;
-            m_Button.Width = 70;
             m_Button.Dock = Dock.Right;
             Container.SizeToChildren(false, true);
             if (cancelbutton)
@@ -51,7 +61,6 @@ namespace Gwen.Controls
                 btn.Dock = Dock.Right;
                 btn.Name = "Cancel";
                 btn.Text = "Cancel";
-                btn.Width = 70;
                 btn.Clicked += (o, e) =>
                 {
                     Result = DialogResult.Cancel;
@@ -72,7 +81,7 @@ namespace Gwen.Controls
         {
             Label add = new Label(m_Panel);
             add.Margin = new Margin(0, 0, 0, 0);
-            add.Alignment = Pos.CenterH | Pos.Top;
+            add.Alignment = Pos.Left | Pos.Top;
             add.Dock = Dock.Top;
             add.AutoSizeToContents = true;
             add.Text = line;
