@@ -9,6 +9,12 @@ namespace Gwen.Controls
     /// </summary>
     public class Label : ControlBase
     {
+        /// <summary>
+        /// Delegate used to request a text value for a label
+        /// </summary>
+        /// <param name="sender">Event source.</param>
+        /// <param name="text">Current label text.</param>
+        public delegate string TextRequestHandler(ControlBase sender, string currenttext);
         #region Fields
 
         protected readonly Text m_Text;
@@ -180,6 +186,10 @@ namespace Gwen.Controls
             }
         }
 
+        /// <summary>
+        /// Function to define the label text before render.
+        /// </summary>
+        public TextRequestHandler TextRequest = null;
         #endregion Properties
 
         #region Constructors
@@ -205,7 +215,14 @@ namespace Gwen.Controls
         #endregion Constructors
 
         #region Methods
-
+        public override void Think()
+        {
+            if (TextRequest != null)
+            {
+                Text = TextRequest(this, Text);
+            }
+            base.Think();
+        }
         /// <summary>
         /// Gets the coordinates of specified character.
         /// </summary>

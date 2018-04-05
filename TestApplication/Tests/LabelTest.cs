@@ -8,6 +8,23 @@ namespace TestApplication.Tests
     {
         public LabelTest(ControlBase parent) : base(parent)
         {
+            Label dynamiclabel = new Label(parent);
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            Random r = new Random();
+            dynamiclabel.TextRequest = (o, s) =>
+            {
+                if (sw.ElapsedMilliseconds > 1000)
+                {
+                    sw.Restart();
+                    return "Random num 1/sec:" +r.Next().ToString();
+                }
+                else
+                {
+                    return s;
+                }
+            };
+            dynamiclabel.DrawDebugOutlines = true;
+            dynamiclabel.X = 200;
             CreateAlign(Pos.Top | Pos.Left);
             CreateAlign(Pos.Top | Pos.CenterH);
             CreateAlign(Pos.Top | Pos.Right);
