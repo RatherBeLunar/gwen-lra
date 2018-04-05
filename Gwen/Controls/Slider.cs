@@ -140,7 +140,7 @@ namespace Gwen.Controls
             m_Value = 0.0f;
 
             KeyboardInputEnabled = true;
-            IsTabable = true;
+            IsTabable = false;
         }
 
         #endregion Constructors

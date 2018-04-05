@@ -53,7 +53,7 @@ namespace Gwen.Skin.Texturing
 
             DrawCenter(render, r, Color.White);
         }
-
+ 
         public void DrawCenter(Renderer.RendererBase render, Rectangle r, Color col)
         {
             r.X += (int)Math.Round((r.Width - m_Width) * 0.5);
