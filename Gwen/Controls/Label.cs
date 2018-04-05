@@ -246,7 +246,7 @@ namespace Gwen.Controls
 
             m_Text.String = str;
             Invalidate();
-            InvalidateParent();
+            // InvalidateParent();
 
             if (doEvents)
                 OnTextChanged();
