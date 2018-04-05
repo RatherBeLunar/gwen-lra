@@ -602,6 +602,14 @@ namespace Gwen.Controls
         /// </summary>
         public virtual void Think()
         {
+            foreach (var child in m_Children)
+            {
+                // ignore parent hidden values, as we are recursing down
+                if (!child.m_Hidden && !child.m_Disabled)
+                {
+                    child.Think();
+                }
+            }
         }
 
         /// <summary>

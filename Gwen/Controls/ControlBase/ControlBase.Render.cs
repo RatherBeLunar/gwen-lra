@@ -107,9 +107,6 @@ namespace Gwen.Controls
 			if (m_Skin != null)
 				skin = m_Skin;
 
-			// Do think
-			Think();
-
 			Renderer.RendererBase render = skin.Renderer;
 
 			if (render.CTT != null && ShouldCacheToTexture)

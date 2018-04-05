@@ -195,6 +195,7 @@ namespace Gwen.Controls
 
             ProcessDelayedDeletes();
 
+            Think();
             // Check has focus etc..
             Layout(false);
 
