@@ -12,7 +12,7 @@ namespace Gwen.Controls
 {
 	public partial class ControlBase
 	{
-		internal Rectangle RenderBounds
+		public Rectangle RenderBounds
 		{
 			get
 			{
