@@ -596,22 +596,6 @@ namespace Gwen.Controls
             OnSelectAll(from, EventArgs.Empty);
         }
 
-
-        /// <summary>
-        /// Called during rendering.
-        /// </summary>
-        public virtual void Think()
-        {
-            foreach (var child in m_Children)
-            {
-                // ignore parent hidden values, as we are recursing down
-                if (!child.m_Hidden && !child.m_Disabled)
-                {
-                    child.Think();
-                }
-            }
-        }
-
         /// <summary>
         /// Handler for gaining keyboard focus.
         /// </summary>

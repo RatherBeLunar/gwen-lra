@@ -372,7 +372,7 @@ namespace Gwen.Controls
                 }
             }
         }
-
+        public event GwenEventHandler<EventArgs> OnThink;
         private Size m_MinimumSize = new Size(1, 1);
         private Size m_MaximumSize = new Size(int.MaxValue, int.MaxValue);
 
@@ -604,6 +604,26 @@ namespace Gwen.Controls
             Tooltip = text;
         }
 
+
+
+        /// <summary>
+        /// Called during rendering.
+        /// </summary>
+        public virtual void Think()
+        {
+            foreach (var child in m_Children)
+            {
+                if (OnThink != null)
+                {
+                    OnThink.Invoke(this, EventArgs.Empty);
+                }
+                // ignore parent hidden values, as we are recursing down
+                if (!child.m_Hidden && !child.m_Disabled)
+                {
+                    child.Think();
+                }
+            }
+        }
         /// <summary>
         /// Finds a child by name.
         /// </summary>
