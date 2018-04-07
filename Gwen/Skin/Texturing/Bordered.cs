@@ -101,11 +101,6 @@ namespace Gwen.Skin.Texturing
             //     render.DrawTexturedRect(m_Texture, r, m_Rects[0].uv[0], m_Rects[0].uv[1], m_Rects[8].uv[2], m_Rects[8].uv[3]);
             //     return;
             // }
-            var clip = render.ClipRegion;
-            // clipping may not be enabled, but we're labeling that 'user fault' right now
-            render.AddClipRegion(r);
-            render.ClipRegion = new Rectangle(render.ClipRegion.X + r.X, render.ClipRegion.Y + r.Y, render.ClipRegion.Width, render.ClipRegion.Height);
-
             DrawRect(render, r, 0, 0, 0);
             DrawRect(render, r, 1, 1, 0);
             DrawRect(render, r, 2, 2, 0);
@@ -115,8 +110,6 @@ namespace Gwen.Skin.Texturing
             DrawRect(render, r, 6, 0, 2);
             DrawRect(render, r, 7, 1, 2);
             DrawRect(render, r, 8, 2, 2);
-
-            render.ClipRegion = clip;
         }
 
         #endregion Methods
