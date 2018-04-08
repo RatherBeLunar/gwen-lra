@@ -409,33 +409,10 @@ namespace Gwen.Renderer
         /// <param name="rect">Rectangle to add.</param>
         public void AddClipRegion(Rectangle rect)
         {
-            rect.X = m_RenderOffset.X;
-            rect.Y = m_RenderOffset.Y;
+            rect.X += m_RenderOffset.X;
+            rect.Y += m_RenderOffset.Y;
             
-            Rectangle r = rect;
-            if (rect.X < m_ClipRegion.X)
-            {
-                r.Width -= (m_ClipRegion.X - r.X);
-                r.X = m_ClipRegion.X;
-            }
-
-            if (rect.Y < m_ClipRegion.Y)
-            {
-                r.Height -= (m_ClipRegion.Y - r.Y);
-                r.Y = m_ClipRegion.Y;
-            }
-
-            if (rect.Right > m_ClipRegion.Right)
-            {
-                r.Width = m_ClipRegion.Right - r.X;
-            }
-
-            if (rect.Bottom > m_ClipRegion.Bottom)
-            {
-                r.Height = m_ClipRegion.Bottom - r.Y;
-            }
-
-            m_ClipRegion = r;
+            m_ClipRegion = Util.RectangleClamp(rect,m_ClipRegion);
         }
     }
 }

@@ -139,7 +139,7 @@ namespace Gwen.Controls
 
 			if (ShouldClip)
 			{
-				render.AddClipRegion(clipRect);
+				render.AddClipRegion(RenderBounds);
 
 				if (!render.ClipRegionVisible)
 				{
