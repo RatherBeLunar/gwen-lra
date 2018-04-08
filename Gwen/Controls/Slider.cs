@@ -83,7 +83,10 @@ namespace Gwen.Controls
                 if (value < m_Min) value = m_Min;
                 if (value > m_Max) value = m_Max;
                 // Normalize Value
-                value = (value - m_Min) / (m_Max - m_Min);
+                if (m_Min == m_Max)
+                    value = 0;
+                else
+                    value = (value - m_Min) / (m_Max - m_Min);
                 SetValueInternal(value);
                 Redraw();
             }
