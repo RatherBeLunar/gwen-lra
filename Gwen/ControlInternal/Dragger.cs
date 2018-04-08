@@ -16,6 +16,14 @@ namespace Gwen.ControlInternal
         /// Event invoked when the control position has been changed.
         /// </summary>
         public event GwenEventHandler<EventArgs> Dragged;
+        /// <summary>
+        /// Invoked when the button is released.
+        /// </summary>
+        public event GwenEventHandler<EventArgs> Released;
+        /// <summary>
+        /// Invoked when the button is pressed.
+        /// </summary>
+        public event GwenEventHandler<EventArgs> Pressed;
 
         #endregion Events
 
@@ -36,6 +44,7 @@ namespace Gwen.ControlInternal
         /// <param name="parent">Parent control.</param>
         public Dragger(Controls.ControlBase parent) : base(parent)
         {
+            ToolTipProvider = false;
             MouseInputEnabled = true;
             m_Held = false;
         }
@@ -62,12 +71,16 @@ namespace Gwen.ControlInternal
                 m_Held = true;
                 m_HoldPos = m_Target.CanvasPosToLocal(new Point(x, y));
                 InputHandler.MouseFocus = this;
+                if (Pressed != null)
+                    Pressed.Invoke(this, EventArgs.Empty);
             }
             else
             {
                 m_Held = false;
-
                 InputHandler.MouseFocus = null;
+
+                if (Released != null)
+                    Released.Invoke(this, EventArgs.Empty);
             }
         }
 
