@@ -1,6 +1,7 @@
 ﻿using Gwen.ControlInternal;
 using System;
 using System.Drawing;
+using Gwen;
 
 namespace Gwen.Controls
 {
@@ -9,12 +10,6 @@ namespace Gwen.Controls
     /// </summary>
     public class Label : ControlBase
     {
-        /// <summary>
-        /// Delegate used to request a text value for a label
-        /// </summary>
-        /// <param name="sender">Event source.</param>
-        /// <param name="text">Current label text.</param>
-        public delegate string TextRequestHandler(ControlBase sender, string currenttext);
         #region Fields
 
         protected readonly Text m_Text;
@@ -181,7 +176,7 @@ namespace Gwen.Controls
                 }
                 else
                 {
-                    return Skin.Colors.Text.Foreground;
+                    return IsTextOverrideVisible ? TextColorOverride : TextColor;
                 }
             }
         }
@@ -207,6 +202,7 @@ namespace Gwen.Controls
 
             AutoSizeToContents = true;
             base.MouseInputEnabled = false;
+            TextColor = Skin.Colors.Foreground;
             TextColorOverride = Color.FromArgb(0, 255, 255, 255);// A==0, override disabled
             BoundsOutlineColor = Color.LawnGreen;
             ResumeLayout(true);
