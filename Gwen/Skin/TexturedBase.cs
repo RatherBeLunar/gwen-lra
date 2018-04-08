@@ -17,6 +17,7 @@ namespace Gwen.Skin
         public _Input Input;
         public _Menu Menu;
         public _Panel Panel;
+        public _Notification Notification;
         public _ProgressBar ProgressBar;
         public _RadioButton RadioButton;
         public _Scroller Scroller;
@@ -256,9 +257,16 @@ namespace Gwen.Skin
         {
             #region Fields
 
-            public Bordered Bright;
-            public Bordered Dark;
-            public Bordered Highlight;
+            // public Bordered Bright;
+            // public Bordered Dark;
+            // public Bordered Highlight;
+            public Bordered Normal;
+
+            #endregion Fields
+        }
+        public struct _Notification
+        {
+            #region Fields
             public Bordered Normal;
 
             #endregion Fields
@@ -553,9 +561,10 @@ namespace Gwen.Skin
             Textures.Selection = new Bordered(m_Texture, 384, 32, 31, 31, Margin.Four);
 
             Textures.Panel.Normal = new Bordered(m_Texture, 256, 0, 63, 63, new Margin(16, 16, 16, 16));
-            Textures.Panel.Bright = new Bordered(m_Texture, 256 + 64, 0, 63, 63, new Margin(16, 16, 16, 16));
-            Textures.Panel.Dark = new Bordered(m_Texture, 256, 64, 63, 63, new Margin(16, 16, 16, 16));
-            Textures.Panel.Highlight = new Bordered(m_Texture, 256 + 64, 64, 63, 63, new Margin(16, 16, 16, 16));
+            Textures.Notification.Normal = new Bordered(m_Texture, 320, 0, 63, 63, new Margin(16, 16, 16, 16));
+            // Textures.Panel.Bright = new Bordered(m_Texture, 256 + 64, 0, 63, 63, new Margin(16, 16, 16, 16));
+            // Textures.Panel.Dark = new Bordered(m_Texture, 256, 64, 63, 63, new Margin(16, 16, 16, 16));
+            // Textures.Panel.Highlight = new Bordered(m_Texture, 256 + 64, 64, 63, 63, new Margin(16, 16, 16, 16));
 
             Textures.Window.Normal = new Bordered(m_Texture, 0, 0, 127, 127, new Margin(8, 32, 8, 8));
             Textures.Window.Inactive = new Bordered(m_Texture, 128, 0, 127, 127, new Margin(8, 32, 8, 8));
@@ -735,6 +744,11 @@ namespace Gwen.Skin
         public override void DrawPanel(Controls.ControlBase control)
         {
             Textures.Panel.Normal.Draw(Renderer, control.RenderBounds);
+        }
+        public override void DrawNotification(Controls.ControlBase control, float fade)
+        {
+            Color c = Color.FromArgb((int)Math.Round(255 * fade), Color.White);
+            Textures.Notification.Normal.Draw(Renderer, control.RenderBounds, c);
         }
 
         public override void DrawColorDisplay(Controls.ControlBase control, Color color)
@@ -1151,7 +1165,8 @@ namespace Gwen.Skin
                 Textures.Input.Slider.H.Back.Draw(Renderer, barrect);
                 if (!control.IsDisabled)
                 {
-                    var clip = ClipArea(new Rectangle(0, 0, (int)Math.Round(barrect.Width * val), barrect.Height));
+                    int w = (int)Math.Round(barrect.Width * val);
+                    var clip = ClipArea(new Rectangle(barrect.X, 0, w, barrect.Height));
                     Textures.Input.Slider.H.Front.Draw(Renderer, barrect);
                     Renderer.ClipRegion = clip;
                 }
@@ -1173,7 +1188,8 @@ namespace Gwen.Skin
 
                 if (!control.IsDisabled)
                 {
-                    var prevclip = ClipArea(new Rectangle(0, barrect.Height - (int)Math.Round(barrect.Height * val), barrect.Width, (int)Math.Round(barrect.Height * val)));
+                    int h = (int)Math.Round(barrect.Height * val);
+                    var prevclip = ClipArea(new Rectangle(0,barrect.Y + (rect.Height - h), barrect.Width, h));
                     Textures.Input.Slider.V.Front.Draw(Renderer, barrect);
                     Renderer.ClipRegion = prevclip;
                 }
@@ -1187,7 +1203,6 @@ namespace Gwen.Skin
         {
             var currentclip = Renderer.ClipRegion;
             Renderer.AddClipRegion(newclip);
-            Renderer.ClipRegion = new Rectangle(Renderer.ClipRegion.X + newclip.X, Renderer.ClipRegion.Y + newclip.Y, Renderer.ClipRegion.Width, Renderer.ClipRegion.Height);
             return currentclip;
         }
 
