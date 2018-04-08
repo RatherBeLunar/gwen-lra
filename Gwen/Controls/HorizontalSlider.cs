@@ -18,6 +18,7 @@ namespace Gwen.Controls
             : base(parent)
         {
             m_SliderBar.IsHorizontal = true;
+            Height = 15;
         }
 
         #endregion Constructors
