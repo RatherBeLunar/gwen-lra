@@ -16,7 +16,7 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public Panel(ControlBase parent) : base(parent)
         {
-            Padding = Padding.Three;
+            //Padding = Padding.Three;
             Invalidate();
             //Margin = new Margin(5, 5, 5, 5);
         }
