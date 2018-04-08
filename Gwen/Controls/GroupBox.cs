@@ -52,11 +52,6 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public GroupBox(ControlBase parent) : base(parent)
         {
-            // Set to true, because it's likely that our
-            // children will want mouse input, and they
-            // can't get it without us..
-            MouseInputEnabled = true;
-            KeyboardInputEnabled = true;
             m_Label = new Label(null);
             m_Label.TextPadding = new Padding(10, 0, 10, 0);
             m_Label.Alignment = Pos.Top | Pos.Left;

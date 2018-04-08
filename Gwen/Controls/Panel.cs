@@ -16,11 +16,6 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public Panel(ControlBase parent) : base(parent)
         {
-            // Set to true, because it's likely that our
-            // children will want mouse input, and they
-            // can't get it without us..
-            MouseInputEnabled = true;
-            KeyboardInputEnabled = true;
             Padding = Padding.Three;
             Invalidate();
             //Margin = new Margin(5, 5, 5, 5);
