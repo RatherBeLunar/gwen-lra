@@ -209,7 +209,7 @@ namespace Gwen.Controls
         private void HandleTooltip()
         {
             var hovered = InputHandler.HoveredControl;
-            if (!InputHandler.IsLeftMouseDown && hovered != null && InputHandler.TooltipTime >= hovered.TooltipDelay)
+            if (!InputHandler.IsLeftMouseDown && hovered != null && InputHandler.TooltipTime >= hovered.GetTooltipDelay())
             {
                 var tooltip = hovered.GetTooltip();
                 if (!string.IsNullOrEmpty(tooltip))

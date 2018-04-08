@@ -20,7 +20,7 @@ namespace Gwen.Controls
         /// <param name="control">Event source.</param>
         /// <param name="args" >Additional arguments. May be empty (EventArgs.Empty).</param>
         public delegate void GwenEventHandler<in T>(ControlBase sender, T arguments) where T : System.EventArgs;
-
+        
         private bool m_Disposed;
 
         private ControlBase m_Parent;
@@ -448,7 +448,7 @@ namespace Gwen.Controls
         /// Delay in milliseconds until a tooltip can pop up
         /// </summary>
         /// <returns></returns>
-        public virtual int TooltipDelay => 400;
+        public virtual int TooltipDelay { get; set; } = 400;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlBase"/> class.
@@ -562,6 +562,13 @@ namespace Gwen.Controls
                 return Tooltip;
             else
                 return Parent?.GetTooltip();
+        }
+        public int GetTooltipDelay()
+        {
+            if (ToolTipProvider || Parent == null)
+                return TooltipDelay;
+            else
+                return Parent.TooltipDelay;
         }
         /// <summary>
         /// Enables the control.
