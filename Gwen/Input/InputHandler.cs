@@ -389,7 +389,7 @@ namespace Gwen.Input
             {
                 hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
             }
-            if (hovered != null && hovered.IsDisabled)
+            if (hovered != null && (hovered.IsDisabled || !hovered.MouseInputEnabled))
                 hovered = null;
 
             if (HoveredControl != hovered)
