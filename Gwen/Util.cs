@@ -72,7 +72,22 @@ namespace Gwen
 
             return inside;
         }
-
+        public static Rectangle RectangleClamp(Rectangle inside, Rectangle outside)
+        {
+            int x = Math.Max(inside.X, outside.X);
+            int y = Math.Max(inside.Y, outside.Y);
+            int w = inside.Width - (inside.X - x);
+            int h = inside.Height - (inside.Y - y);
+            if (x + w > outside.Right)
+            {
+                w = Math.Min(outside.Right, x + w) - x;
+            }
+            if (y + h > outside.Bottom)
+            {
+                h = Math.Min(outside.Bottom, y + h) - y;
+            }
+            return new Rectangle(x, y, w, h);
+        }
         // from http://stackoverflow.com/questions/359612/how-to-change-rgb-color-to-hsv
         public static HSV ToHSV(this Color color)
         {
