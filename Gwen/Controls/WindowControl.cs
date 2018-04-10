@@ -173,7 +173,8 @@ namespace Gwen.Controls
             };
             m_CloseButton.Clicked += CloseButtonPressed;
             //Create a blank content control, dock it to the top - Should this be a ScrollControl?
-            GetResizer(8).Hide();
+            // GetResizer(8).Hide();
+            _resizer_top.Hide();
             IsTabable = false;
             MinimumSize = new Size(100, 50);
             ClampMovement = true;

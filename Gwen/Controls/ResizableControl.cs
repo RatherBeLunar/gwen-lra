@@ -10,7 +10,11 @@ namespace Gwen.Controls
     public class ResizableControl : Container
     {
         private bool m_ClampMovement;
-        protected readonly Resizer[] m_Resizer;
+        protected readonly Resizer[] m_Resizers;
+        protected Resizer _resizer_top;
+        protected Resizer _resizer_bottom;
+        protected Resizer _resizer_left;
+        protected Resizer _resizer_right;
 
         /// <summary>
         /// Determines whether control's position should be restricted to its parent bounds.
@@ -32,61 +36,74 @@ namespace Gwen.Controls
         public ResizableControl(ControlBase parent)
             : base(parent)
         {
-            m_Resizer = new Resizer[10];
             MinimumSize = new Size(5, 5);
             m_ClampMovement = false;
 
-            m_Resizer[2] = new Resizer(null);
-            PrivateChildren.Insert(0, m_Resizer[2]);
-            m_Resizer[2].Dock = Dock.Bottom;
-            m_Resizer[2].ResizeDir = Pos.Bottom;
-            m_Resizer[2].Resized += OnResized;
-            m_Resizer[2].Target = this;
+            _resizer_bottom = new Resizer(null);
+            _resizer_bottom.Dock = Dock.Bottom;
+            _resizer_bottom.ResizeDir = Pos.Bottom;
+            _resizer_bottom.Resized += OnResized;
+            _resizer_bottom.Target = this;
 
-            m_Resizer[1] = new Resizer(m_Resizer[2]);
-            m_Resizer[1].Dock = Dock.Left;
-            m_Resizer[1].ResizeDir = Pos.Bottom | Pos.Left;
-            m_Resizer[1].Resized += OnResized;
-            m_Resizer[1].Target = this;
+            _resizer_top = new Resizer(null);
+            _resizer_top.Dock = Dock.Top;
+            _resizer_top.ResizeDir = Pos.Top;
+            _resizer_top.Resized += OnResized;
+            _resizer_top.Target = this;
 
-            m_Resizer[3] = new Resizer(m_Resizer[2]);
-            m_Resizer[3].Dock = Dock.Right;
-            m_Resizer[3].ResizeDir = Pos.Bottom | Pos.Right;
-            m_Resizer[3].Resized += OnResized;
-            m_Resizer[3].Target = this;
+            _resizer_left = new Resizer(null);
+            _resizer_left.Dock = Dock.Left;
+            _resizer_left.ResizeDir = Pos.Left;
+            _resizer_left.Resized += OnResized;
+            _resizer_left.Target = this;
 
-            m_Resizer[8] = new Resizer(null);
-            PrivateChildren.Insert(0, m_Resizer[8]);
-            m_Resizer[8].Dock = Dock.Top;
-            m_Resizer[8].ResizeDir = Pos.Top;
-            m_Resizer[8].Resized += OnResized;
-            m_Resizer[8].Target = this;
+            _resizer_right = new Resizer(null);
+            _resizer_right.Dock = Dock.Right;
+            _resizer_right.ResizeDir = Pos.Right;
+            _resizer_right.Resized += OnResized;
+            _resizer_right.Target = this;
 
-            m_Resizer[7] = new Resizer(m_Resizer[8]);
-            m_Resizer[7].Dock = Dock.Left;
-            m_Resizer[7].ResizeDir = Pos.Left | Pos.Top;
-            m_Resizer[7].Resized += OnResized;
-            m_Resizer[7].Target = this;
 
-            m_Resizer[9] = new Resizer(m_Resizer[8]);
-            m_Resizer[9].Dock = Dock.Right;
-            m_Resizer[9].ResizeDir = Pos.Right | Pos.Top;
-            m_Resizer[9].Resized += OnResized;
-            m_Resizer[9].Target = this;
 
-            m_Resizer[4] = new Resizer(null);
-            PrivateChildren.Insert(0, m_Resizer[4]);
-            m_Resizer[4].Dock = Dock.Left;
-            m_Resizer[4].ResizeDir = Pos.Left;
-            m_Resizer[4].Resized += OnResized;
-            m_Resizer[4].Target = this;
+            var sizebl = new Resizer(_resizer_bottom);
+            sizebl.Dock = Dock.Left;
+            sizebl.ResizeDir = Pos.Bottom | Pos.Left;
+            sizebl.Resized += OnResized;
+            sizebl.Target = this;
 
-            m_Resizer[6] = new Resizer(null);
-            PrivateChildren.Insert(0, m_Resizer[6]);
-            m_Resizer[6].Dock = Dock.Right;
-            m_Resizer[6].ResizeDir = Pos.Right;
-            m_Resizer[6].Resized += OnResized;
-            m_Resizer[6].Target = this;
+            var sizebr = new Resizer(_resizer_bottom);
+            sizebr.Dock = Dock.Right;
+            sizebr.ResizeDir = Pos.Bottom | Pos.Right;
+            sizebr.Resized += OnResized;
+            sizebr.Target = this;
+
+            var sizetl = new Resizer(_resizer_top);
+            sizetl.Dock = Dock.Left;
+            sizetl.ResizeDir = Pos.Left | Pos.Top;
+            sizetl.Resized += OnResized;
+            sizetl.Target = this;
+
+            var sizetr = new Resizer(_resizer_top);
+            sizetr.Dock = Dock.Right;
+            sizetr.ResizeDir = Pos.Right | Pos.Top;
+            sizetr.Resized += OnResized;
+            sizetr.Target = this;
+
+            PrivateChildren.Insert(0, _resizer_top);
+            PrivateChildren.Insert(1, _resizer_bottom);
+            PrivateChildren.Insert(2, _resizer_right);
+            PrivateChildren.Insert(3, _resizer_left);
+            m_Resizers = new Resizer[]
+            {
+                _resizer_top,
+                _resizer_bottom,
+                _resizer_left,
+                _resizer_right,
+                sizetr,
+                sizetl,
+                sizebr,
+                sizebl
+            };
         }
 
         /// <summary>
@@ -99,23 +116,18 @@ namespace Gwen.Controls
                 Resized.Invoke(this, EventArgs.Empty);
         }
 
-        protected Resizer GetResizer(int i)
-        {
-            return m_Resizer[i];
-        }
-
         /// <summary>
         /// Disables resizing.
         /// </summary>
         public virtual void DisableResizing()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < m_Resizers.Length; i++)
             {
-                if (m_Resizer[i] == null)
+                if (m_Resizers[i] == null)
                     continue;
-                m_Resizer[i].MouseInputEnabled = false;
+                m_Resizers[i].MouseInputEnabled = false;
                 if (HideResizersOnDisable)
-                    m_Resizer[i].IsHidden = true;
+                    m_Resizers[i].IsHidden = true;
             }
         }
 
@@ -124,12 +136,12 @@ namespace Gwen.Controls
         /// </summary>
         public void EnableResizing()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < m_Resizers.Length; i++)
             {
-                if (m_Resizer[i] == null)
+                if (m_Resizers[i] == null)
                     continue;
-                m_Resizer[i].MouseInputEnabled = true;
-                m_Resizer[i].IsHidden = false;
+                m_Resizers[i].MouseInputEnabled = true;
+                m_Resizers[i].IsHidden = false;
             }
         }
 
