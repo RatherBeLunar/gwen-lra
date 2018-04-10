@@ -84,7 +84,7 @@ namespace Gwen.Controls
             m_ScrollButton[1].Dock = Dock.Right;
 
             m_Bar.Height = ButtonSize;
-            m_Bar.Padding = new Padding(ButtonSize, 0, ButtonSize, 0);
+            m_Bar.Margin = new Margin(ButtonSize, 0, ButtonSize, 0);
 
             float barWidth = (m_ViewableContentSize / m_ContentSize) * (size.Width - (ButtonSize * 2));
 

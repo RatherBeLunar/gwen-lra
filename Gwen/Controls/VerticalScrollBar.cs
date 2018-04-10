@@ -42,7 +42,7 @@ namespace Gwen.Controls
             : base(parent)
         {
             m_Bar.IsVertical = true;
-
+            
             m_ScrollButton[0].SetDirectionUp();
             m_ScrollButton[0].Clicked += NudgeUp;
 
@@ -76,7 +76,7 @@ namespace Gwen.Controls
             m_ScrollButton[1].Dock = Dock.Bottom;
 
             m_Bar.Width = ButtonSize;
-            m_Bar.Padding = new Padding(0, ButtonSize, 0, ButtonSize);
+            m_Bar.Margin = new Margin(0, ButtonSize, 0, ButtonSize);
 
             float barHeight = 0.0f;
             if (m_ContentSize > 0.0f) barHeight = (m_ViewableContentSize / m_ContentSize) * (size.Height - (ButtonSize * 2));
