@@ -57,6 +57,7 @@ namespace Gwen.Controls
             m_Label.Alignment = Pos.Top | Pos.Left;
             m_Label.AutoSizeToContents = true;
             PrivateChildren.Add(m_Label);
+            m_Panel.AutoSizeToContents = true;
             Invalidate();
             //Margin = new Margin(5, 5, 5, 5);
         }
