@@ -47,7 +47,7 @@ namespace Gwen.ControlInternal
             Alignment = Pos.Left | Pos.CenterV;
             m_Alt = false;
             IsToggle = true;
-            TextPadding = new Padding(3, 0, 3, 0);
+            TextPadding = new Padding(3, 2, 3, 2);
             ShouldDrawBackground = false;
             Dock = Dock.Top;
             Margin = new Margin(1, 0, 1, 0);
