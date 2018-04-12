@@ -21,7 +21,7 @@ namespace Gwen.Renderer
         }
         public override List<string> WordWrap(string input, int maxpx)
         {
-            return fontdata.WordWrap(input,maxpx);
+            return fontdata.WordWrap(input, maxpx);
         }
     }
     /// <summary>
@@ -261,60 +261,74 @@ namespace Gwen.Renderer
             }
             return input.Length - start;
         }
+        private List<string> WrapLine(string line, int maxpx, List<int> widths)
+        {
+            var wordarr = line.Split(' ');
+            var ret = new List<string>();
+            List<string> words = new List<string>(wordarr.Length);
+            foreach (var word in wordarr)
+            {
+                if (MeasureText(word).Width >= maxpx)
+                {
+                    int index = 0;
+                    do
+                    {
+                        var linewidth = MeasureWordSplit(word, index, maxpx);
+                        Debug.Assert(
+                            linewidth != 0,
+                            "word wrap split line width is zero");
+                        words.Add(word.Substring(index, linewidth));
+                        index += linewidth;
+                    }
+                    while (index != word.Length);
+                }
+                else
+                {
+                    words.Add(word);
+                }
+            }
+            string seperator = string.Empty;
+            StringBuilder linebuilder = new StringBuilder();
+            int lnwidth = 0;
+            for (int i = 0; i < words.Count; i++)
+            {
+                var word = words[i];
+                var str = linebuilder.ToString();
+                var add = str + seperator + word;
+                lnwidth = MeasureText(add).Width;
+                if (lnwidth < maxpx)
+                {
+                    linebuilder.Append(seperator + word);
+                }
+                else
+                {
+                    ret.Add(str);
+                    widths.Add(lnwidth);
+                    linebuilder.Clear();
+                    linebuilder.Append(word);
+                    continue;
+                }
+                seperator = " ";
+            }
+            if (linebuilder.Length > 0)
+            {
+                ret.Add(linebuilder.ToString());
+                widths.Add(lnwidth);
+            }
+            return ret;
+        }
         public List<string> WordWrap(string input, int maxpx)
         {
             // this function isnt 100% for performance but i think thats okay.
-            string[] originallines = input.Replace("\r\n", "\n").
-            Split('\n');
+            string[] originallines = input.Replace("\r\n", "\n").Split('\n');
 
             List<string> ret = new List<string>();
+            List<int> widths = new List<int>();
             foreach (var line in originallines)
             {
-                var wordarr = line.Split(' ');
-                List<string> words = new List<string>(wordarr.Length);
-                foreach (var word in wordarr)
-                {
-                    if (MeasureText(word).Width >= maxpx)
-                    {
-                        int index = 0;
-                        do
-                        {
-                            var linewidth = MeasureWordSplit(word, index, maxpx);
-                            Debug.Assert(
-                                linewidth != 0,
-                                "word wrap split line width is zero");
-                            words.Add(word.Substring(index, linewidth));
-                            index += linewidth;
-                        }
-                        while (index != word.Length);
-                    }
-                    else
-                    {
-                        words.Add(word);
-                    }
-                }
-                string seperator = string.Empty;
-                StringBuilder linebuilder = new StringBuilder();
-                for (int i = 0; i < words.Count; i++)
-                {
-                    var word = words[i];
-                    var str = linebuilder.ToString();
-                    var add = str + seperator + word;
-                    if (MeasureText(add).Width < maxpx)
-                    {
-                        linebuilder.Append(seperator + word);
-                    }
-                    else
-                    {
-                        ret.Add(str);
-                        linebuilder.Clear();
-                        linebuilder.Append(word);
-                        continue;
-                    }
-                    seperator = " ";
-                }
-                if (linebuilder.Length > 0)
-                    ret.Add(linebuilder.ToString());
+                widths.Clear();
+                var wrapped = WrapLine(line, maxpx, widths);
+                ret.AddRange(wrapped);
             }
             return ret;
         }
