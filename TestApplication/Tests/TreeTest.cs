@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 using Gwen.Controls;
 using Gwen;
 namespace TestApplication
@@ -9,6 +10,14 @@ namespace TestApplication
         public TreeTest(ControlBase parent) : base(parent)
         {
             TreeControl tree = new TreeControl(parent);
+            tree.SelectionChanged += (o, e) =>
+            {
+                if (tree.SelectedChildren.Count == 2)
+                {
+                    tree.SelectedChildren[1].Parent.RemoveChild(tree.SelectedChildren[1], true);
+                }
+            };
+            tree.Margin = Margin.Five;
             Checkbox cb = new Checkbox(parent);
             cb.Dock = Dock.Bottom;
             cb.Text = "Multiselect";
@@ -33,7 +42,7 @@ namespace TestApplication
                 {
                     var node = root.AddNode("child " + ix + " of root " + i);
                     if (i == 0)
-                        node.AddNode("subnode that has a really long label so we can trigger the scrollbar................");
+                        node.AddNode("subnode that has a really long label so we can trigger the scrollbar................").AddNode("fuck you").AddNode("seriously").AddNode(" i want to die");
                 }
                 if (i == 1 || i == 5 || i == 8)
                     root.ExpandAll();

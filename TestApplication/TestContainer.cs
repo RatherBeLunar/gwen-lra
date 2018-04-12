@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Gwen;
 using Gwen.Controls;
 using TestApplication.Tests;
@@ -24,7 +25,28 @@ namespace TestApplication
         }
         public void DbgCreate()
         {
-            var test = new ButtonTest(this);
+            string random = "abcdefghijklmnop";
+            var panel = new Panel(this)
+            {
+                Height = 100,
+                Dock = Dock.Top,
+            };
+            var label = new Label(panel)
+            {
+                Dock = Dock.Left,
+                Text = "abcd",
+            };
+            Layout(true);
+            Stopwatch sw = Stopwatch.StartNew();
+
+
+            label.TextRequest = (o, current) =>
+            {
+                if (sw.ElapsedMilliseconds > 3000)
+                    return random;
+                return random.Substring(0, new Random().Next(0, 10));
+            };
+            // var test = new TreeTest(this);
         }
         public void CreateStatusbar()
         {
@@ -89,6 +111,10 @@ namespace TestApplication
             var container = new ContainerTest(page);
             page = AddPage(cat, "Layout Container");
             var layoutcontainer = new LayoutContainerTest(page);
+            page = AddPage(cat, "Notification");
+            var notify = new NotificationTest(page);
+            _focus = page;
+            _focus.Show();
             page = AddPage(cat, "Window");
             var window = new WindowTest(page);
 
@@ -102,8 +128,6 @@ namespace TestApplication
 
             page = AddPage(cat, "Menu");
             var menu = new MenuTest(page);
-            _focus = page;
-            _focus.Show();
             page = AddPage(cat, "Property");
             var prop = new PropertyTest(page);
             page = AddPage(cat, "Category");

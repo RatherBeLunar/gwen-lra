@@ -25,7 +25,11 @@ namespace TestApplication
 
             FlowLayout flow = new FlowLayout(parent);
             flow.Dock = Dock.Fill;
-            ComboBox cb = new ComboBox(flow);
+            flow.Margin = Margin.Three;
+            ComboBox cb = new ComboBox(flow)
+            {
+                Margin = Margin.Three
+            };
             cb.AddItem("Test");
             cb.AddItem("Come on combobox");
             cb.AddItem("maybe");
