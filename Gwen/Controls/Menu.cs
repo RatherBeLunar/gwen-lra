@@ -172,7 +172,7 @@ namespace Gwen.Controls
             IsHidden = false;
             BringToFront();
             Point mouse = Input.InputHandler.MousePosition;
-            SetPosition(mouse.X, mouse.Y);
+            SetPosition(mouse.X+1, mouse.Y);
             Invalidate();
         }
         private void UpdateCanvas()
