@@ -11,7 +11,7 @@ namespace Gwen.Controls
 {
     public class Container : ControlBase
     {
-        protected readonly Panel m_Panel;
+        protected readonly ContainerPanel m_Panel;
         public override ControlCollection Children
         {
             get
@@ -52,7 +52,7 @@ namespace Gwen.Controls
         internal Rectangle PanelBounds => m_Panel.Bounds;
         public Container(ControlBase parent) : base(parent)
         {
-            m_Panel = new Panel(null);
+            m_Panel = new ContainerPanel(null);
             m_Panel.Dock = Dock.Fill;
             PrivateChildren.Add(m_Panel);
             this.BoundsOutlineColor = Color.Cyan;
@@ -102,7 +102,7 @@ namespace Gwen.Controls
         protected virtual void RenderPanel(Skin.SkinBase skin)
         {
         }
-        protected class Panel : ControlBase
+        protected class ContainerPanel : ControlBase
         {
             public override Margin Margin
             {
@@ -117,7 +117,7 @@ namespace Gwen.Controls
                     throw new Exception("Attempt to set panel margin");
                 }
             }
-            public Panel(ControlBase parent) : base(parent)
+            public ContainerPanel(ControlBase parent) : base(parent)
             {
             }
             public override void SendToBack()
