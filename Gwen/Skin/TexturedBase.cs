@@ -1166,7 +1166,7 @@ namespace Gwen.Skin
                 if (!control.IsDisabled)
                 {
                     int w = (int)Math.Round(barrect.Width * val);
-                    var clip = ClipArea(new Rectangle(barrect.X, 0, w, barrect.Height));
+                    var clip = ClipArea(new Rectangle(barrect.X, barrect.Y, w, barrect.Height));
                     Textures.Input.Slider.H.Front.Draw(Renderer, barrect);
                     Renderer.ClipRegion = clip;
                 }
@@ -1189,7 +1189,7 @@ namespace Gwen.Skin
                 if (!control.IsDisabled)
                 {
                     int h = (int)Math.Round(barrect.Height * val);
-                    var prevclip = ClipArea(new Rectangle(0,barrect.Y + (rect.Height - h), barrect.Width, h));
+                    var prevclip = ClipArea(new Rectangle(barrect.X, barrect.Y + (rect.Height - h), barrect.Width, h));
                     Textures.Input.Slider.V.Front.Draw(Renderer, barrect);
                     Renderer.ClipRegion = prevclip;
                 }
