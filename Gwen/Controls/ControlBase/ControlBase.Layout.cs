@@ -1,4 +1,4 @@
-using Gwen.Anim;
+﻿using Gwen.Anim;
 using Gwen.DragDrop;
 using Gwen.Input;
 using System;
@@ -71,7 +71,7 @@ namespace Gwen.Controls
             {
                 var pos = Positioner.Invoke(this);
                 SetPosition(pos.X, pos.Y);
-        }
+            }
         }
 
         /// <summary>
@@ -130,11 +130,15 @@ namespace Gwen.Controls
         /// Recursively lays out the control's interior according to alignment, margin, padding, dock etc.
         /// If AutoSizeToContents is enabled, sizes the control before layout.
         /// </summary>
-        protected virtual void Layout(bool force, bool recursioncheck = false)
+        protected virtual bool Layout(bool force, bool recursioncheck = false)
         {
+            //todo
+            //layout and processlayout do not play well with nested autosize controls
+            //reply: possibly fixed?
             if (IsHidden || m_LayoutSuspendedCount > 0)
-                return;
+                return false;
             var shouldlayout = m_NeedsLayout || force;
+            bool ret = shouldlayout;
             if (shouldlayout)
             {
                 // if we have a dock property, our parent handles sizing us.
@@ -145,6 +149,10 @@ namespace Gwen.Controls
                     SetBounds(X, Y, sz.Width, sz.Height);
                     // setbounds can be overridden, so just get size for
                     // processlayout later.
+                }
+                if (Dock != Dock.None)
+                {
+                    InvalidateParent();
                 }
                 var oldbounds = Bounds;
                 ProcessLayout(oldbounds.Size);
@@ -166,7 +174,7 @@ namespace Gwen.Controls
             {
                 foreach (var child in m_Children)
                 {
-                    child.Layout(false);
+                    child.Layout(false, false);
                 }
                 if (m_NeedsLayout)
                 {
@@ -187,6 +195,7 @@ namespace Gwen.Controls
             {
                 GetCanvas().NextTab = null;
             }
+            return ret;
         }
         /// <summary>
         /// Positions the control inside its parent relative to its edges
@@ -736,7 +745,7 @@ namespace Gwen.Controls
         /// </summary>
         protected virtual void OnChildBoundsChanged(Rectangle oldChildBounds, ControlBase child)
         {
-            if (AutoSizeToContents)
+            if (AutoSizeToContents || child.Dock != Dock.None)
                 Invalidate();
         }
         /// <summary>
