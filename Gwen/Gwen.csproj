@@ -29,6 +29,7 @@
     <Compile Include="Cursor.cs" />
     <Compile Include="Cursors.cs" />
     <Compile Include="DialogResult.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Anim\Animation.cs" />
     <Compile Include="Anim\Size\Height.cs" />
     <Compile Include="Anim\Size\Width.cs" />
@@ -63,6 +64,7 @@
     <!-- <Compile Include="Controls\ProgressBar.cs" /> -->
     <Compile Include="Controls\PropertyTable.cs" />
     <Compile Include="Controls\PropertyRow.cs" />
+    <Compile Include="Controls\RichLabel.cs" />
     <Compile Include="ControlInternal\PropertyRowLabel.cs" />
     <Compile Include="Controls\PropertyTree.cs" />
     <Compile Include="ControlInternal\PropertyTreeNode.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="ControlInternal\ScrollBarButton.cs" />
     <Compile Include="ControlInternal\Text.cs" />
     <Compile Include="Controls\ScrollBar.cs" />
+    <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Controls\Canvas.cs" />
