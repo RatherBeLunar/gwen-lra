@@ -1,4 +1,4 @@
-﻿using Gwen.Anim;
+using Gwen.Anim;
 using Gwen.DragDrop;
 using Gwen.Input;
 using System;
@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using Gwen;
 namespace Gwen.Controls
 {
     public partial class ControlBase
@@ -60,11 +61,17 @@ namespace Gwen.Controls
                 InvalidateParent();
             }
         }
+        public PositionerDelegate Positioner = null;
         /// <summary>
         /// Function invoked after layout.
         /// </summary>
         protected virtual void PostLayout()
         {
+            if (Dock == Dock.None && Positioner != null)
+            {
+                var pos = Positioner.Invoke(this);
+                SetPosition(pos.X, pos.Y);
+        }
         }
 
         /// <summary>
