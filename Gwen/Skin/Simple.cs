@@ -171,6 +171,11 @@ namespace Gwen.Skin
             m_Renderer.DrawShavedCornerRect(new Rectangle(0, 0, w, h), bSquared);
         }
 
+        public override void DrawNotification(Controls.ControlBase control, float fade)
+        {
+            //todo
+            DrawPanel(control);
+        }
         public override void DrawRadioButton(Controls.ControlBase control, bool selected, bool depressed)
         {
             Rectangle rect = control.RenderBounds;

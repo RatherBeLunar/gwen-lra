@@ -268,6 +268,10 @@ namespace Gwen.Skin
             Renderer.DrawLinedRect(control.RenderBounds);
         }
 
+        public virtual void DrawNotification(Controls.ControlBase control, float fade)
+        {
+        }
+        
         public virtual void DrawPropertyRow(Controls.ControlBase control, int iWidth, bool bBeingEdited, bool hovered)
         {
             Rectangle rect = control.RenderBounds;
