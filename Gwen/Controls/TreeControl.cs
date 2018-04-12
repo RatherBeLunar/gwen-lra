@@ -19,7 +19,7 @@ namespace Gwen.Controls
         /// </summary>
         public bool AllowMultiSelect { get { return m_MultiSelect; } set { m_MultiSelect = value; } }
 
-        public IEnumerable<TreeNode> SelectedChildren
+        public List<TreeNode> SelectedChildren
         {
             get
             {
