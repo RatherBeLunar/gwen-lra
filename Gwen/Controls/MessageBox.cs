@@ -6,7 +6,7 @@ namespace Gwen.Controls
     public class MessageBox : Gwen.Controls.WindowControl
     {
         private readonly Button m_Button;
-        public EventHandler<EventArgs> Dismissed;
+        public EventHandler<DialogResult> Dismissed;
         public ControlBase Container;
         public DialogResult Result { get; set; }
         public string Text { get; private set; }
@@ -75,7 +75,7 @@ namespace Gwen.Controls
         private void DismissedHandler(ControlBase control, EventArgs args)
         {
             if (Dismissed != null)
-                Dismissed.Invoke(this, EventArgs.Empty);
+                Dismissed.Invoke(this, Result);
         }
         private void AddLine(string line)
         {
