@@ -156,6 +156,8 @@ namespace Gwen.Renderer
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.ColorArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
+            GL.PushMatrix();
+            GL.Scale(Scale,Scale,1);
         }
 
         public override void Dispose()
@@ -262,6 +264,7 @@ namespace Gwen.Renderer
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.ColorArray);
             GL.DisableClientState(ArrayCap.TextureCoordArray);
+            GL.PopMatrix();
         }
 
         public override void EndClip()

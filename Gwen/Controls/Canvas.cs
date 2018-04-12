@@ -132,13 +132,13 @@ namespace Gwen.Controls
 
             Renderer.RendererBase render = Skin.Renderer;
 
+            render.Scale = Scale;
             render.Begin();
 
             Layout(false);
 
             render.ClipRegion = Bounds;
             render.RenderOffset = Point.Empty;
-            render.Scale = Scale;
 
             if (ShouldDrawBackground)
             {
@@ -156,6 +156,11 @@ namespace Gwen.Controls
             render.EndClip();
 
             render.End();
+        }
+        public void SetCanvasSize(int width, int height)
+        {
+            Width = (int)Math.Round(width / Scale);
+            Height = (int)Math.Round(height / Scale);
         }
 
         /// <summary>
@@ -278,9 +283,10 @@ namespace Gwen.Controls
         {
             if (IsHidden)
                 return false;
-
-            // Todo: Handle scaling here..
-            //float fScale = 1.0f / Scale();
+            x = (int)Math.Round(x / Scale);
+            y = (int)Math.Round(y / Scale);
+            dx = (int)Math.Round(dx / Scale);
+            dy = (int)Math.Round(dy / Scale);
 
             InputHandler.OnMouseMoved(this, x, y, dx, dy);
 
@@ -303,6 +309,8 @@ namespace Gwen.Controls
         {
             if (IsHidden) return false;
 
+            x = (int)Math.Round(x / Scale);
+            y = (int)Math.Round(y / Scale);
             return InputHandler.OnMouseClicked(this, button, down, x, y);
         }
 

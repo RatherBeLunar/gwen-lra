@@ -203,9 +203,7 @@ namespace Gwen.Renderer
         /// <returns>Width and height of the rendered text.</returns>
         public virtual Point MeasureText(Font font, string text)
         {
-            Point p = new Point((int)(font.Size * Scale * text.Length * 0.4f), (int)(font.Size * Scale));
-
-            return p;
+            throw new NotImplementedException("Text rendering not implemented by Skin");
         }
 
         /// <summary>
@@ -216,49 +214,7 @@ namespace Gwen.Renderer
         /// <param name="text">Text to render.</param>
         public virtual void RenderText(Font font, Point position, string text)
         {
-            float size = font.Size * Scale;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                char chr = text[i];
-
-                if (chr == ' ')
-                    continue;
-
-                Rectangle r = Util.FloatRect(position.X + i * size * 0.4f, position.Y, size * 0.4f - 1, size);
-
-                /*
-                    This isn't important, it's just me messing around changing the
-                    shape of the rect based on the letter.. just for fun.
-                */
-                if (chr == 'l' || chr == 'i' || chr == '!' || chr == 't')
-                {
-                    r.Width = 1;
-                }
-                else if (chr >= 'a' && chr <= 'z')
-                {
-                    r.Y = (int)(r.Y + size * 0.5f);
-                    r.Height = (int)(r.Height - size * 0.4f);
-                }
-                else if (chr == '.' || chr == ',')
-                {
-                    r.X += 2;
-                    r.Y += r.Height - 2;
-                    r.Width = 2;
-                    r.Height = 2;
-                }
-                else if (chr == '\'' || chr == '`' || chr == '"')
-                {
-                    r.X += 3;
-                    r.Width = 2;
-                    r.Height = 2;
-                }
-
-                if (chr == 'o' || chr == 'O' || chr == '0')
-                    DrawLinedRect(r);
-                else
-                    DrawFilledRect(r);
-            }
+            throw new NotImplementedException("Text rendering not implemented by Skin");
         }
 
         //
@@ -352,13 +308,13 @@ namespace Gwen.Renderer
         private int TranslateX(int x)
         {
             int x1 = x + m_RenderOffset.X;
-            return Util.Ceil(x1 * Scale);
+            return Util.Ceil(x1);
         }
 
         private int TranslateY(int y)
         {
             int y1 = y + m_RenderOffset.Y;
-            return Util.Ceil(y1 * Scale);
+            return Util.Ceil(y1);
         }
 
         /// <summary>
@@ -371,8 +327,8 @@ namespace Gwen.Renderer
             x += m_RenderOffset.X;
             y += m_RenderOffset.Y;
 
-            x = Util.Ceil(x * Scale);
-            y = Util.Ceil(y * Scale);
+            x = Util.Ceil(x);
+            y = Util.Ceil(y);
         }
 
         /// <summary>
@@ -391,7 +347,7 @@ namespace Gwen.Renderer
         /// </summary>
         public Rectangle Translate(Rectangle rect)
         {
-            return new Rectangle(TranslateX(rect.X), TranslateY(rect.Y), Util.Ceil(rect.Width * Scale), Util.Ceil(rect.Height * Scale));
+            return new Rectangle(TranslateX(rect.X), TranslateY(rect.Y), Util.Ceil(rect.Width), Util.Ceil(rect.Height));
         }
 
         /// <summary>
