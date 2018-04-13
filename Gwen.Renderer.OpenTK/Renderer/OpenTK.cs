@@ -157,7 +157,7 @@ namespace Gwen.Renderer
             GL.EnableClientState(ArrayCap.ColorArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
             GL.PushMatrix();
-            GL.Scale(Scale,Scale,1);
+            GL.Scale(Scale, Scale, 1);
         }
 
         public override void Dispose()
@@ -337,6 +337,15 @@ namespace Gwen.Renderer
             return false;
         }
 
+        /// <summary>
+        /// Create a texture from the specified bitmap.
+        /// </summary>
+        public override Texture CreateTexture(Bitmap bmp)
+        { 
+            Texture t = new Texture(this);
+            LoadTextureInternal(t,bmp);
+            return t;
+        }
         public override void LoadTexture(Texture t)
         {
             Bitmap bmp;

@@ -126,6 +126,13 @@ namespace Gwen.Renderer
         /// <param name="t"></param>
         public virtual void LoadTexture(Texture t)
         { }
+        /// <summary>
+        /// Create a texture from the specified bitmap.
+        /// </summary>
+        public virtual Texture CreateTexture(Bitmap bmp)
+        { 
+            return null;
+        }
 
         /// <summary>
         /// Initializes texture from raw pixel data.
@@ -367,8 +374,8 @@ namespace Gwen.Renderer
         {
             rect.X += m_RenderOffset.X;
             rect.Y += m_RenderOffset.Y;
-            
-            m_ClipRegion = Util.RectangleClamp(rect,m_ClipRegion);
+
+            m_ClipRegion = Util.RectangleClamp(rect, m_ClipRegion);
         }
     }
 }
