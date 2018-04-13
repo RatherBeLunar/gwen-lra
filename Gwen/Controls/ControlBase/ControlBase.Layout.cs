@@ -12,7 +12,7 @@ namespace Gwen.Controls
 {
     public partial class ControlBase
     {
-        public static bool LogLayout = true;
+        public static bool LogLayout = false;
         private bool m_AutoSizeToContents;
         private int m_LayoutSuspendedCount = 0;
         internal bool NeedsLayout => m_NeedsLayout;
@@ -180,7 +180,7 @@ namespace Gwen.Controls
                 {
                     if (recursioncheck)
                         throw new Exception("Layout recursion detected.");
-                    Layout(true, true);
+                    Layout(false, true);
                 }
             }
             if (IsTabable)
