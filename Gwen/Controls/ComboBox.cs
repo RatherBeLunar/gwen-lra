@@ -132,7 +132,7 @@ namespace Gwen.Controls
                 m_Menu.BringToFront();
 
                 Point p = LocalPosToCanvas(Point.Empty);
-
+                m_Menu.MinimumSize = new Size(Width, m_Menu.MinimumSize.Height);
                 m_Menu.SetBounds(new Rectangle(p.X, p.Y + Height, Width, m_Menu.Height));
             }
         }
