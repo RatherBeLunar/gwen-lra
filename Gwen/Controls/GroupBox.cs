@@ -72,9 +72,12 @@ namespace Gwen.Controls
         /// <param name="skin">Skin to use.</param>
         protected override void Render(Skin.SkinBase skin)
         {
-            var end = m_Label.TextX + m_Label.TextWidth;
-            int txwidth = m_Label.TextWidth - (end - Math.Min(end, Width - Padding.Right));
-            skin.DrawGroupBox(this, m_Label.TextX, m_Label.TextHeight, txwidth);
+            if (ShouldDrawBackground)
+            {
+                var end = m_Label.TextX + m_Label.TextWidth;
+                int txwidth = m_Label.TextWidth - (end - Math.Min(end, Width - Padding.Right));
+                skin.DrawGroupBox(this, m_Label.TextX, m_Label.TextHeight, txwidth);
+            }
         }
 
         #endregion Methods
