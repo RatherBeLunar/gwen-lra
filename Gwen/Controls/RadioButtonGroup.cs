@@ -35,6 +35,17 @@ namespace Gwen.Controls
         /// Invoked when the selected option has changed.
         /// </summary>
         public event GwenEventHandler<ItemSelectedEventArgs> SelectionChanged;
+        
+        protected override Margin PanelMargin
+        {
+            get
+            {
+                if (ShouldDrawBackground)
+                    return base.PanelMargin;
+                else
+                    return Margin.Zero;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RadioButtonGroup"/> class.
