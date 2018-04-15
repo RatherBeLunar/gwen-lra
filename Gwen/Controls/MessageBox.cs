@@ -19,6 +19,7 @@ namespace Gwen.Controls
         }
         public MessageBox(Gwen.Controls.ControlBase ctrl, string text, string title, bool cancelbutton = false) : base(ctrl, title)
         {
+            DeleteOnClose = true;
             var charsize = Skin.Renderer.MeasureText(Skin.DefaultFont, "_").X;
             int maxwidth = charsize * 30;
             int maxwidth2 = charsize * 50;
