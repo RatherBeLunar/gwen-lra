@@ -136,20 +136,23 @@ namespace Gwen.Controls
         public Button(ControlBase parent)
             : base(parent)
         {
-            SetupDefault();
             AutoSizeToContents = true;
+            SetupDefault();
             MouseInputEnabled = true;
             Alignment = Pos.Center;
         }
-        private void SetupDefault()
+        protected virtual void SetupDefault()
         {
             var extra = TextHeight / 3;
             var textpadding = new Padding(extra, extra, extra, extra);
             if (TextPadding != textpadding)
             {
                 TextPadding = textpadding;
-                if (GetSizeToFitContents().Height > Height)
-                    SizeToChildren(false, true);
+                if (AutoSizeToContents)
+                {
+                    if (GetSizeToFitContents().Height > Height)
+                        SizeToChildren(false, true);
+                }
             }
         }
 
