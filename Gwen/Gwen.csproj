@@ -38,7 +38,8 @@
     <Compile Include="ControlInternal\CategoryHeaderButton.cs" />
     <!-- <Compile Include="ControlInternal\ColorButton.cs" /> -->
     <!-- <Compile Include="ControlInternal\ColorDisplay.cs" /> -->
-    <Compile Include="ControlInternal\DownArrow.cs" />
+    <Compile Include="ControlInternal\DropDownArrow.cs" />
+    <Compile Include="ControlInternal\ComboBoxArrow.cs" />
     <Compile Include="ControlInternal\MenuDivider.cs" />
     <Compile Include="ControlInternal\Modal.cs" />
     <Compile Include="ControlInternal\Resizer.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Controls\MultilineTextBox.cs" />
     <Compile Include="Controls\Property\KeyProperty.cs" />
     <Compile Include="Controls\Property\LabelProperty.cs" />
+    <Compile Include="Controls\Property\ComboBoxProperty.cs" />
     <Compile Include="Controls\MessageBox.cs" />
     <!-- <Compile Include="Controls\ProgressBar.cs" /> -->
     <Compile Include="Controls\PropertyTable.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="ControlInternal\ScrollBarButton.cs" />
     <Compile Include="ControlInternal\Text.cs" />
     <Compile Include="Controls\ScrollBar.cs" />
+    <Compile Include="Controls\DropDownButton.cs" />
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\ProgressBar.cs" />
@@ -102,8 +105,8 @@
     <Compile Include="Controls\Layout\FlowLayout.cs" />
     <Compile Include="Controls\Layout\TableLayout.cs" />
     <Compile Include="Controls\Layout\TableRow.cs" />
-    <!-- <Compile Include="Controls\ListBox.cs" /> -->
-    <!-- <Compile Include="Controls\ListBoxRow.cs" /> -->
+    <Compile Include="Controls\ListBox.cs" />
+    <Compile Include="Controls\ListBoxRow.cs" />
     <Compile Include="Controls\Menu.cs" />
     <Compile Include="Controls\MenuItem.cs" />
     <Compile Include="Controls\MenuStrip.cs" />
