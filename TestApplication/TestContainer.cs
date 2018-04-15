@@ -17,6 +17,7 @@ namespace TestApplication
         // dpi
         // cursors
         // horz scroll respond when hovered to wheel
+        // scrollbars covering borders
         private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
@@ -122,6 +123,8 @@ namespace TestApplication
             var tab = new TabTest(page);
 
             cat = list.Add("Composite controls");
+            page = AddPage(cat, "ListBox");
+            var listbox = new ListBoxTest(page);
 
             page = AddPage(cat, "TreeControl");
             var tree = new TreeTest(page);

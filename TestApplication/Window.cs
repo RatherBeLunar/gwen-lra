@@ -147,19 +147,15 @@ namespace TestApplication
             base.OnLoad(e);
             input = new Gwen.Input.OpenTK(this);
             var renderer = new Gwen.Renderer.OpenTK();
-            skinpng = new Texture(renderer);
             var skinimg = new Bitmap(Image.FromFile("DefaultSkin.png"));
+            // var font = new Bitmap(Image.FromFile("liberation_20_0.png"));
+            // var fontdata = System.IO.File.ReadAllText("liberation_20.fnt");
             var font = new Bitmap(Image.FromFile("gamefont_15_0.png"));
             var fontdata = System.IO.File.ReadAllText("gamefont_15.fnt");
             var colorxml = System.IO.File.ReadAllText("DefaultColors.xml");
-            Gwen.Renderer.OpenTK.LoadTextureInternal(
-                skinpng,
-                skinimg);
+            skinpng = renderer.CreateTexture(skinimg);
 
-            var fontpng = new Texture(renderer);
-            Gwen.Renderer.OpenTK.LoadTextureInternal(
-                fontpng,
-                font);
+            var fontpng = renderer.CreateTexture(font);
 
             var gamefont_15 = new Gwen.Renderer.BitmapFont(
                 renderer,
@@ -169,11 +165,13 @@ namespace TestApplication
             var skin = new Gwen.Skin.TexturedBase(renderer, skinpng, colorxml) { DefaultFont = gamefont_15 };
             // var skin = new Gwen.Skin.Simple(renderer) { DefaultFont = gamefont_15 };
             Canvas = new Canvas(skin);
-            Canvas.SetSize(ClientSize.Width, ClientSize.Height);
+            // Canvas.Scale = 2;
+            Canvas.SetCanvasSize(ClientSize.Width, ClientSize.Height);
             input.Initialize(Canvas);
             TestContainer container = new TestContainer(Canvas);
             font.Dispose();
             skinimg.Dispose();
+            ControlBase.LogLayout = true;
         }
         protected override void OnClosed(EventArgs e)
         {
@@ -182,15 +180,16 @@ namespace TestApplication
             Canvas.Skin.Dispose();
             Canvas.Dispose();
         }
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Canvas.SetCanvasSize(ClientSize.Width, ClientSize.Height);
+        }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             if (_slow && !_steps)
                 return;
             _steps = false;
-            if (Canvas.Size != ClientSize)
-            {
-                Canvas.SetSize(ClientSize.Width, ClientSize.Height);
-            }
             GL.ClearColor(255, 255, 255, 255);
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

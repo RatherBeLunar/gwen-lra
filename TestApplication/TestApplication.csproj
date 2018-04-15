@@ -40,6 +40,7 @@
     <Compile Include="Window.cs" />
     <Compile Include="Tests\ControlTest.cs" />
     <Compile Include="Tests\ButtonTest.cs" />
+    <Compile Include="Tests\ListBoxTest.cs" />
     <Compile Include="Tests\LabelTest.cs" />
     <Compile Include="Tests\NotificationTest.cs" />
     <Compile Include="Tests\ContainerTest.cs" />

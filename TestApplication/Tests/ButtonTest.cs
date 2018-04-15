@@ -1,20 +1,34 @@
 ﻿using System;
 using System.Diagnostics;
+using Gwen;
 using Gwen.Controls;
 namespace TestApplication
 {
     public class ButtonTest : ControlTest
     {
+        private TableLayout _layout;
         public ButtonTest(ControlBase parent) : base(parent)
         {
-            var btn = CreateButton("auto sized button");
-            btn.Tooltip = "With tooltip";
+            Create();
+        }
+        private void Create()
+        {
+
+            _layout = new TableLayout(Parent)
+            {
+                AutoSizeRows = true,
+                Dock = Dock.Fill,
+                ColumnCount = 2,
+                //DrawDebugOutlines = true
+            };
+            var btn = CreateButton("auto sized button (hover me)");
             btn.AutoSizeToContents = true;
-            posy += 50;
-            btn = CreateButton("auto sized padding button");
+            btn.Tooltip = "With tooltip";
+
+            btn = CreateButton("Auto sized padding button");
             btn.Padding = new Gwen.Padding(10, 10, 10, 10);
             btn.AutoSizeToContents = true;
-            posy += 50;
+
             btn = CreateButton("Event Test Button");
             btn.Padding = new Gwen.Padding(10, 10, 10, 10);
             btn.AutoSizeToContents = true;
@@ -34,70 +48,90 @@ namespace TestApplication
             {
                 Console.WriteLine("Released");
             };
-            posy += 50;
             btn = CreateButton("manual sized button");
             btn.Width += 100;
-            posy += 50;
+            btn.AutoSizeToContents = false;
+
             btn.AutoSizeToContents = false;
             btn = CreateButton("disabled");
             btn.IsDisabled = true;
-            btn.Width += 50;
-            posy += 50;
+
             btn = CreateButton("toggle");
             btn.IsToggle = true;
             btn.Toggle();
-            btn.Width += 50;
-            posy += 50;
+
             btn = CreateButton("left aligned button");
-            btn.Width += 50;
-            posy += 50;
+            btn.Width = 150;
             btn.AutoSizeToContents = false;
             btn.Alignment = Gwen.Pos.Left | Gwen.Pos.CenterV;
+
             btn = CreateButton("right align button.");
-            btn.Width += 50;
-            posy += 30;
+            btn.Width = 150;
             btn.Alignment = Gwen.Pos.Right | Gwen.Pos.CenterV;
             btn.AutoSizeToContents = false;
-            Checkbox checkbox = new Checkbox(Parent);
-            checkbox.SetPosition(posx, posy);
-            posy += 30;
-            Checkbox checkedbox = new Checkbox(Parent);
-            checkedbox.SetPosition(posx, posy);
-            checkedbox.IsChecked = true;
-            checkedbox.Text = "checked";
-            posy += 30;
-            Checkbox lcheckbox = new Checkbox(Parent);
-            lcheckbox.Text = "checkbox";
-            lcheckbox.SetPosition(posx, posy);
-            Checkbox disabledlcheckbox = new Checkbox(Parent);
-            disabledlcheckbox.Text = "disabled";
-            disabledlcheckbox.Disable();
-            disabledlcheckbox.SetPosition(posx + 100, posy);
-            disabledlcheckbox = new Checkbox(Parent);
-            disabledlcheckbox.Text = "disabled";
-            disabledlcheckbox.IsChecked = true;
-            disabledlcheckbox.Disable();
-            disabledlcheckbox.SetPosition(posx + 200, posy);
-            posy += 30;
-            RadioButtonGroup group = new RadioButtonGroup(Parent);
-            group.Text = "radio button group";
-            group.SetPosition(posx, posy);
-            group.AddOption("Radio 1").Tooltip = "tooltip 1";
-            group.AddOption("Radio 2").Tooltip = "tooltip 2";
-            var dc = group.AddOption("disabledChecked");
+
+            var row = _layout.CreateRow();
+            btn = new DropDownButton(row.GetCell(0))
+            {
+                Text = "Drop me"
+            };
+            CreateCheckables();
+        }
+        private void CreateCheckables()
+        {
+            var row = _layout.CreateRow();
+            var box = new Checkbox(row.GetCell(0));
+            row = _layout.CreateRow();
+            box = new Checkbox(row.GetCell(0))
+            {
+                Text = "Checked",
+                IsChecked = true
+            };
+            row = _layout.CreateRow();
+            box = new Checkbox(row.GetCell(0))
+            {
+                Text = "Checkbox",
+                IsChecked = false
+            };
+            row = _layout.CreateRow();
+            box = new Checkbox(row.GetCell(0))
+            {
+                Text = "Disabled",
+                IsChecked = false,
+                IsDisabled = true,
+            };
+            box = new Checkbox(row.GetCell(1))
+            {
+                Text = "Disabled",
+                IsChecked = true,
+                IsDisabled = true,
+            };
+            row = _layout.CreateRow();
+            var radiogroup = new RadioButtonGroup(row.GetCell(0));
+            radiogroup.AddOption("Radio 1").Tooltip = "tooltip 1";
+            radiogroup.AddOption("Radio 2").Tooltip = "tooltip 2";
+            var dc = radiogroup.AddOption("disabledChecked");
             dc.IsChecked = true;
             dc.Disable();
-            group.AddOption("disabled").Disable();
-            posy += 100;
+            radiogroup.AddOption("disabled").Disable();
+
+            row = _layout.CreateRow();
+            var radio = new RadioButton(row.GetCell(0))
+            {
+                Text = "ungrouped 1",
+                Dock = Dock.Top
+            }; radio = new RadioButton(row.GetCell(0))
+            {
+                Text = "ungrouped 2",
+                Dock = Dock.Top
+            };
         }
-        private int posx = 0;
-        private int posy = 0;
         private Button CreateButton(string text)
         {
-            Button btn = new Button(Parent);
+            var row = _layout.CreateRow();
+            Button btn = new Button(row.GetCell(0));
+            btn.Dock = Dock.Left;
             btn.Text = text;
-            btn.SetPosition(posx, posy);
-
             return btn;
         }
     }

@@ -29,6 +29,12 @@ namespace TestApplication
             table.Add("text", "val").Tooltip = "Heyy tooltip";
             table.Add("check", new CheckProperty(null));
             table.Add("Key", new KeyProperty(table));
+            var cb = new ComboBoxProperty(table);
+            cb.AddItem("Test");
+            cb.AddItem("auto selected");
+            cb.AddItem("val 3");
+            cb.SetValue("auto selected");
+            table.Add("combo",cb);
         }
     }
 }
