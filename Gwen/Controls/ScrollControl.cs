@@ -109,17 +109,22 @@ namespace Gwen.Controls
         public ScrollControl(ControlBase parent)
             : base(parent)
         {
-            m_VerticalScrollBar = new VerticalScrollBar(null);
-            m_VerticalScrollBar.Dock = Dock.Right;
+            //todo scrollbars currently hide borders of our owner
+            m_VerticalScrollBar = new VerticalScrollBar(null)
+            {
+                Dock = Dock.Right,
+                NudgeAmount = 30,
+            };
             m_VerticalScrollBar.BarMoved += VBarMoved;
             m_CanScrollV = true;
-            m_VerticalScrollBar.NudgeAmount = 30;
 
-            m_HorizontalScrollBar = new HorizontalScrollBar(null);
-            m_HorizontalScrollBar.Dock = Dock.Bottom;
+            m_HorizontalScrollBar = new HorizontalScrollBar(null)
+            {
+                Dock = Dock.Bottom,
+                NudgeAmount = 30,
+            };
             m_HorizontalScrollBar.BarMoved += HBarMoved;
             m_CanScrollH = true;
-            m_HorizontalScrollBar.NudgeAmount = 30;
             PrivateChildren.Add(m_VerticalScrollBar);
             PrivateChildren.Add(m_HorizontalScrollBar);
             m_Panel.Dock = Dock.None;
