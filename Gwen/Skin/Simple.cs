@@ -586,10 +586,8 @@ namespace Gwen.Skin
             else DrawArrowRight(r);
         }
 
-        public override void DrawComboBoxArrow(Controls.ControlBase control, bool hovered, bool depressed, bool open, bool disabled)
+        public override void DrawDropDownArrow(Controls.ControlBase control, bool hovered, bool depressed, bool open, bool disabled)
         {
-            //DrawButton( control.Width, control.Height, depressed, false, true );
-
             m_Renderer.DrawColor = Color.FromArgb(240, 0, 0, 0);
 
             Rectangle r = new Rectangle(control.Width / 2 - 2, control.Height / 2 - 2, 5, 5);

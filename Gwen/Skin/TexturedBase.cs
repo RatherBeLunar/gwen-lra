@@ -638,7 +638,7 @@ namespace Gwen.Skin
                 Textures.Scroller.Button.Disabled[i] = new Bordered(m_Texture, 480, 272 + i * 16, 15, 15, Margin.Two);
             }
 
-            Textures.Input.ListBox.Background = new Bordered(m_Texture, 256, 256, 63, 127, Margin.Eight);
+            Textures.Input.ListBox.Background = new Bordered(m_Texture, 256, 256, 63, 63, Margin.Eight);
             Textures.Input.ListBox.Hovered = new Bordered(m_Texture, 320, 320, 31, 31, Margin.Eight);
             Textures.Input.ListBox.EvenLine = new Bordered(m_Texture, 352, 256, 31, 31, Margin.Eight);
             Textures.Input.ListBox.OddLine = new Bordered(m_Texture, 352, 288, 31, 31, Margin.Eight);
@@ -682,7 +682,7 @@ namespace Gwen.Skin
             Textures.Input.Slider.V.Down = new Single(m_Texture, 432, 64, 15, 15);
             Textures.Input.Slider.V.Disabled = new Single(m_Texture, 432, 80, 15, 15);
 
-            Textures.CategoryList.Outer = new Bordered(m_Texture, 256, 256, 63, 127, Margin.Eight);
+            Textures.CategoryList.Outer = new Bordered(m_Texture, 256, 320, 63, 63, Margin.Eight);
             Textures.CategoryList.Inner = new Bordered(m_Texture, 256 + 64, 384, 63, 63, new Margin(8, 21, 8, 8));
             Textures.CategoryList.Header = new Bordered(m_Texture, 320, 352, 63, 31, Margin.Eight);
         }
@@ -795,28 +795,33 @@ namespace Gwen.Skin
 
             Textures.Input.ComboBox.Normal.Draw(Renderer, control.RenderBounds);
         }
-
-        public override void DrawComboBoxArrow(Controls.ControlBase control, bool hovered, bool down, bool open, bool disabled)
+        public override void DrawDropDownArrow(Controls.ControlBase control, bool hovered, bool down, bool open, bool disabled)
         {
+            var bounds = control.RenderBounds;
+            bounds.Height = 15;
+            bounds.Y += (control.RenderBounds.Height / 2) - (bounds.Height / 2);
+            bounds.Width = 15;
+            bounds.X += (control.RenderBounds.Width / 2) - (bounds.Width/2);
+
             if (disabled)
             {
-                Textures.Input.ComboBox.Button.Disabled.Draw(Renderer, control.RenderBounds);
+                Textures.Input.ComboBox.Button.Disabled.Draw(Renderer, bounds);
                 return;
             }
 
             if (down || open)
             {
-                Textures.Input.ComboBox.Button.Down.Draw(Renderer, control.RenderBounds);
+                Textures.Input.ComboBox.Button.Down.Draw(Renderer, bounds);
                 return;
             }
 
             if (hovered)
             {
-                Textures.Input.ComboBox.Button.Hover.Draw(Renderer, control.RenderBounds);
+                Textures.Input.ComboBox.Button.Hover.Draw(Renderer, bounds);
                 return;
             }
 
-            Textures.Input.ComboBox.Button.Normal.Draw(Renderer, control.RenderBounds);
+            Textures.Input.ComboBox.Button.Normal.Draw(Renderer, bounds);
         }
 
         public override void DrawGroupBox(Controls.ControlBase control, int textStart, int textHeight, int textWidth)

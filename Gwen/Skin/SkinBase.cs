@@ -192,14 +192,12 @@ namespace Gwen.Skin
         {
         }
 
+        public virtual void DrawDropDownArrow(Controls.ControlBase control, bool hovered, bool down, bool open, bool disabled)
+        {
+        }
         public virtual void DrawComboBox(Controls.ControlBase control, bool down, bool isMenuOpen)
         {
         }
-
-        public virtual void DrawComboBoxArrow(Controls.ControlBase control, bool hovered, bool depressed, bool open, bool disabled)
-        {
-        }
-
         public virtual void DrawKeyboardHighlight(Controls.ControlBase control, Rectangle rect, int offset)
         {
         }
