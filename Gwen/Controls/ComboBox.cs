@@ -59,7 +59,7 @@ namespace Gwen.Controls
             m_Menu.IsHidden = true;
             m_Menu.IconMarginDisabled = true;
             m_Menu.IsTabable = false;
-            DownArrow arrow = new DownArrow(this);
+            ComboBoxArrow arrow = new ComboBoxArrow(this);
             m_Button = arrow;
 
             Alignment = Pos.Left | Pos.CenterV;
@@ -125,7 +125,7 @@ namespace Gwen.Controls
         {
             if (!IsDisabled)
             {
-                if (null == m_Menu) return;
+                if (null == m_Menu || m_Menu.Children.Count == 0) return;
 
                 m_Menu.Parent = GetCanvas();
                 m_Menu.IsHidden = false;
