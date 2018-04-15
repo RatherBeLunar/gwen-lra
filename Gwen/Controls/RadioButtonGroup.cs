@@ -35,7 +35,7 @@ namespace Gwen.Controls
         /// Invoked when the selected option has changed.
         /// </summary>
         public event GwenEventHandler<ItemSelectedEventArgs> SelectionChanged;
-        
+
         protected override Margin PanelMargin
         {
             get
@@ -104,9 +104,10 @@ namespace Gwen.Controls
                 if (child is RadioButton rb)
                 {
                     if (rb == chked)
+                    {
                         m_Selected = rb;
-                    else
-                        rb.IsChecked = false;
+                        break;
+                    }
                 }
             }
 

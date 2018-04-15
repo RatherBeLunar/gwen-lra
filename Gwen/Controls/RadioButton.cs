@@ -68,6 +68,20 @@ namespace Gwen.Controls
             m_Label.Clicked += delegate (ControlBase Control, ClickedEventArgs args) { m_RadioButton.Press(Control); };
             m_Label.IsTabable = false;
             AutoSizeToContents = true;
+            Checked += (o, e) =>
+            {
+                if (Parent != null)
+                {
+                    foreach (var child in Parent.Children)
+                    {
+                        if (child is RadioButton rb)
+                        {
+                            if (rb != this)
+                                rb.IsChecked = false;
+                        }
+                    }
+                }
+            };
         }
 
         protected override void ProcessLayout(Size size)
