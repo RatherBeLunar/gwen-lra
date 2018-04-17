@@ -40,10 +40,8 @@ namespace Gwen.Controls
             Container.Margin = new Margin(0, 40, 0, 5);
             Container.Dock = Dock.Bottom;
             Container.AutoSizeToContents = true;
-            m_Panel.Layout();
             m_Panel.SizeToChildren(true, true);
             SizeToChildren(true, true);
-            Layout();
             m_Button = new Button(Container);
             m_Button.Text = "Okay";
             m_Button.Clicked += (o, e) =>
