@@ -33,7 +33,17 @@ namespace Gwen.Controls
             get { return m_CheckBox.IsChecked ? "1" : "0"; }
             set { base.Value = value; }
         }
-
+        public bool IsChecked
+        {
+            get
+            {
+                return m_CheckBox.IsChecked;
+            }
+            set
+            {
+                m_CheckBox.IsChecked = value;
+            }
+        }
         #endregion Properties
 
         #region Constructors
