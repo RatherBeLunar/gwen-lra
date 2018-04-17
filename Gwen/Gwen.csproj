@@ -60,6 +60,7 @@
     <Compile Include="Controls\EventArguments\ItemSelectedEventArgs.cs" />
     <Compile Include="Controls\MultilineTextBox.cs" />
     <Compile Include="Controls\Property\KeyProperty.cs" />
+    <Compile Include="Controls\Property\NumberProperty.cs" />
     <Compile Include="Controls\Property\LabelProperty.cs" />
     <Compile Include="Controls\Property\ComboBoxProperty.cs" />
     <Compile Include="Controls\MessageBox.cs" />
