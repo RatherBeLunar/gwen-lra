@@ -47,6 +47,7 @@ namespace Gwen.Controls
         public PropertyTable(ControlBase parent, int StartingBarPosition = 80)
             : base(parent)
         {
+            Width = StartingBarPosition + 50;
             m_SplitterBar = new SplitterBar(null);
             m_SplitterBar.SetPosition(StartingBarPosition, 0);
             m_SplitterBar.Cursor = Cursors.SizeWE;
@@ -54,7 +55,6 @@ namespace Gwen.Controls
             m_SplitterBar.ShouldDrawBackground = false;
             PrivateChildren.Add(m_SplitterBar);
             m_Panel.AutoSizeToContents = true;
-            Width = StartingBarPosition + 50;
         }
 
         #endregion Constructors
@@ -69,7 +69,10 @@ namespace Gwen.Controls
         /// <returns>Newly created row.</returns>
         public PropertyRow Add(string label, string value = "")
         {
-            return Add(label, new TextProperty(this), value);
+            var tx = new TextProperty(this);
+            var ret = Add(label, tx);
+            tx.Value = value;
+            return ret;
         }
 
         /// <summary>
@@ -77,17 +80,13 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="label">Property name.</param>
         /// <param name="prop">Property control.</param>
-        /// <param name="value">Initial value.</param>
         /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, PropertyBase prop, string value = "")
+        public PropertyRow Add(string label, PropertyBase prop)
         {
             PropertyRow row = new PropertyRow(this, prop);
             row.Dock = Dock.Top;
             row.Label = label;
             row.ValueChanged += OnRowValueChanged;
-
-            prop.SetValue(value, true);
-
             m_SplitterBar.BringToFront();
             return row;
         }
