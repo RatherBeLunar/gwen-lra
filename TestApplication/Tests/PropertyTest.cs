@@ -10,7 +10,7 @@ namespace TestApplication
         {
             PropertyTable table = new PropertyTable(parent);
             table.AutoSizeToContents = true;
-            table.Width=100;
+            table.Width = 100;
             table.Height = 100;
             InitTable(table);
             PropertyTree tree = new PropertyTree(parent);
@@ -34,7 +34,9 @@ namespace TestApplication
             cb.AddItem("auto selected");
             cb.AddItem("val 3");
             cb.SetValue("auto selected");
-            table.Add("combo",cb);
+            table.Add("combo", cb);
+            NumberProperty num = new NumberProperty(table) { Min = -10, Max = 10, Value = "3" };
+            table.Add("Number:", num);
         }
     }
 }

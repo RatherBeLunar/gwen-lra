@@ -18,6 +18,7 @@ namespace TestApplication
         // cursors
         // horz scroll respond when hovered to wheel
         // scrollbars covering borders
+        // we have to let Layout(force) work on hidden controls, (window controls start hidden) but its not right (example a collapsed treenode)
         private ControlBase _focus = null;
         public TestContainer(ControlBase parent) : base(parent)
         {
