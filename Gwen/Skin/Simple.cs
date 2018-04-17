@@ -174,7 +174,7 @@ namespace Gwen.Skin
         public override void DrawNotification(Controls.ControlBase control, float fade)
         {
             //todo
-            DrawPanel(control);
+            DrawPanel(control, 255);
         }
         public override void DrawRadioButton(Controls.ControlBase control, bool selected, bool depressed)
         {

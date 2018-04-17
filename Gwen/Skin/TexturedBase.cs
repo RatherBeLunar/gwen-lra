@@ -741,9 +741,9 @@ namespace Gwen.Skin
                     Textures.CheckBox.Active.Normal.Draw(Renderer, control.RenderBounds);
             }
         }
-        public override void DrawPanel(Controls.ControlBase control)
+        public override void DrawPanel(Controls.ControlBase control, byte panelalpha)
         {
-            Textures.Panel.Normal.Draw(Renderer, control.RenderBounds);
+            Textures.Panel.Normal.Draw(Renderer, control.RenderBounds, Color.FromArgb(panelalpha, Color.White));
         }
         public override void DrawNotification(Controls.ControlBase control, float fade)
         {
@@ -801,7 +801,7 @@ namespace Gwen.Skin
             bounds.Height = 15;
             bounds.Y += (control.RenderBounds.Height / 2) - (bounds.Height / 2);
             bounds.Width = 15;
-            bounds.X += (control.RenderBounds.Width / 2) - (bounds.Width/2);
+            bounds.X += (control.RenderBounds.Width / 2) - (bounds.Width / 2);
 
             if (disabled)
             {

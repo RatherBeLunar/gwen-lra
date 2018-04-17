@@ -8,6 +8,22 @@ namespace Gwen.Controls
     /// </summary>
     public class Panel : ControlBase
     {
+        private byte _backgroundalpha = 255;
+        public byte BackgroundAlpha
+        {
+            get
+            {
+                return _backgroundalpha;
+            }
+            set
+            {
+                if (_backgroundalpha != value)
+                {
+                    _backgroundalpha = value;
+                    Redraw();
+                }
+            }
+        }
 
         #region Constructors
         /// <summary>
@@ -32,7 +48,7 @@ namespace Gwen.Controls
         protected override void Render(Skin.SkinBase skin)
         {
             if (ShouldDrawBackground)
-                skin.DrawPanel(this);
+                skin.DrawPanel(this, BackgroundAlpha);
         }
 
         #endregion Methods

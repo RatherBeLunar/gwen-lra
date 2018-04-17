@@ -258,26 +258,26 @@ namespace Gwen.Skin
 
             Renderer.DrawFilledRect(new Rectangle(14 + 7, labelHeight + 1, 1, lastBranch + halfWay - labelHeight));
         }
-        public virtual void DrawPanel(Controls.ControlBase control)
+        public virtual void DrawPanel(Controls.ControlBase control, byte panelapha)
         {
-            Renderer.DrawColor = Colors.Background;
+            Renderer.DrawColor = Color.FromArgb(panelapha, Colors.Background);
             Renderer.DrawFilledRect(control.RenderBounds);
-            Renderer.DrawColor = Colors.BackgroundHighlight;
+            Renderer.DrawColor = Color.FromArgb(panelapha, Colors.BackgroundHighlight);
             Renderer.DrawLinedRect(control.RenderBounds);
         }
 
         public virtual void DrawNotification(Controls.ControlBase control, float fade)
         {
         }
-        
+
         public virtual void DrawPropertyRow(Controls.ControlBase control, int iWidth, bool bBeingEdited, bool hovered)
         {
             Rectangle rect = control.RenderBounds;
             bool drawbox = true;
             if (bBeingEdited)
                 m_Renderer.DrawColor = Colors.Accent;
-            else if (hovered)
-                m_Renderer.DrawColor = Colors.Accent;
+            // else if (hovered)
+            // m_Renderer.DrawColor = Colors.ForegroundInactive;
             else
             {
                 drawbox = false;
