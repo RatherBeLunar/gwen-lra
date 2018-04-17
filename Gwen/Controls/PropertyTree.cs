@@ -15,7 +15,6 @@ namespace Gwen.Controls
         public PropertyTree(ControlBase parent)
             : base(parent)
         {
-            m_Panel.Padding = new Padding(1,1,1,1);
         }
 
         /// <summary>
@@ -23,11 +22,11 @@ namespace Gwen.Controls
         /// </summary>
         /// <param name="label">Node label.</param>
         /// <returns>Newly created control</returns>
-        public PropertyTable Add(string label)
+        public PropertyTable Add(string label, int startingbarposition = 80)
         {
             PropertyTreeNode node = new PropertyTreeNode(this);
             node.Text = label;
-            PropertyTable props = new PropertyTable(node);
+            PropertyTable props = new PropertyTable(node, startingbarposition);
             props.Dock = Dock.Fill;
             props.AutoSizeToContents = true;
             node.Table = props;
