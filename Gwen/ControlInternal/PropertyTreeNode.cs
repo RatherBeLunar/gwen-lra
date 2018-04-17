@@ -28,5 +28,15 @@ namespace Gwen.ControlInternal
         {
             skin.DrawPropertyTreeNode(this, m_Panel.X, m_Panel.Y);
         }
+        protected override void OnClickName(ControlBase control, EventArgs args)
+        {
+            if (!m_ToggleButton.IsVisible)
+                return;
+            m_ToggleButton.Toggle();
+        }
+        protected override void OnDoubleClickName(ControlBase control, EventArgs args)
+        {
+            //ignored
+        }
     }
 }

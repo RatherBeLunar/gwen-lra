@@ -25,7 +25,7 @@ namespace Gwen.ControlInternal
 
 				else if (m_PropertyRow != null && m_PropertyRow.IsHovered)
 				{
-					return Skin.Colors.Text.Highlight;
+					return Skin.Colors.Text.Contrast;
 				}
 				else
 				{
