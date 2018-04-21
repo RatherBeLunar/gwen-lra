@@ -290,7 +290,8 @@ namespace Gwen.Controls
 
             InputHandler.OnMouseMoved(this, x, y, dx, dy);
 
-            if (InputHandler.HoveredControl == null) return false;
+            if (InputHandler.HoveredControl == null)
+                return InputHandler.MouseCaptured;
             if (InputHandler.HoveredControl == this) return false;
             if (InputHandler.HoveredControl.GetCanvas() != this) return false;
 

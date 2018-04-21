@@ -24,7 +24,7 @@ namespace Gwen.Input
                 return (int)((Platform.Neutral.GetTimeInSeconds() - m_TooltipCounter) * 1000);
             }
         }
-
+        public static bool MouseCaptured = false;
         /// <summary>
         /// Control currently hovered by mouse.
         /// </summary>
@@ -254,7 +254,8 @@ namespace Gwen.Input
 
             try
             {
-                if (null == HoveredControl) return false;
+                if (HoveredControl == null)
+                    return MouseCaptured;
                 if (HoveredControl.GetCanvas() != canvas) return false;
                 if (!HoveredControl.IsVisible) return false;
                 if (HoveredControl == canvas) return false;
@@ -381,6 +382,7 @@ namespace Gwen.Input
         {
             Controls.ControlBase hovered;
 
+            bool mousecaptured = false;
             if (MouseFocus != null && MouseFocus.GetCanvas() == inCanvas)
             {
                 hovered = MouseFocus;
@@ -389,9 +391,18 @@ namespace Gwen.Input
             {
                 hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
             }
-            if (hovered != null && (hovered.IsDisabled || !hovered.MouseInputEnabled))
-                hovered = null;
-
+            if (hovered != null)
+            {
+                if (hovered.IsDisabled)
+                {
+                    mousecaptured = true;
+                    hovered = null;
+                }
+                else if (!hovered.MouseInputEnabled)
+                    hovered = null;
+                else
+                    mousecaptured = true;
+            }
             if (HoveredControl != hovered)
             {
                 if (HoveredControl != null)
@@ -411,6 +422,7 @@ namespace Gwen.Input
                 }
                 HoveredControl = hovered;
             }
+            MouseCaptured = mousecaptured;
         }
 
         private static void FindKeyboardFocus(Controls.ControlBase control)
