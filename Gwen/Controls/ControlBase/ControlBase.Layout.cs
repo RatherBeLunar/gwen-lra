@@ -621,14 +621,12 @@ namespace Gwen.Controls
             if (RestrictToParent && (Parent != null))
             {
                 ControlBase parent = Parent;
-                if (x - Margin.Left < parent.Padding.Left)
-                    x = parent.Padding.Left + Margin.Left;
-                if (y - Margin.Top < parent.Padding.Top)
-                    y = parent.Padding.Top + Margin.Top;
-                if (x + Width + Margin.Right > parent.Width - parent.Padding.Right)
-                    x = parent.Width - parent.Padding.Right - Width - Margin.Right;
-                if (y + Height + Margin.Bottom > parent.Height - parent.Padding.Bottom)
-                    y = parent.Height - parent.Padding.Bottom - Height - Margin.Bottom;
+                x = Util.Clamp(x,
+                    parent.Padding.Left + Margin.Left,
+                    parent.Width - parent.Padding.Right - (Width + Margin.Right));
+                y = Util.Clamp(y,
+                    parent.Padding.Top + Margin.Top,
+                    parent.Height - parent.Padding.Bottom - (Height + Margin.Bottom));
             }
 
             SetBounds(x, y, Width, Height);
