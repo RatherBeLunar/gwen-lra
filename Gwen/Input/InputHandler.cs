@@ -419,6 +419,7 @@ namespace Gwen.Input
                 if (hovered != null)
                 {
                     hovered.InputMouseEntered();
+                    hovered.UpdateCursor();
                 }
                 HoveredControl = hovered;
             }
