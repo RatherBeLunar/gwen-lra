@@ -69,8 +69,26 @@ namespace TestApplication
             btn.Text = "Open Messagebox";
             btn.Clicked += (sender, arguments) =>
             {
-                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, "+filler, "Caption", true);
+                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, " + filler, "Caption", MessageBox.Buttons.OkCancel);
                 filler += ",wrap filler ";
+                // mb.ShowCentered();
+            };
+            btn = new Button(parent);
+            btn.Y += 180;
+            btn.Text = "Open Messagebox y/n/c";
+            btn.Clicked += (sender, arguments) =>
+            {
+                MessageBox.Show(Parent.GetCanvas(), "This is a test for a y/n messagebox, " + filler, "Caption", MessageBox.Buttons.YesNoCancel);
+                filler += ",wrap filler ";
+                // mb.ShowCentered();
+            };
+            btn = new Button(parent);
+            btn.Y += 210;
+            btn.Text = "Open Custom Mbox";
+            btn.Clicked += (sender, arguments) =>
+            {
+                var mb = MessageBox.Show(Parent.GetCanvas(), "Do you agree?", "Caption", MessageBox.Buttons.YesNoCancel);
+                mb.RenameButtonsYN("Yeah", "I DO NOT AGREE","FUCK");
                 // mb.ShowCentered();
             };
         }
