@@ -201,9 +201,14 @@ namespace Gwen.Controls
                 }
             }
         }
-        public void Close()
+        /// <summary>
+        /// Closes the window. Returns true if this window was closed
+        /// </summary>
+        public virtual bool Close()
         {
+            bool prev = IsHidden;
             CloseButtonPressed(this, EventArgs.Empty);
+            return IsHidden && IsHidden != prev;
         }
 
         /// <summary>
