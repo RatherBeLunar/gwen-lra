@@ -17,9 +17,9 @@ namespace Gwen.Controls
         public DialogResult Result { get; set; }
         public string Text { get; private set; }
         private ButtonType _buttons;
-        public static MessageBox Show(Canvas canvas, string text, string title, bool cancancel = false)
+        public static MessageBox Show(Canvas canvas, string text, string title)
         {
-            var ret = new MessageBox(canvas, text, title, cancancel ? ButtonType.OkCancel : ButtonType.Ok);
+            var ret = new MessageBox(canvas, text, title, ButtonType.Ok);
             ret.ShowCentered();
             return ret;
         }
