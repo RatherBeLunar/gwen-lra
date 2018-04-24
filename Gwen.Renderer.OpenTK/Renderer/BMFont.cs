@@ -9,6 +9,13 @@ namespace Gwen.Renderer
 {
     public class BitmapFont : Gwen.Font
     {
+        public override int LineHeight
+        {
+            get
+            {
+                return fontdata.LineHeight;
+            }
+        }
         public BMFont fontdata;
         public Texture texture;
         public BitmapFont(RendererBase renderer, string bmfont, Texture tx)

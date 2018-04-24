@@ -31,6 +31,7 @@ namespace Gwen
         /// This should be set by the renderer if it tries to use a font where it's null.
         /// </summary>
         public object RendererData { get; set; }
+        public virtual int LineHeight => Size;
 
         /// <summary>
         /// This is the real font size, after it's been scaled by Renderer.Scale()
