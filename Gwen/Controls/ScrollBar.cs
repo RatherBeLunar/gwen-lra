@@ -53,9 +53,13 @@ namespace Gwen.Controls
             {
                 if (m_ContentSize != value)
                 {
-                    var unscaled = m_ScrollAmount * (m_ContentSize - ViewableContentSize);
-                    m_ScrollAmount = Util.Clamp(unscaled / (value - ViewableContentSize), 0, 1);
-
+                    if (value == ViewableContentSize)
+                        m_ScrollAmount = 0;
+                    else
+                    {
+                        var unscaled = m_ScrollAmount * (m_ContentSize - ViewableContentSize);
+                        m_ScrollAmount = Util.Clamp(unscaled / (value - ViewableContentSize), 0, 1);
+                    }
                     Invalidate();
                 }
                 m_ContentSize = value;
