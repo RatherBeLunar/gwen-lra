@@ -16,32 +16,37 @@ namespace Gwen.Controls
         /// <param name="parent">Parent control.</param>
         public LabelProperty(Gwen.Controls.ControlBase parent) : base(parent)
         {
-            m_text = new Gwen.Controls.Label(this);
-            var marg = m_text.Margin;
-            marg.Left = 2;
-            m_text.Margin = marg;
-            m_text.Dock = Dock.Fill;
-            m_text.ShouldDrawBackground = false;
+            m_text = new Gwen.Controls.Label(this)
+            {
+                Dock = Dock.Fill,
+                ShouldDrawBackground = false,
+                AutoSizeToContents = true,
+                Alignment = Pos.CenterV | Pos.Left,
+                TextPadding = new Padding(2, 2, 2, 2),
+            };
+            AutoSizeToContents = true;
         }
-        
+
         /// <summary>
         /// Property value.
         /// </summary>
         public override string Value
         {
             get { return m_text.Text; }
-            set { base.Value = value;
-                m_text.SetText(value); }
+            set
+            {
+                base.Value = value;
+                m_text.SetText(value);
+            }
         }
         protected override void Render(SkinBase skin)
         {
-            skin.Renderer.DrawColor = System.Drawing.Color.LightGray;
-            var r = this.RenderBounds;
-            r.X += 1;
-            r.Y += 1;
-            r.Width -= 2;
-            r.Height -= 2;
-            skin.Renderer.DrawFilledRect(r);
+            if (ShouldDrawBackground)
+            {
+                skin.Renderer.DrawColor = Skin.Colors.ForegroundHighlight;
+                var r = this.RenderBounds;
+                skin.Renderer.DrawFilledRect(r);
+            }
             base.Render(skin);
         }
         /// <summary>

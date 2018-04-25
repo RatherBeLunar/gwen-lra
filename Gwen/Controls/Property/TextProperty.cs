@@ -20,6 +20,7 @@ namespace Gwen.Controls
             m_TextBox.Dock = Dock.Fill;
             m_TextBox.ShouldDrawBackground = false;
             m_TextBox.TextChanged += OnValueChanged;
+            AutoSizeToContents = false;
         }
 
         public override void Disable()

@@ -97,10 +97,12 @@ namespace Gwen.Controls
         {
             Padding = Padding.One;
             m_Spinner = new Spinner(this);
+            m_Spinner.MinimumSize = m_Spinner.Size;
             this.Height = m_Spinner.Height;
             m_Spinner.Dock = Dock.Fill;
             m_Spinner.ShouldDrawBackground = false;
             m_Spinner.ValueChanged += OnValueChanged;
+            AutoSizeToContents = true;
         }
 
         public override void Disable()

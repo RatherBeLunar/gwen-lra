@@ -14,6 +14,7 @@ namespace Gwen.Controls
         public PropertyBase(Gwen.Controls.ControlBase parent) : base(parent)
         {
             Height = 17;
+            Dock = Dock.Fill;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace Gwen.Controls
         /// <param name="fireEvents">Determines whether to fire "value changed" event.</param>
         public virtual void SetValue(string value, bool fireEvents = false)
         {
-            
+
         }
     }
 }

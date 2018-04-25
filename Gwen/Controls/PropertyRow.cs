@@ -76,12 +76,13 @@ namespace Gwen.Controls
             m_Label.AutoSizeToContents = false;
 
             m_Property = prop;
+            m_Property.Dock = Dock.Fill;
             m_Property.Parent = this;
-            // m_Property.Dock = Dock.Left;
+            m_Property.Margin = new Margin(1, 0, 0, 1);
             m_Property.ValueChanged += OnValueChanged;
-            m_Property.AutoSizeToContents = false;
             m_Property.ToolTipProvider = false;
             SizeToChildren(false, true);
+            AutoSizeToContents = true;
         }
 
         #endregion Constructors
@@ -91,13 +92,11 @@ namespace Gwen.Controls
         protected override void ProcessLayout(System.Drawing.Size size)
         {
             PropertyTable parent = Parent as PropertyTable;
-            if (null == parent) return;
-
-            // m_Label.SetBounds(2, 2, parent.SplitWidth, Height - 2);
-            m_Label.Width = parent.SplitWidth;
-            // m_Property.Width = parent.Width - parent.SplitWidth;
+            if (parent != null)
+            {
+                m_Label.Width = parent.SplitWidth;
+            }
             base.ProcessLayout(size);
-            m_Property.SetBounds(m_Label.Right + m_Label.Margin.Right, 0, parent.Width - (m_Label.Right + m_Label.Margin.Right), Height);
         }
 
         protected virtual void OnValueChanged(ControlBase control, EventArgs args)

@@ -51,6 +51,8 @@ namespace Gwen.Controls
             m_ComboBox.Dock = Dock.Fill;
             m_ComboBox.ShouldDrawBackground = false;
             m_ComboBox.ItemSelected += OnValueChanged;
+            m_ComboBox.AutoSizeToContents = true;
+            AutoSizeToContents = false;
         }
         public MenuItem AddItem(string text, string name = "", object userdata = null)
         {

@@ -90,22 +90,6 @@ namespace Gwen.Controls
             m_SplitterBar.BringToFront();
             return row;
         }
-        /// <summary>
-        /// Adds a new property row.
-        /// </summary>
-        /// <param name="label">Property name.</param>
-        /// <param name="prop">Property control.</param>
-        /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, KeyProperty prop)
-        {
-            PropertyRow row = new PropertyRow(this, prop);
-            row.Dock = Dock.Top;
-            row.Label = label;
-            row.ValueChanged += OnRowValueChanged;
-
-            m_SplitterBar.BringToFront();
-            return row;
-        }
 
 
         /// <summary>
@@ -132,7 +116,7 @@ namespace Gwen.Controls
         public override Size GetSizeToFitContents()
         {
             var ret = base.GetSizeToFitContents();
-            ret.Width = m_SplitterBar.X + 50;
+            ret.Width = Math.Max(m_SplitterBar.X + 50, ret.Width);
             return ret;
         }
 
