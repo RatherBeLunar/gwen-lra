@@ -69,7 +69,7 @@ namespace TestApplication
             btn.Text = "Open Messagebox";
             btn.Clicked += (sender, arguments) =>
             {
-                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, " + filler, "Caption", MessageBox.Buttons.OkCancel);
+                MessageBox.Show(Parent.GetCanvas(), "This is a test for a messagebox, " + filler, "Caption", MessageBox.ButtonType.OkCancel);
                 filler += ",wrap filler ";
                 // mb.ShowCentered();
             };
@@ -78,7 +78,7 @@ namespace TestApplication
             btn.Text = "Open Messagebox y/n/c";
             btn.Clicked += (sender, arguments) =>
             {
-                MessageBox.Show(Parent.GetCanvas(), "This is a test for a y/n messagebox, " + filler, "Caption", MessageBox.Buttons.YesNoCancel);
+                MessageBox.Show(Parent.GetCanvas(), "This is a test for a y/n messagebox, " + filler, "Caption", MessageBox.ButtonType.YesNoCancel);
                 filler += ",wrap filler ";
                 // mb.ShowCentered();
             };
@@ -87,7 +87,7 @@ namespace TestApplication
             btn.Text = "Open Custom Mbox";
             btn.Clicked += (sender, arguments) =>
             {
-                var mb = MessageBox.Show(Parent.GetCanvas(), "Do you agree?", "Caption", MessageBox.Buttons.YesNoCancel);
+                var mb = MessageBox.Show(Parent.GetCanvas(), "Do you agree?", "Caption", MessageBox.ButtonType.YesNoCancel);
                 mb.RenameButtonsYN("Yeah", "I DO NOT AGREE","FUCK");
                 // mb.ShowCentered();
             };

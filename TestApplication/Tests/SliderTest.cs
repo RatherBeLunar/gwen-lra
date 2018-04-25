@@ -56,7 +56,6 @@ namespace TestApplication
         {
             table.Add("text", "val").Tooltip = "Heyy tooltip";
             table.Add("check", new CheckProperty(null));
-            table.Add("Key", new KeyProperty(table));
         }
     }
 }

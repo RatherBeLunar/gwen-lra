@@ -26,9 +26,13 @@ namespace TestApplication
         }
         private void InitTable(PropertyTable table)
         {
-            table.Add("text", "val").Tooltip = "Heyy tooltip";
+            table.Add("text", "textbox").Tooltip = "Heyy tooltip";
+            LabelProperty lab = new LabelProperty(null)
+            {
+                Value = "Uneditable label",
+            };
+            table.Add("Label", lab);
             table.Add("check", new CheckProperty(null));
-            table.Add("Key", new KeyProperty(table));
             var cb = new ComboBoxProperty(table);
             cb.AddItem("Test");
             cb.AddItem("auto selected");
