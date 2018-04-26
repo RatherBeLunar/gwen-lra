@@ -74,6 +74,19 @@ namespace Gwen.Controls
             tx.Value = value;
             return ret;
         }
+        /// <summary>
+        /// Adds a new label property row.
+        /// </summary>
+        /// <param name="label">Property name.</param>
+        /// <param name="value">Initial value.</param>
+        /// <returns>Newly created row.</returns>
+        public PropertyRow AddLabel(string label, string value)
+        {
+            var tx = new LabelProperty(this);
+            var ret = Add(label, tx);
+            tx.Value = value;
+            return ret;
+        }
 
         /// <summary>
         /// Adds a new property row.
