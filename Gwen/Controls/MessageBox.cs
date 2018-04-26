@@ -17,15 +17,19 @@ namespace Gwen.Controls
         public DialogResult Result { get; set; }
         public string Text { get; private set; }
         private ButtonType _buttons;
-        public static MessageBox Show(Canvas canvas, string text, string title)
+        public static MessageBox Show(Canvas canvas, string text, string title, bool modal = true, bool dim = false)
         {
             var ret = new MessageBox(canvas, text, title, ButtonType.Ok);
+            if (modal)
+                ret.MakeModal(dim);
             ret.ShowCentered();
             return ret;
         }
-        public static MessageBox Show(Canvas canvas, string text, string title, ButtonType buttons)
+        public static MessageBox Show(Canvas canvas, string text, string title, ButtonType buttons, bool modal = true, bool dim = false)
         {
             var ret = new MessageBox(canvas, text, title, buttons);
+            if (modal)
+                ret.MakeModal(dim);
             ret.ShowCentered();
             return ret;
         }
