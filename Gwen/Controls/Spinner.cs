@@ -79,6 +79,7 @@ namespace Gwen.Controls
             }
             set
             {
+                value = Math.Round(value, 2);
                 if (value < m_Min) value = m_Min;
                 if (value > m_Max) value = m_Max;
                 if (value != m_Value)
