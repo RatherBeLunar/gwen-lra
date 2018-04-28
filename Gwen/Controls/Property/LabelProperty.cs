@@ -39,6 +39,17 @@ namespace Gwen.Controls
                 m_text.SetText(value);
             }
         }
+        public Font Font
+        {
+            get
+            {
+                return m_text.Font;
+            }
+            set
+            {
+                m_text.Font = value;
+            }
+        }
         protected override void Render(SkinBase skin)
         {
             if (ShouldDrawBackground)
