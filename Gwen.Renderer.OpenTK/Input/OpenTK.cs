@@ -8,7 +8,7 @@ namespace Gwen.Input
     public class OpenTK
     {
         #region Properties
-
+        public bool MouseCaptured => InputHandler.MouseCaptured;
         private bool m_AltGr = false;
         private Canvas m_Canvas = null;
 

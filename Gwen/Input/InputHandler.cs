@@ -400,7 +400,7 @@ namespace Gwen.Input
                 }
                 else if (!hovered.MouseInputEnabled)
                     hovered = null;
-                else
+                else if (hovered != inCanvas)
                     mousecaptured = true;
             }
             if (HoveredControl != hovered)
