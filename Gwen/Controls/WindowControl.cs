@@ -246,7 +246,7 @@ namespace Gwen.Controls
                 m_Modal = null;
             }
 
-            if (m_DeleteOnClose)
+            if (m_DeleteOnClose && Parent != null)
             {
                 Parent.RemoveChild(this, true);
             }
