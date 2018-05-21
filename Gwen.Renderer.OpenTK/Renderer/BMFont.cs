@@ -335,6 +335,10 @@ namespace Gwen.Renderer
             {
                 widths.Clear();
                 var wrapped = WrapLine(line, maxpx, widths);
+                if (wrapped.Count == 0)
+                {
+                    wrapped.Add("");
+                }
                 ret.AddRange(wrapped);
             }
             return ret;
