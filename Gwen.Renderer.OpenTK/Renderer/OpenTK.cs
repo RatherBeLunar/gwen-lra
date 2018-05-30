@@ -341,9 +341,9 @@ namespace Gwen.Renderer
         /// Create a texture from the specified bitmap.
         /// </summary>
         public override Texture CreateTexture(Bitmap bmp)
-        { 
+        {
             Texture t = new Texture(this);
-            LoadTextureInternal(t,bmp);
+            LoadTextureInternal(t, bmp);
             return t;
         }
         public override void LoadTexture(Texture t)
@@ -582,44 +582,37 @@ namespace Gwen.Renderer
             }
 
             int vertexIndex = m_VertNum;
-            m_Vertices[vertexIndex].x = (short)rect.X;
-            m_Vertices[vertexIndex].y = (short)rect.Y;
-            m_Vertices[vertexIndex].u = u1;
-            m_Vertices[vertexIndex].v = v1;
-            m_Vertices[vertexIndex].r = m_Color.R;
-            m_Vertices[vertexIndex].g = m_Color.G;
-            m_Vertices[vertexIndex].b = m_Color.B;
-            m_Vertices[vertexIndex].a = m_Color.A;
+            short rectw = (short)rect.Width;
+            short recth = (short)rect.Height;
+            var first = vertexIndex;
+            m_Vertices[vertexIndex] = new Vertex
+            {
+                x = (short)rect.X,
+                y = (short)rect.Y,
+                u = u1,
+                v = v1,
+                r = m_Color.R,
+                g = m_Color.G,
+                b = m_Color.B,
+                a = m_Color.A,
+            };
 
             vertexIndex++;
-            m_Vertices[vertexIndex].x = (short)(rect.X + rect.Width);
-            m_Vertices[vertexIndex].y = (short)rect.Y;
+            m_Vertices[vertexIndex] = m_Vertices[first];
+            m_Vertices[vertexIndex].x += rectw;
             m_Vertices[vertexIndex].u = u2;
-            m_Vertices[vertexIndex].v = v1;
-            m_Vertices[vertexIndex].r = m_Color.R;
-            m_Vertices[vertexIndex].g = m_Color.G;
-            m_Vertices[vertexIndex].b = m_Color.B;
-            m_Vertices[vertexIndex].a = m_Color.A;
-
             vertexIndex++;
-            m_Vertices[vertexIndex].x = (short)(rect.X + rect.Width);
-            m_Vertices[vertexIndex].y = (short)(rect.Y + rect.Height);
+
+            m_Vertices[vertexIndex] = m_Vertices[first];
+            m_Vertices[vertexIndex].x += rectw;
+            m_Vertices[vertexIndex].y += recth;
             m_Vertices[vertexIndex].u = u2;
             m_Vertices[vertexIndex].v = v2;
-            m_Vertices[vertexIndex].r = m_Color.R;
-            m_Vertices[vertexIndex].g = m_Color.G;
-            m_Vertices[vertexIndex].b = m_Color.B;
-            m_Vertices[vertexIndex].a = m_Color.A;
 
             vertexIndex++;
-            m_Vertices[vertexIndex].x = (short)rect.X;
-            m_Vertices[vertexIndex].y = (short)(rect.Y + rect.Height);
-            m_Vertices[vertexIndex].u = u1;
+            m_Vertices[vertexIndex] = m_Vertices[first];
+            m_Vertices[vertexIndex].y += recth;
             m_Vertices[vertexIndex].v = v2;
-            m_Vertices[vertexIndex].r = m_Color.R;
-            m_Vertices[vertexIndex].g = m_Color.G;
-            m_Vertices[vertexIndex].b = m_Color.B;
-            m_Vertices[vertexIndex].a = m_Color.A;
 
             m_VertNum += 4;
         }
