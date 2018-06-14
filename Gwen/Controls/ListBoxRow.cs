@@ -23,6 +23,9 @@ namespace Gwen.Controls
             get { return m_Selected; }
             set
             {
+                //todo: this does not notify parent listbox, causing bugs.
+                // needs to be part of parent.selectedrows, and optionally deselect
+                // other rows
                 m_Selected = value;
             }
         }
