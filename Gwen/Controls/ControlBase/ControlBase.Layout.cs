@@ -332,10 +332,9 @@ namespace Gwen.Controls
                 if (child.Dock == Dock.Fill)
                 {
                     // fill is lowest priority
-                    Size childsize;
+                    Size childsize = child.Bounds.Size;
                     if (child.AutoSizeToContents)
                     {
-                        childsize = child.Bounds.Size;
                         if (child.AutoSizeToContents)
                         {
                             childsize = child.GetSizeToFitContents();
